@@ -1,7 +1,7 @@
 #ifndef MYCLASS_H
 #define MYCLASS_H
 
-#include "OO/OO.h"
+#include "Core/OO.h"
 #include "Structure/Array.h"
 
 RClass(MyClass)

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "OO/OO.h"
+#include "Core/OO.h"
 #include "MyClass.h"
 
 RClass(MyInherit)
