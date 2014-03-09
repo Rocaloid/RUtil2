@@ -116,3 +116,11 @@ Format: 1.51
 Language: C
 
    Line Extender: \
+
+
+Language: CText
+
+   Add Extension: .txt
+   Line Comment: //
+   Block Comment: /* */
+   Line Extender: \

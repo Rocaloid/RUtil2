@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "OO.h"
+#include "OO/OO.h"
 #include "MyClass.h"
 
 RClass(MyInherit)
@@ -17,14 +17,16 @@ RCtor(MyInherit)
 
 RDtor(MyInherit)
 {
-    MyClass_Dtor(MyBase(MyClass));
     printf("MyInherit Dtor\n");
+    MyClass_Dtor(MyBase(MyClass));
 }
 
 int MyInherit_Method(MyInherit* This)
 {
-    return MyBase(MyClass) -> Prop1 + 
-           MyBase(MyClass) -> Prop2 + This -> Prop3;
+    Array_Push(int, MyBase(MyClass) -> MyArray, 
+        MyBase(MyClass) -> Prop1 + 
+        MyBase(MyClass) -> Prop2 + This -> Prop3);
+    return TopOf(MyBase(MyClass) -> MyArray);
 }
 
 int IObject_Method(RObject* This)

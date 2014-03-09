@@ -4,21 +4,18 @@
         Object Oriented Programming in C.
 */
 
-#ifndef OO_H
-#define OO_H
-
 /*
-    Section: Globals
-
     Variable: __ClassID__
 
         The counter which assigns each RClass a unique class number.
         
-        Automatically increases by 1 when a RClass is defined.
+        Automatically increases by 1 when a RCtor for a RClass is defined.
 */
 int __ClassID__;
 
 /*
+    Section: RClass
+
     Macro: RClass
 
         Defines a RClass.
@@ -54,12 +51,6 @@ int __ClassID__;
         
         <RInit>
 */
-#define RClass(Name) \
-    typedef struct Name Name; \
-    int __ClassID_##Name##__; \
-    void Name##_Ctor(Name* This); \
-    void Name##_Dtor(Name* This); \
-    struct Name
 
 /*
     Macro: RInherit
@@ -102,8 +93,6 @@ int __ClassID__;
     
         <RClass>
 */
-#define RInherit(BaseClass) \
-    BaseClass _Base
 
 /*
     Macro: RCtor
@@ -148,12 +137,6 @@ int __ClassID__;
         
         <RDtor>
 */
-#define RCtor(Name) \
-    void __attribute__ ((constructor)) __##Name##_ClassInit__() \
-    { \
-        __ClassID_##Name##__ = __ClassID__ ++; \
-    }\
-    void Name##_Ctor(Name* This)
 
 /*
     Macro: RDtor
@@ -195,8 +178,6 @@ int __ClassID__;
         
         <RCtor>
 */
-#define RDtor(Name) \
-    void Name##_Dtor(Name* This)
 
 /*
     Macro: RInit
@@ -229,41 +210,10 @@ int __ClassID__;
         };
         (end)
 */
-#define RInit(Name) \
-    ((RObject*)This) -> ClassID = __ClassID_##Name##__;
 
 /*
-    Macro: MyBase
+    Section: RInterface
 
-        Converts 'This' pointer to a specified base class.
-        
-        Usage:
-        
-        > MyBase(BaseClassName);
-        
-        Example:
-        
-        (start code)
-        RClass(MyClass)
-        {
-            RInherit(RObject);
-        };
-        
-        RCtor(MyClass)
-        {
-            printf("My ClassID is %d\n", MyBase(RObject) -> ClassID);
-            RInit(MyClass);
-        };
-        (end)
-        
-        See also:
-        
-            <RInherit>
-*/
-#define MyBase(Name) \
-    ((Name*)This)
-
-/*
     Macro: RInterface_Start
 
         Marks the start of RInterface definition.
@@ -276,9 +226,6 @@ int __ClassID__;
     
         <RInterface_Add>
 */
-#define RInterface_Start() \
-    if(0) \
-        __ClassID__ = __ClassID__
 
 /*
     Macro: RInterface_Add
@@ -315,24 +262,35 @@ int __ClassID__;
     
         <RInterface_Start>
 */
-#define RInterface_Add(Class, Method) \
-    else if(This -> ClassID == __ClassID_##Class##__) \
-        return Class##_##Method
 
 /*
-    Class: RObject
-    
-        The base class of all RClasses.
-*/
-RClass(RObject)
-{
-    /*
-        Variable: ClassID
-        
-            Stores the unique ID representing the RClass of this object.
-    */
-    int ClassID;
-};
+    Section: Auxillaries
 
-#endif
+    Macro: MyBase
+
+        Converts 'This' pointer to a specified base class.
+        
+        Usage:
+        
+        > MyBase(BaseClassName);
+        
+        Example:
+        
+        (start code)
+        RClass(MyClass)
+        {
+            RInherit(RObject);
+        };
+        
+        RCtor(MyClass)
+        {
+            printf("My ClassID is %d\n", MyBase(RObject) -> ClassID);
+            RInit(MyClass);
+        };
+        (end)
+        
+        See also:
+        
+            <RInherit>
+*/
 

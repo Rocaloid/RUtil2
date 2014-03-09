@@ -46,13 +46,16 @@ Format: 1.51
 # --------------------------------------------------------------------------
 
 
-File: OO  (OO.h)
+File: Array  (Structure/Array.txt)
+File: OO  (OO/OO.txt)
+File: RObject  (OO/OO.h)
 
 Group: Index  {
 
    Index: Everything
    Class Index: Classes
-   Macro Index: Macros
    Variable Index: Variables
+   Constant Index: Constants
+   Macro Index: Macros
    }  # Group: Index
 
