@@ -7,7 +7,7 @@
 #include "_Transition.h"
 #endif
 #define _RTAddress "../Structure/_Transition.h"
-#define _ClassName Transition
+#define _ClassName Transition_
 #define _Attr 2
 
 #define _T1 float

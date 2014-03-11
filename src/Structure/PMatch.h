@@ -9,7 +9,7 @@
 #include "_PMatch.h"
 #endif
 #define _RTAddress "../Structure/_PMatch.h"
-#define _ClassName PMatch
+#define _ClassName PMatch_
 #define _Attr 2
 
 #define _T1 float
@@ -28,7 +28,10 @@
 #define _T2 double
 #include "../Core/RTemplate.h"
 
-//Default methods
+//Default
+#define PMatch PMatch_double_double
+#define PMatch_Ctor PMatch_double_double_Ctor
+#define PMatch_Dtor PMatch_double_double_Dtor
 #define PMatch_AddPair PMatch_double_double_AddPair
 #define PMatch_Clear PMatch_double_double_Clear
 #define PMatch_Print PMatch_double_double_Print

@@ -44,7 +44,7 @@ int __ClassID__;
         (_RTClassName* This, ##__VA_ARGS__)
 
 #define RTFunc(Ret, Method, ...) \
-    Ret _C(Method, __Attr) \
+    Ret _C(Method, _, __Attr) \
         (__VA_ARGS__)
 
 #define RTAttr_1 _, _T1

@@ -5,7 +5,7 @@
 #include "_PMatch.rc"
 #endif
 #define _RTAddress "../Structure/_PMatch.rc"
-#define _ClassName PMatch
+#define _ClassName PMatch_
 #define _Attr 2
 
 #define _T1 float
