@@ -9,7 +9,7 @@ int __ClassID__;
     typedef struct Name Name; \
     int _C2(__ClassID_, Name, __); \
     void _C1(Name, _Ctor)(Name* This); \
-    void _C1(Name, _Ctor)(Name* This); \
+    void _C1(Name, _Dtor)(Name* This); \
     struct Name
 
 #define RInherit(BaseClass) \

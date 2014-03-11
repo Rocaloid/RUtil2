@@ -1,19 +1,19 @@
 #include <stdio.h>
 #include "MyPrint.h"
-#include "Core/OO.h"
+#include "RUtil/Core/OO.h"
 
 #if 0
 #include "_MyPrint.rc"
 #endif
-#define _RTAddress "../_MyPrint.rc"
+#define _RTAddress "_MyPrint.rc"
 #define _ClassName
 #define _Attr 1
 
 #define _T1 float
-#include "Core/RTemplate.h"
+#include "RUtil/Core/RTemplate.h"
 
 #define _T1 double
-#include "Core/RTemplate.h"
+#include "RUtil/Core/RTemplate.h"
 
 void Check_float(float Sorc)
 {
