@@ -1,30 +1,32 @@
 #ifndef OO_H
 #define OO_H
 
+#include "MacroUtil.h"
+
 int __ClassID__;
 
 #define RClass(Name) \
     typedef struct Name Name; \
-    int __ClassID_##Name##__; \
-    void Name##_Ctor(Name* This); \
-    void Name##_Dtor(Name* This); \
+    int _C2(__ClassID_, Name, __); \
+    void _C1(Name, _Ctor)(Name* This); \
+    void _C1(Name, _Ctor)(Name* This); \
     struct Name
 
 #define RInherit(BaseClass) \
     BaseClass _Base
 
 #define RCtor(Name) \
-    void __attribute__ ((constructor)) __##Name##_ClassInit__() \
+    void __attribute__ ((constructor)) _C2(__, Name, _ClassInit__)() \
     { \
-        __ClassID_##Name##__ = __ClassID__ ++; \
+        _C2(__ClassID_, Name, __) = __ClassID__ ++; \
     }\
-    void Name##_Ctor(Name* This)
+    void _C1(Name, _Ctor)(Name* This)
 
 #define RDtor(Name) \
-    void Name##_Dtor(Name* This)
+    void _C1(Name, _Dtor)(Name* This)
 
 #define RInit(Name) \
-    ((RObject*)This) -> ClassID = __ClassID_##Name##__;
+    ((RObject*)This) -> ClassID = _C2(__ClassID_, Name, __);
 
 #define MyBase(Name) \
     ((Name*)This)
@@ -34,8 +36,23 @@ int __ClassID__;
         __ClassID__ = __ClassID__
 
 #define RInterface_Add(Class, Method) \
-    else if(This -> ClassID == __ClassID_##Class##__) \
-        return Class##_##Method
+    else if(This -> ClassID == _C2(__ClassID_, Class, __)) \
+        return _C2(Class, _, Method)
+
+#define RTMethod(Ret, Name, Method, ...) \
+    Ret _C(_RTClassName, _, Method) \
+        (_RTClassName* This, ##__VA_ARGS__)
+
+#define RTFunc(Ret, Method, ...) \
+    Ret _C(Method, __Attr) \
+        (__VA_ARGS__)
+
+#define RTAttr_1 _, _T1
+#define RTAttr_2 _, _T1, _, _T2
+#define RTAttr_3 _, _T1, _, _T2, _, _T3
+#define RTAttr_4 _, _T1, _, _T2, _, _T3, _, _T4
+
+#define RCall(Class, Method) _C2(Class, _, Method)
 
 /*
     Class: RObject
@@ -53,4 +70,8 @@ RClass(RObject)
 };
 
 #endif
+
+#undef _RTAddress
+#undef _ClassName
+#undef _Attr
 
