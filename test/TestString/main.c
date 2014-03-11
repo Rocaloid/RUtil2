@@ -3,16 +3,16 @@
 
 int main(void)
 {
-    String a;
-    String b;
-    RNew(String, & a, & b);
+    String a, b, c;
+    RNew(String, & a, & b, & c);
     
     String_SetChars(& a, "asdfsf from a string.");
     String_SetChars(& b, "string2.");
     String_Join(& a, & b);
-    printf("%s\n", String_GetChars(& a));
+    Mid(& c, & a, 5, 10);
+    printf("%s\n", String_GetChars(& c));
     
-    RDelete(& a, & b);
+    RDelete(& a, & b, & c);
     return 0;
 }
 

@@ -91,7 +91,62 @@ int String_EqualChars(String* This, char* Sorc)
         return ! strncmp(This -> Data, Sorc, This -> Data_Index + 1);
     return 0;
 }
-/*
+
+int String_InStrFrom(String* This, String* Part, int From)
+{
+    int i, j;
+    int End = This -> Data_Index - Part -> Data_Index;
+    int PartLen = Part -> Data_Index + 1;
+
+    Array_Push(char, This -> Data, 0);
+    This -> Data_Index --;
+    Array_Push(char, Part -> Data, 0);
+    Part -> Data_Index --;
+
+    for(i = From; i <= End; i ++)
+    {
+        for(j = 0; j < PartLen; j ++)
+            if(Part -> Data[j] != This -> Data[i + j])
+                goto cont;
+        return i;
+        cont:;
+    }
+    return -1;
+}
+
+int String_InStr(String* This, String* Part)
+{
+    return String_InStrFrom(This, Part, 0);
+}
+
+int String_InStrRevFrom(String* This, String* Part, int From)
+{
+    int i, j;
+    int End = This -> Data_Index - Part -> Data_Index;
+    int PartLen = Part -> Data_Index + 1;
+    From = From > End ? End : From;
+
+    Array_Push(char, This -> Data, 0);
+    This -> Data_Index --;
+    Array_Push(char, Part -> Data, 0);
+    Part -> Data_Index --;
+
+    for(i = From; i >= 0; i --)
+    {
+        for(j = 0; j < PartLen; j ++)
+            if(Part -> Data[j] != This -> Data[i + j])
+                goto cont;
+        return i;
+        cont:;
+    }
+    return -1;
+}
+
+int String_InStrRev(String* This, String* Part)
+{
+    return String_InStrRevFrom(This, Part, This -> Data_Index + 1);
+}
+
 //------------------------------------------------------------
 
 void Mid(String* Dest, String* Sorc, int From, int Count)
@@ -102,7 +157,7 @@ void Mid(String* Dest, String* Sorc, int From, int Count)
     if(Count < 0)
         Count = 0;
     String_AllocLength(Dest, Count);
-    for(i = 0;i < Count;i ++)
+    for(i = 0; i < Count; i ++)
         Dest -> Data[i] = Sorc -> Data[From + i];
     Dest -> Data_Index = Count - 1;
 }
@@ -114,7 +169,7 @@ void MidFrom(String* Dest, String* Sorc, int From)
     if(Count < 0)
         Count = 0;
     String_AllocLength(Dest, Count);
-    for(i = 0;i < Count;i ++)
+    for(i = 0; i < Count; i ++)
         Dest -> Data[i] = Sorc -> Data[From + i];
     Dest -> Data_Index = Count - 1;
 }
@@ -128,7 +183,7 @@ void Right(String* Dest, String* Sorc, int Count)
     if(Count < 0)
         Count = 0;
     String_AllocLength(Dest, Count);
-    for(i = 0;i < Count;i ++)
+    for(i = 0; i < Count; i ++)
         Dest -> Data[i] = Sorc -> Data[From + i];
     Dest -> Data_Index = Count - 1;
 }
@@ -141,7 +196,7 @@ void Left(String* Dest, String* Sorc, int Count)
     if(Count < 0)
         Count = 0;
     String_AllocLength(Dest, Count);
-    for(i = 0;i < Count;i ++)
+    for(i = 0; i < Count; i ++)
         Dest -> Data[i] = Sorc -> Data[i];
     Dest -> Data_Index = Count - 1;
 }
@@ -151,7 +206,7 @@ void UpperCase(String* Dest, String* Sorc)
     int i;
     int Len = Sorc -> Data_Index + 1;
     String_AllocLength(Dest, Len);
-    for(i = 0;i < Len;i ++)
+    for(i = 0; i < Len; i ++)
         if(Sorc -> Data[i] >= 'a' && Sorc -> Data[i] <= 'z')
             Dest -> Data[i] = Sorc -> Data[i] + ('A' - 'a');
         else
@@ -164,67 +219,12 @@ void LowerCase(String* Dest, String* Sorc)
     int i;
     int Len = Sorc -> Data_Index + 1;
     String_AllocLength(Dest, Len);
-    for(i = 0;i < Len;i ++)
+    for(i = 0; i < Len; i ++)
         if(Sorc -> Data[i] >= 'A' && Sorc -> Data[i] <= 'Z')
             Dest -> Data[i] = Sorc -> Data[i] + ('a' - 'A');
         else
             Dest -> Data[i] = Sorc -> Data[i];
     Dest -> Data_Index = Len - 1;
-}
-
-int InStrFrom(String* Whole, String* Part, int From)
-{
-    int i, j;
-    int End = Whole -> Data_Index - Part -> Data_Index;
-    int PartLen = Part -> Data_Index + 1;
-
-    Array_Push(char, Whole -> Data, 0);
-    Whole -> Data_Index --;
-    Array_Push(char, Part -> Data, 0);
-    Part -> Data_Index --;
-
-    for(i = From;i <= End;i ++)
-    {
-        for(j = 0;j < PartLen;j ++)
-            if(Part -> Data[j] != Whole -> Data[i + j])
-                goto cont;
-        return i;
-        cont:;
-    }
-    return -1;
-}
-
-int InStr(String* Whole, String* Part)
-{
-    return InStrFrom(Whole, Part, 0);
-}
-
-int InStrRevFrom(String* Whole, String* Part, int From)
-{
-    int i, j;
-    int End = Whole -> Data_Index - Part -> Data_Index;
-    int PartLen = Part -> Data_Index + 1;
-    From = From > End ? End : From;
-
-    Array_Push(char, Whole -> Data, 0);
-    Whole -> Data_Index --;
-    Array_Push(char, Part -> Data, 0);
-    Part -> Data_Index --;
-
-    for(i = From;i >= 0;i --)
-    {
-        for(j = 0;j < PartLen;j ++)
-            if(Part -> Data[j] != Whole -> Data[i + j])
-                goto cont;
-        return i;
-        cont:;
-    }
-    return -1;
-}
-
-int InStrRev(String* Whole, String* Part)
-{
-    return InStrRevFrom(Whole, Part, Whole -> Data_Index + 1);
 }
 
 void Trim(String* Dest, String* Sorc)
@@ -233,13 +233,13 @@ void Trim(String* Dest, String* Sorc)
     SorcLen = Sorc -> Data_Index + 1;
     Start = 0;
     End = 0;
-    for(i = 0;i < SorcLen;i ++)
+    for(i = 0; i < SorcLen; i ++)
         if(Sorc -> Data[i] != ' ' && Sorc -> Data[i] != '\t')
         {
             Start = i;
             break;
         }
-    for(i = SorcLen - 1;i >= 0;i --)
+    for(i = SorcLen - 1; i >= 0; i --)
         if(Sorc -> Data[i] != ' ' && Sorc -> Data[i] != '\t')
         {
             End = i;
@@ -247,7 +247,7 @@ void Trim(String* Dest, String* Sorc)
         }
     RetLen = End - Start + 1;
     String_AllocLength(Dest, RetLen);
-    for(i = 0;i < RetLen;i ++)
+    for(i = 0; i < RetLen; i ++)
         Dest -> Data[i] = Sorc -> Data[i + Start];
     Dest -> Data_Index = RetLen - 1;
 }
@@ -258,7 +258,7 @@ void LTrim(String* Dest, String* Sorc)
     SorcLen = Sorc -> Data_Index + 1;
     Start = 0;
     End = 0;
-    for(i = SorcLen - 1;i >= 0;i --)
+    for(i = SorcLen - 1; i >= 0; i --)
         if(Sorc -> Data[i] != ' ' && Sorc -> Data[i] != '\t')
         {
             End = i;
@@ -266,7 +266,7 @@ void LTrim(String* Dest, String* Sorc)
         }
     RetLen = End - Start + 1;
     String_AllocLength(Dest, RetLen);
-    for(i = 0;i < RetLen;i ++)
+    for(i = 0; i < RetLen; i ++)
         Dest -> Data[i] = Sorc -> Data[i + Start];
     Dest -> Data_Index = RetLen - 1;
 }
@@ -277,7 +277,7 @@ void RTrim(String* Dest, String* Sorc)
     SorcLen = Sorc -> Data_Index + 1;
     Start = 0;
     End = SorcLen - 1;
-    for(i = 0;i < SorcLen;i ++)
+    for(i = 0; i < SorcLen; i ++)
         if(Sorc -> Data[i] != ' ' && Sorc -> Data[i] != '\t')
         {
             Start = i;
@@ -285,9 +285,8 @@ void RTrim(String* Dest, String* Sorc)
         }
     RetLen = End - Start + 1;
     String_AllocLength(Dest, RetLen);
-    for(i = 0;i < RetLen;i ++)
+    for(i = 0; i < RetLen; i ++)
         Dest -> Data[i] = Sorc -> Data[i + Start];
     Dest -> Data_Index = RetLen - 1;
 }
-*/
 
