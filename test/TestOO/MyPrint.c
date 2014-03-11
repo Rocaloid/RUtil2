@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "MyPrint.h"
-#include "RUtil/Core/OO.h"
+#include "Core/OO.h"
 
 #if 0
 #include "_MyPrint.rc"
@@ -10,10 +10,10 @@
 #define _Attr 1
 
 #define _T1 float
-#include "RUtil/Core/RTemplate.h"
+#include "Core/RTemplate.h"
 
 #define _T1 double
-#include "RUtil/Core/RTemplate.h"
+#include "Core/RTemplate.h"
 
 void Check_float(float Sorc)
 {
