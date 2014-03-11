@@ -3,7 +3,6 @@ RCtor(_RTClassName)
     RInit(_RTClassName);
     Array_Ctor(_T1, This -> X);
     Array_Ctor(_T2, This -> Y);
-    printf(_S(_RTClassName)" %d Ctor.\n", MyBase(RObject) -> ClassID);
 }
 
 RDtor(_RTClassName)

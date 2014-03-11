@@ -43,8 +43,10 @@ int main(void)
 {
     MyClass a;
     MyInherit b;
-    MyClass_Ctor(& a);
-    MyInherit_Ctor(& b);
+    RNew(MyClass, & a);
+    RNew(MyInherit, & b);
+    //MyClass_Ctor(& a);
+    //MyInherit_Ctor(& b);
     a.Prop1 = 5;
     a.Prop2 = 3;
     b._Base.Prop1 = 8;
@@ -58,24 +60,25 @@ int main(void)
         IObject_Method((RObject*)(& b)));
     
     PMatch c;
-    PMatch_Ctor(& c);
+    RNew(PMatch, & c);
+    //PMatch_Ctor(& c);
     PMatch_AddPair(& c, 0, 1.5452334545);
     PMatch_AddPair(& c, 1, 2.53245345);
     PMatch_AddPair(& c, 5, 0);
     PMatch_AddPair(& c, 6, 0.3454353545);
-    PMatch_Print(& c);
     int i;
-    for(i = 0; i < 60; i ++)
+    for(i = 0; i < 10; i ++)
     {
-        printf("%d, %.9lf\n", i, PMatch_Query(& c, (double)i / 10.0).Y);
+        printf("%d, %.9lf\n", i, PMatch_Query(& c, (double)i / 2.0).Y);
     }
-    PMatch_Dtor(& c);
+    //PMatch_Dtor(& c);
     
-    MyPrint_float(213.234353423);
-    MyPrint_double(213.234353423);
+    MyPrint_Float(213.234353423);
+    MyPrint_Double(213.234353423);
     
-    MyClass_Dtor(& a);
-    MyInherit_Dtor(& b);
+    //MyClass_Dtor(& a);
+    //MyInherit_Dtor(& b);
+    RDelete(& a, & b, & c);
     return 0;
 }
 

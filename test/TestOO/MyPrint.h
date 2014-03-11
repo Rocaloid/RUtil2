@@ -10,10 +10,10 @@
 #define _ClassName
 #define _Attr 1
 
-#define _T1 float
+#define _T1 Float
 #include "Core/RTemplate.h"
 
-#define _T1 double
+#define _T1 Double
 #include "Core/RTemplate.h"
 
 #endif

@@ -12,30 +12,30 @@
 #define _ClassName PMatch_
 #define _Attr 2
 
-#define _T1 float
-#define _T2 float
+#define _T1 Float
+#define _T2 Float
 #include "../Core/RTemplate.h"
 
-#define _T1 float
-#define _T2 double
+#define _T1 Float
+#define _T2 Double
 #include "../Core/RTemplate.h"
 
-#define _T1 double
-#define _T2 float
+#define _T1 Double
+#define _T2 Float
 #include "../Core/RTemplate.h"
 
-#define _T1 double
-#define _T2 double
+#define _T1 Double
+#define _T2 Double
 #include "../Core/RTemplate.h"
 
 //Default
-#define PMatch PMatch_double_double
-#define PMatch_Ctor PMatch_double_double_Ctor
-#define PMatch_Dtor PMatch_double_double_Dtor
-#define PMatch_AddPair PMatch_double_double_AddPair
-#define PMatch_Clear PMatch_double_double_Clear
-#define PMatch_Print PMatch_double_double_Print
-#define PMatch_Query PMatch_double_double_Query
+#define PMatch PMatch_Double_Double
+#define PMatch_Ctor PMatch_Double_Double_Ctor
+#define PMatch_Dtor PMatch_Double_Double_Dtor
+#define PMatch_AddPair PMatch_Double_Double_AddPair
+#define PMatch_Clear PMatch_Double_Double_Clear
+#define PMatch_Print PMatch_Double_Double_Print
+#define PMatch_Query PMatch_Double_Double_Query
 
 #endif
 

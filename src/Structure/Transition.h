@@ -10,20 +10,20 @@
 #define _ClassName Transition_
 #define _Attr 2
 
-#define _T1 float
-#define _T2 float
+#define _T1 Float
+#define _T2 Float
 #include "../Core/RTemplate.h"
 
-#define _T1 float
-#define _T2 double
+#define _T1 Float
+#define _T2 Double
 #include "../Core/RTemplate.h"
 
-#define _T1 double
-#define _T2 float
+#define _T1 Double
+#define _T2 Float
 #include "../Core/RTemplate.h"
 
-#define _T1 double
-#define _T2 double
+#define _T1 Double
+#define _T2 Double
 #include "../Core/RTemplate.h"
 
 #endif

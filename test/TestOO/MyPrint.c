@@ -9,18 +9,18 @@
 #define _ClassName
 #define _Attr 1
 
-#define _T1 float
+#define _T1 Float
 #include "Core/RTemplate.h"
 
-#define _T1 double
+#define _T1 Double
 #include "Core/RTemplate.h"
 
-void Check_float(float Sorc)
+void Check_Float(float Sorc)
 {
     printf("Float is %f\n", Sorc);
 }
 
-void Check_double(double Sorc)
+void Check_Double(double Sorc)
 {
     printf("Double is %.9lf\n", Sorc);
 }
