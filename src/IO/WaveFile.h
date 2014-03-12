@@ -31,6 +31,8 @@ RClass(WaveFile)
 int WaveFile_Open(WaveFile* This, String* Sorc);
 int WaveFile_Save(WaveFile* This, String* Dest);
 
+void WaveFile_PrintInfo(WaveFile* This);
+
 void WaveFile_FinishWrite(WaveFile* This);
 void WaveFile_Close(WaveFile* This);
 
@@ -43,7 +45,7 @@ float WaveFile_FetchRAt(WaveFile* This, int Position);
 
 void WaveFile_WriteAll(WaveFile* This, char* Sorc, int Size);
 void WaveFile_WriteAllFloat(WaveFile* This, float* Sorc, int Size);
-void WaveFile_WriteAllFloatStereo(WaveFile* This, float* SorcL, float* SorcR, 
+void WaveFile_WriteAllFloatStereo(WaveFile* This, float* SorcL, float* SorcR,
     int Size);
 void WaveFile_Write(WaveFile* This, float Data);
 void WaveFile_WriteStereo(WaveFile* This, float DataL, float DataR);

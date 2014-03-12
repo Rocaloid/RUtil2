@@ -52,22 +52,22 @@ RTFunc(static int, Sort_CmpMore, const void* a, const void* b)
 
 RTFunc(void, Sort_IncIndex, _T1* Dest, int* Index, _T1* Sorc, int Num)
 {
-    Sort_Index_Core(Sort_CmpLess_Index);
+    Sort_Index_Core(Sort_CmpMore_Index);
 }
 
 RTFunc(void, Sort_DecIndex, _T1* Dest, int* Index, _T1* Sorc, int Num)
 {
-    Sort_Index_Core(Sort_CmpMore_Index);
+    Sort_Index_Core(Sort_CmpLess_Index);
 }
 
 RTFunc(void, Sort_Inc, _T1* Dest, _T1* Sorc, int Num)
 {
-    Sort_Core(Sort_CmpLess);
+    Sort_Core(Sort_CmpMore);
 }
 
 RTFunc(void, Sort_Dec, _T1* Dest, _T1* Sorc, int Num)
 {
-    Sort_Core(Sort_CmpMore);
+    Sort_Core(Sort_CmpLess);
 }
 
 //Compiler warning prevention. NEVER call this.

@@ -10,6 +10,9 @@
 #define _T1 UInt
 #include "../Core/RTemplate.h"
 
+#define _T1 Short
+#include "../Core/RTemplate.h"
+
 #define _T1 UShort
 #include "../Core/RTemplate.h"
 

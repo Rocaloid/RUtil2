@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Structure/String.h"
 #include "Misc/Convert.h"
+#include "Misc/Sort.h"
 #include "IO/File.h"
 #include "IO/WaveFile.h"
 
@@ -38,6 +39,29 @@ int main(void)
     File_Flush(& WriteFile);
     RDelete(& Path, & TestFile, & tmp, & WriteFile);
     */
+    String Path;
+    RNew(String, & Path);
+    WaveFile Wave, OutputWave;
+    RNew(WaveFile, & Wave, & OutputWave);
+    
+    String_SetChars(& Path, "/tmp/a.wav");
+    WaveFile_Open(& Wave, & Path);
+    WaveFile_PrintInfo(& Wave);
+    
+    float* temp = (float*)malloc(Wave.Header.DataNum * 4);
+    WaveFile_FetchAllFloat(& Wave, temp);
+    Sort_Dec_Float(temp, temp, Wave.Header.DataNum);
+    String_SetChars(& Path, "/tmp/b.wav");
+    
+    OutputWave.Header = Wave.Header;
+    WaveFile_Save(& OutputWave, & Path);
+    WaveFile_WriteAllFloat(& OutputWave, temp, Wave.Header.DataNum);
+    WaveFile_FinishWrite(& OutputWave);
+    free(temp);
+    
+    WaveFile_Close(& Wave);
+    WaveFile_Close(& OutputWave);
+    RDelete(& Path, & Wave, & OutputWave);
     return 0;
 }
 
