@@ -1,5 +1,5 @@
 #ifndef FILE_H
-#define FILE_h
+#define FILE_H
 
 #include <stdio.h>
 #include "../Structure/String.h"

@@ -1,6 +1,6 @@
-#aux_source_directory(./TestOO Test1)
-#add_executable(TestOO ${Test1})
-#target_link_libraries(TestOO RUtil2)
+aux_source_directory(./TestOO Test1)
+add_executable(TestOO ${Test1})
+target_link_libraries(TestOO RUtil2)
 
 #aux_source_directory(./TestString Test2)
 #add_executable(TestString ${Test2})
@@ -14,7 +14,7 @@ aux_source_directory(./TestIO Test4)
 add_executable(TestIO ${Test4})
 target_link_libraries(TestIO RUtil2)
 
-#add_test(TestOO TestOO)
+add_test(TestOO TestOO)
 #add_test(TestString TestString)
 #add_test(TestSort TestSort)
 add_test(TestIO TestIO)

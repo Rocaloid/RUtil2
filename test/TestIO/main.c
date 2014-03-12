@@ -2,9 +2,11 @@
 #include "Structure/String.h"
 #include "Misc/Convert.h"
 #include "IO/File.h"
+#include "IO/WaveFile.h"
 
 int main(void)
 {
+    /* Generic File IO
     String Path, tmp;
     RNew(String, & Path, & tmp);
     String_SetChars(& Path, "/tmp/a.txt");
@@ -35,6 +37,7 @@ int main(void)
     File_Close(& TestFile);
     File_Flush(& WriteFile);
     RDelete(& Path, & TestFile, & tmp, & WriteFile);
+    */
     return 0;
 }
 
