@@ -8,7 +8,7 @@
 #define _RTAddress "Misc/_Sort.rc"
 #define _ClassName
 #define _Attr 1
-
+/*
 #define _T1 Float
 #include "../Core/RTemplate.h"
 
@@ -17,4 +17,7 @@
 
 #define _T1 Int
 #include "../Core/RTemplate.h"
+*/
+
+#include "../Core/Include_T1AllTypes.h"
 
