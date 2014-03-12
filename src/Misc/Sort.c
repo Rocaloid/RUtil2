@@ -1,12 +1,11 @@
-#ifndef SORT_H
-#define SORT_H
-
+#include "Sort.h"
+#include <stdlib.h>
 #include "../Core/OO.h"
 
 #if 0
-#include "_Sort.h"
+#include "_Sort.rc"
 #endif
-#define _RTAddress "Misc/_Sort.h"
+#define _RTAddress "Misc/_Sort.rc"
 #define _ClassName
 #define _Attr 1
 
@@ -18,6 +17,4 @@
 
 #define _T1 Int
 #include "../Core/RTemplate.h"
-
-#endif
 
