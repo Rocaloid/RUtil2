@@ -6,7 +6,11 @@
 #if 0
 #include "_Transition.h"
 #endif
-#define _RTAddress "../Structure/_Transition.h"
+#ifdef __RUtil2_Install
+#define _RTAddress "RUtil2/Structure/_Transition.h"
+#else
+#define _RTAddress "Structure/_Transition.h"
+#endif
 #define _ClassName Transition_
 #define _Attr 2
 

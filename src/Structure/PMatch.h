@@ -8,7 +8,11 @@
 #if 0
 #include "_PMatch.h"
 #endif
-#define _RTAddress "../Structure/_PMatch.h"
+#ifdef __RUtil2_Install
+#define _RTAddress "RUtil2/Structure/_PMatch.h"
+#else
+#define _RTAddress "Structure/_PMatch.h"
+#endif
 #define _ClassName PMatch_
 #define _Attr 2
 

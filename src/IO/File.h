@@ -51,7 +51,11 @@ void File_WriteLine(File* This, String* Sorc);
 #if 0
 #include "_File.h"
 #endif
+#ifdef __RUtil2_Install
+#define _RTAddress "RUtil2/IO/_File.h"
+#else
 #define _RTAddress "IO/_File.h"
+#endif
 #define _ClassName
 #define _Attr 1
 

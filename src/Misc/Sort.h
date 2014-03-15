@@ -6,19 +6,13 @@
 #if 0
 #include "_Sort.h"
 #endif
+#ifdef __RUtil2_Install
+#define _RTAddress "RUtil2/Misc/_Sort.h"
+#else
 #define _RTAddress "Misc/_Sort.h"
+#endif
 #define _ClassName
 #define _Attr 1
-/*
-#define _T1 Float
-#include "../Core/RTemplate.h"
-
-#define _T1 Double
-#include "../Core/RTemplate.h"
-
-#define _T1 Int
-#include "../Core/RTemplate.h"
-*/
 
 #include "../Core/Include_T1AllTypes.h"
 
