@@ -48,8 +48,10 @@ Format: 1.51
 
 File: Array  (Structure/Array.txt)
 File: OO  (Core/OO.txt)
+File: PMatch  (Structure/PMatch.txt)
 File: RObject  (Core/OO.h)
 File: String  (Structure/String.txt)
+File: Transition  (Structure/Transition.txt)
 
 Group: Index  {
 
@@ -58,5 +60,6 @@ Group: Index  {
    Variable Index: Variables
    Constant Index: Constants
    Macro Index: Macros
+   Function Index: Functions
    }  # Group: Index
 
