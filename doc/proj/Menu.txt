@@ -47,8 +47,9 @@ Format: 1.51
 
 
 File: Array  (Structure/Array.txt)
-File: OO  (OO/OO.txt)
-File: RObject  (OO/OO.h)
+File: OO  (Core/OO.txt)
+File: RObject  (Core/OO.h)
+File: String  (Structure/String.txt)
 
 Group: Index  {
 

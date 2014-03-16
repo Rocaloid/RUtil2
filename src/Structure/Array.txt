@@ -1,25 +1,23 @@
 /*
     Title: Array
     
-        An light weight implementation of dynamic array structure in C Macros.
+        A light weight implementation of dynamic array structure in C Macros.
         
-        Each array actually consists of the following members:
+        Each array actually consists of the following members
         
         (start code)
         ElementType* Name; //The pointer to elements.
         int Name_Index; //Index of the top element.
         int Name_Size; //Size allocated for the Array.
         (end)
-*/
-
-/*
+        
+        
     Constant: Array_Addition
     
         The number of empty elements to be added to an Array when an
         enlargement takes place.
-*/
-
-/*
+        
+        
     Section: Constructing/Destructing
 
     Macro: Array_Define
@@ -43,9 +41,8 @@
         Type - Type of elements(e.g. int, float ...)
         
         Name - Name of the Array.
-*/
-
-/*
+        
+        
     Macro: Array_Gtor
     
         Defines and inits an Array.
@@ -59,9 +56,8 @@
         Type - Type of elements.
         
         Name - Name of the Array.
-*/
-
-/*
+        
+        
     Macro: Array_Ctor
     
         Inits an Array.
@@ -75,9 +71,8 @@
         Type - Type of elements.
         
         Name - Name of the Array.
-*/
-
-/*
+        
+        
     Macro: Array_Dtor
     
         Destructs(frees) an Array.
@@ -91,9 +86,8 @@
         Type - Type of elements.
         
         Name - Name of the Array.
-*/
-
-/*
+        
+        
     Macro: Array_ObjDtor
     
         Destructs an Array and automatically calls the destructor for each of 
@@ -108,9 +102,8 @@
         Type - Type of elements.
         
         Name - Name of the Array.
-*/
-
-/*
+        
+        
     Section: Operations
 
     Macro: Array_Resize
@@ -129,9 +122,8 @@
         Array - Name of the Array.
         
         NewSize - Number of elements the Array holds.
-*/
-
-/*
+        
+        
     Macro: Array_Push
     
         Add an element at the top of an Array.
@@ -147,9 +139,8 @@
         Array - Name of the Array.
         
         Data - The element to be pushed.
-*/
-
-/*
+        
+        
     Macro: Array_PushNull
     
         Add an empty element at the top of an Array.
@@ -167,9 +158,8 @@
         Type - Type of elements.
         
         Array - Name of the Array.
-*/
-
-/*
+        
+        
     Macro: Array_Pop
     
         Pops an element from the top of an Array.
@@ -191,9 +181,8 @@
     Returns:
     
         The element being poped.
-*/
-
-/*
+        
+        
     Macro: Array_Insert
     
         Inserts an element into an Array.
@@ -211,9 +200,8 @@
         Index - The index at where Data is inserted.
         
         Data - The element to be inserted.
-*/
-
-/*
+        
+        
     Macro: Array_InsertNull
     
         Inserts an empty element into an Array.
@@ -233,9 +221,8 @@
         Array - Name of the Array.
         
         Index - The index at where element is inserted.
-*/
-
-/*
+        
+        
     Macro: Array_Remove
     
         Removes an element from an Array.
@@ -255,9 +242,8 @@
         Array - Name of the Array.
         
         Index - The index of the element being removed.
-*/
-
-/*
+        
+        
     Macro: Array_RemoveRange
     
         Removes a range of elements from an Array.
@@ -279,9 +265,8 @@
         LIndex - The lower index of the elements being removed.
         
         HIndex - The upper index of the elements being removed.
-*/
-
-/*
+        
+        
     Section: Advanced
 
     Macro: Array_IncFind
@@ -299,9 +284,8 @@
         Array - Name of the Array.
         
         Data - An element to be compared.
-*/
-
-/*
+        
+        
     Macro: Array_DecFind
     
         Finds the index of an element by comparing in decreasing trend.
@@ -317,9 +301,8 @@
         Array - Name of the Array.
         
         Data - An element to be compared.
-*/
-
-/*
+        
+        
     Section: Auxillaries
 
     Macro: TopOf
@@ -333,9 +316,8 @@
     Parameters:
         
         Array - Name of the Array.
-*/
-
-/*
+        
+        
     Macro: Array_Par
     
         Defines an Array in function parameters.
@@ -356,9 +338,8 @@
         Type - Type of elements.
         
         Array - Name of the Array.
-*/
-
-/*
+        
+        
     Macro: Array_Arg
     
         Sends an Array in function arguments.

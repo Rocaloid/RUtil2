@@ -50,9 +50,8 @@ int __ClassID__;
         <RDtor>
         
         <RInit>
-*/
-
-/*
+        
+        
     Macro: RInherit
 
         Inherit a RClass from another RClass.
@@ -92,9 +91,8 @@ int __ClassID__;
     See also:
     
         <RClass>
-*/
-
-/*
+        
+        
     Macro: RCtor
 
         Defines the constructor of a RClass.
@@ -136,9 +134,8 @@ int __ClassID__;
         <RInit>
         
         <RDtor>
-*/
-
-/*
+        
+        
     Macro: RDtor
 
         Defines the destructor of a RClass.
@@ -177,9 +174,8 @@ int __ClassID__;
         <RClass>
         
         <RCtor>
-*/
-
-/*
+        
+        
     Macro: RInit
 
         Assigns the ClassID to the object.
@@ -209,9 +205,65 @@ int __ClassID__;
             RInit(MyClass);
         };
         (end)
-*/
 
-/*
+
+    Macro: RNew
+    
+        Calls constructor functions for multiple objects of the same type.
+        
+        Usage:
+        
+        > RNew(TypeName, & obj1, & obj2, & obj3, ...);
+        
+        Equivalent to
+        
+        (start code)
+        TypeName_Ctor(& obj1);
+        TypeName_Ctor(& obj2);
+        TypeName_Ctor(& obj3);
+        ...
+        (end)
+        
+        Example:
+        (start code)
+        String a, b, c;
+        
+        RNew(String, & a, & b, & c);
+        
+        ...
+        (end)
+    
+    Macro: RDelete
+    
+        Automatically calls destructors of multiple objects.
+        
+        Usage:
+        
+        > RDelete(& obj1, & obj2, & obj3, ...);  
+              
+        Equivalent to
+        
+        (start code)
+        TypeName1_Ctor(& obj1);
+        TypeName2_Ctor(& obj2);
+        TypeName3_Ctor(& obj3);
+        ...
+        (end)
+        
+        Example:
+        (start code)
+        String a, b, c;
+        MyClass d, e, f;
+        
+        RNew(String, & a, & b, & c);
+        RNew(MyClass, & d, & e, & f);
+        
+        ...
+        
+        RDelete(& a, & b, & c, & d, & e, & f);
+        (end code)
+    
+        
     Section: RInterface
 
     Macro: RInterface_Start
@@ -225,9 +277,8 @@ int __ClassID__;
     See also:
     
         <RInterface_Add>
-*/
-
-/*
+        
+        
     Macro: RInterface_Add
 
         Add a method to a RInterface method.
@@ -261,9 +312,63 @@ int __ClassID__;
     See also:
     
         <RInterface_Start>
-*/
+    
+    
+    Section: Template Programming
+    
+    Macro: RTMethod
+    
+        Defines a method for a template class.
+        
+        Usage:
+        
+        > RTMethod(RetType, ClassName, Method, Parameter1, Parameter2, ...)
+        
+        Equivalent to
+        
+        > RetType ClassName_Method_...(Parameter1, Parameter2, ...)
+        
+        Example:
+        (start code)
+        RClass(_RTClassName)
+        {
+            RInherit(RObject);
+            Array_Define(_T1, X);
+            Array_Define(_T2, Y);
+        };
 
-/*
+        RTMethod(void, PMatch, AddPair, _T1 XVar, _T2 YVar);
+        (end)
+        
+        (start code)
+        RTMethod(void, PMatch, AddPair, _T1 XVar, _T2 YVar)
+        {
+            int Index;
+            Array_IncFind(Index, _T1, This -> X, XVar);
+            Array_Insert(_T2, This -> Y, Index, YVar);
+            Array_Insert(_T1, This -> X, Index, XVar);
+        }
+        (end)
+        (Adapted from src/Structure/_PMatch.h and _PMatch.rc)
+        
+        
+    Macro: RTFunc
+    
+        Defines a template function.
+        
+        Usage:
+        
+        > RTFunc(RetType, Method, Parameter1, Parameter2, ...)
+        
+        Equivalent to
+        
+        > RetType Method_...(Parameter1, Parameter2, ...)
+        
+        See Also:
+        
+        <RTMethod>
+    
+        
     Section: Auxillaries
 
     Macro: MyBase
@@ -292,5 +397,19 @@ int __ClassID__;
         See also:
         
             <RInherit>
+    
+    
+    Macro: RCall
+    
+        Syntactic sugar for calling methods of RClasses.
+        
+        Usage:
+        
+        > RCall(Class, Method)(Arg1, Arg2, ...);
+        
+        Equivalent to
+        
+        > Class_Method(Arg1, Arg2, ...);
+
 */
 

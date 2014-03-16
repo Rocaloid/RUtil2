@@ -1,0 +1,18 @@
+/*    
+    Class: String
+    
+        RClass of a char string.
+        
+        Inherits <RObject>.
+*/
+RClass(String)
+{
+    RInherit(RObject);
+    /*
+        Variable: Data
+        
+            The array which stores chars.
+    */
+    Array_Define(char, Data);
+};
+

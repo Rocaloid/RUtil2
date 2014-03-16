@@ -123,4 +123,8 @@ Language: CText
    Add Extension: .txt
    Line Comment: //
    Block Comment: /* */
+   Enum Values: Under parent
+   Class Prototype Enders: ; {
+   Function Prototype Enders: ; {
+   Variable Prototype Enders: ; =
    Line Extender: \
