@@ -7,6 +7,8 @@ add_library(RUtil2 ${SRC_LIST})
 target_include_directories(RUtil2 PUBLIC "${CMAKE_SOURCE_DIR}/src")
 
 install(FILES Core/OO.h
+              Core/RAlloc.h
+              Core/_RAlloc.h
               Core/RTemplate.h
               Core/Include_T1AllTypes.h
               Core/MacroUtil.h
