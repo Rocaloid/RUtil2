@@ -267,8 +267,12 @@ void File_ReadAll(File* This, String* Dest);
 void File_WriteLine(File* This, String* Sorc);
 
 /*
-    Function: File_Read_TypeName
+    Function: File_Read
         Read a specific data type.
+        
+    Usage:
+    
+    > Ret = File_Read_TypeName(File* This);
         
     Returns:
         The data being read.
@@ -276,8 +280,12 @@ void File_WriteLine(File* This, String* Sorc);
 RTFunc(_T1, File_Read, File* This);
 
 /*
-    Function: File_Write_TypeName
+    Function: File_Write
         Write a specific data type.
+        
+    Usage:
+    
+    > File_Write_TypeName(File* This, TypeName Sorc);
         
     Parameters:
         Sorc - The data to be written.
