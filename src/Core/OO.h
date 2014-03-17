@@ -22,6 +22,20 @@ typedef int32_t             Int32;
 typedef uint32_t            UInt32;
 typedef int64_t             Int64;
 typedef uint64_t            UInt64;
+#define _TID_Float          0
+#define _TID_Double         1
+#define _TID_Int            2
+#define _TID_UInt           3
+#define _TID_Short          4
+#define _TID_UShort         5
+#define _TID_Char           6
+#define _TID_UChar          7
+#define _TID_Int16          8
+#define _TID_UInt16         9
+#define _TID_Int32          10
+#define _TID_UInt32         11
+#define _TID_Int64          12
+#define _TID_UInt64         13
 
 //Automatic constructor/destructor.
 typedef void (*__CDtorFunc)(void*);
