@@ -7,7 +7,9 @@
         
         This is a template class.
         
-        Inherits <RObject>.
+        Parent:
+        
+            <RObject>
 */
 #define _ClassName PMatch_
 ;

@@ -46,12 +46,24 @@ Format: 1.51
 # --------------------------------------------------------------------------
 
 
-File: Array  (Structure/Array.txt)
-File: OO  (Core/OO.txt)
-File: PMatch  (Structure/PMatch.txt)
-File: RObject  (Core/OO.h)
-File: String  (Structure/String.txt)
-File: Transition  (Structure/Transition.txt)
+Group: Core  {
+
+   File: OO  (Core/OO.txt)
+   File: RObject  (Core/OO.h)
+   }  # Group: Core
+
+Group: Structure  {
+
+   File: Array  (Structure/Array.txt)
+   File: PMatch  (Structure/PMatch.txt)
+   File: String  (Structure/String.txt)
+   File: Transition  (Structure/Transition.txt)
+   }  # Group: Structure
+
+Group: IO  {
+
+   File: File  (IO/File.txt)
+   }  # Group: IO
 
 Group: Index  {
 
@@ -61,5 +73,6 @@ Group: Index  {
    Constant Index: Constants
    Macro Index: Macros
    Function Index: Functions
+   Type Index: Types
    }  # Group: Index
 
