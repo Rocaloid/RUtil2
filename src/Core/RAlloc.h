@@ -4,7 +4,9 @@
 #include "OO.h"
 
 void* RAlloc(int Size);
-void RFree(void* Ptr);
+
+#define RFree(...) __RFree(__VA_ARGS__, (void*)(- 1))
+void __RFree(void* a, ...);
 
 #define RAlloc_Class(Name, Size) \
     (Name*)__RAlloc_Class(Size, sizeof(Name), __ClassID_##Name##__);

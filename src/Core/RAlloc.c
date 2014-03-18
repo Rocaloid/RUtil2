@@ -1,4 +1,5 @@
 #include <malloc.h>
+#include <stdarg.h>
 #include "RAlloc.h"
 #include "OO.h"
 
@@ -7,9 +8,24 @@ void* RAlloc(int Size)
     return malloc(Size);
 }
 
-void RFree(void* Ptr)
+void __RFree(void* a, ...)
 {
-    free(Ptr);
+    void* Ptr;
+    va_list Args;
+    va_start(Args, a);
+    
+    //First
+    free(a);
+    while(1)
+    {
+        Ptr = va_arg(Args, void*);
+        //End
+        if((int)Ptr == - 1)
+            break;
+        free(Ptr);
+    }
+    
+    va_end(Args);
 }
 
 void* __RAlloc_Class(int Size, int UnitSize, int ClassID)

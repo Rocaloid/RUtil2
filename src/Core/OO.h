@@ -4,6 +4,8 @@
 #include "MacroUtil.h"
 #include "../Structure/Array.h"
 #include <stdint.h>
+#include <float.h>
+#include <limits.h>
 
 int __ClassID__;
 
@@ -36,6 +38,34 @@ typedef uint64_t            UInt64;
 #define _TID_UInt32         11
 #define _TID_Int64          12
 #define _TID_UInt64         13
+#define _Max_Float          FLT_MAX
+#define _Max_Double         DBL_MAX
+#define _Max_Int            INT_MAX
+#define _Max_UInt           UINT_MAX
+#define _Max_Short          SHRT_MAX
+#define _Max_UShort         USHRT_MAX
+#define _Max_Char           CHAR_MAX
+#define _Max_UChar          UCHAR_MAX
+#define _Max_Int16          SHRT_MAX
+#define _Max_UInt16         USHRT_MAX
+#define _Max_Int32          LONG_MAX
+#define _Max_UInt32         ULONG_MAX
+#define _Max_Int64          LLONG_MAX
+#define _Max_UInt64         ULLONG_MAX
+#define _Min_Float          FLT_MIN
+#define _Min_Double         DBL_MIN
+#define _Min_Int            INT_MIN
+#define _Min_UInt           0
+#define _Min_Short          SHRT_MIN
+#define _Min_UShort         0
+#define _Min_Char           CHAR_MIN
+#define _Min_UChar          0
+#define _Min_Int16          SHRT_MIN
+#define _Min_UInt16         0
+#define _Min_Int32          LONG_MIN
+#define _Min_UInt32         0
+#define _Min_Int64          LLONG_MIN
+#define _Min_UInt64         0
 
 //Automatic constructor/destructor.
 typedef void (*__CDtorFunc)(void*);
@@ -45,8 +75,8 @@ void __AutoCDtor_Init();
 void __RNew(__CDtorFunc Ctor, ...);
 void __RDelete(void* a, ...);
 #define RNew(Type, ...) \
-    __RNew(__AutoCtor[_C2(__ClassID_, Type, __)], __VA_ARGS__, (void*)(- 1));
-#define RDelete(...) __RDelete(__VA_ARGS__, (void*)(- 1));
+    __RNew(__AutoCtor[_C2(__ClassID_, Type, __)], __VA_ARGS__, (void*)(- 1))
+#define RDelete(...) __RDelete(__VA_ARGS__, (void*)(- 1))
 
 #define RClass(Name) \
     typedef struct Name Name; \
