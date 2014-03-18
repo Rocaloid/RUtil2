@@ -4,6 +4,7 @@
 #include "OO.h"
 
 void* RAlloc(int Size);
+void* RAlign(int Align, int Size);
 
 #define RFree(...) __RFree(__VA_ARGS__, (void*)(- 1))
 void __RFree(void* a, ...);

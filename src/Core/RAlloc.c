@@ -8,6 +8,11 @@ void* RAlloc(int Size)
     return malloc(Size);
 }
 
+void* RAlign(int Align, int Size)
+{
+    return memalign(Align, Size);
+}
+
 void __RFree(void* a, ...)
 {
     void* Ptr;
