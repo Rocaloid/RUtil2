@@ -4,7 +4,7 @@
 int __ClassID__ = 0;
 int __FirstRun__ = 0;
 
-void __attribute__ ((destructor)) __AutoCDtor_Init()
+void __attribute__ ((constructor)) __AutoCDtor_Init()
 {
     if(__ClassID__ == 0 && __FirstRun__ == 0)
     {
