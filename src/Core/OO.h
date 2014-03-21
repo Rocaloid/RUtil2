@@ -4,7 +4,7 @@
 #include "MacroUtil.h"
 #include "../Structure/Array.h"
 #include <stdint.h>
-#include <float.h>
+#include <math.h>
 #include <limits.h>
 
 int __ClassID__;
@@ -38,8 +38,8 @@ typedef uint64_t            UInt64;
 #define _TID_UInt32         11
 #define _TID_Int64          12
 #define _TID_UInt64         13
-#define _Max_Float          FLT_MAX
-#define _Max_Double         DBL_MAX
+#define _Max_Float          INFINITY
+#define _Max_Double         INFINITY
 #define _Max_Int            INT_MAX
 #define _Max_UInt           UINT_MAX
 #define _Max_Short          SHRT_MAX
@@ -52,8 +52,8 @@ typedef uint64_t            UInt64;
 #define _Max_UInt32         ULONG_MAX
 #define _Max_Int64          LLONG_MAX
 #define _Max_UInt64         ULLONG_MAX
-#define _Min_Float          FLT_MIN
-#define _Min_Double         DBL_MIN
+#define _Min_Float          (- INFINITY)
+#define _Min_Double         (- INFINITY)
 #define _Min_Int            INT_MIN
 #define _Min_UInt           0
 #define _Min_Short          SHRT_MIN
