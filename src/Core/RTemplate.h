@@ -49,7 +49,11 @@
 #endif
 
 #undef _RTClassName
-#define _RTClassName _C(_ClassName, __Attr)
+#if _Attr == 1
+    #define _RTClassName _C1(_ClassName, __Attr)
+#else
+    #define _RTClassName _C(_ClassName, __Attr)
+#endif
 #include _E(_RTAddress)
 
 #undef _T1
