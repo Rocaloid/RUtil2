@@ -120,7 +120,6 @@ void __RDelete(void* a, ...);
 
 #define RInterface_Define(RetType, Name, ...) \
     typedef RetType (*_C(__Itfc_, Name, _CallType))(__VA_ARGS__); \
-    int _C(__Itfc_, Name, _Inited); \
     Array_Define(int, _C(__Itfc_, Name, _ClassID)); \
     Array_Define(_C(__Itfc_, Name, _, CallType), _C(__Itfc_, Name, _CallPtr)); \
     RetType Name(__VA_ARGS__);
@@ -134,31 +133,23 @@ void __RDelete(void* a, ...);
     /*TODO: There should be some kind of exception throwing.*/
 
 #define RInterface_Make(Name) \
-    void __attribute__ ((constructor (101))) _C(__Itfc_, Name, _Ctor)() \
+    void __attribute__ ((constructor (500))) _C(__Itfc_, Name, _Ctor)() \
     { \
-        _C(__Itfc_, Name, _Inited) = 0; \
+        Array_Ctor(int, _C(__Itfc_, Name, _ClassID)); \
+        Array_Ctor(_C(__Itfc_, Name, _, CallType), \
+                   _C(__Itfc_, Name, _CallPtr)); \
     } \
     void __attribute__ ((destructor)) _C(__Itfc_, Name, _Dtor)() \
     { \
-        if(_C(__Itfc_, Name, _Inited)) \
-        { \
-            Array_Dtor(int, _C(__Itfc_, Name, _ClassID)); \
-            Array_Dtor(_C(__Itfc_, Name, _, CallType), \
-                       _C(__Itfc_, Name, _CallPtr)); \
-        } \
+        Array_Dtor(int, _C(__Itfc_, Name, _ClassID)); \
+        Array_Dtor(_C(__Itfc_, Name, _, CallType), \
+                   _C(__Itfc_, Name, _CallPtr)); \
     }
 
 #define RInterface_AddMethod(IName, MName, ClsName) \
-    void __attribute__ ((constructor (500))) \
+    void __attribute__ ((constructor (550))) \
         _C(__Itfc_, IName, _Add_, ClsName)() \
     { \
-        if(! _C(__Itfc_, IName, _Inited)) \
-        { \
-            _C(__Itfc_, IName, _Inited) = 1; \
-            Array_Ctor(int, _C(__Itfc_, IName, _ClassID)); \
-            Array_Ctor(_C(__Itfc_, IName, _, CallType), \
-                       _C(__Itfc_, IName, _CallPtr)); \
-        } \
         Array_Push(int, _C(__Itfc_, IName, _ClassID), \
                         _C(__ClassID_, ClsName, __)); \
         Array_Push(_C(__Itfc_, IName, _, CallType), \
