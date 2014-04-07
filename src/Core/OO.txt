@@ -266,7 +266,7 @@ int __ClassID__;
         
     Section: RInterface
 
-    Macro: RInterface_Start
+    Macro: (Obsoleted)RInterface_Start
 
         Marks the start of RInterface definition.
         
@@ -279,7 +279,7 @@ int __ClassID__;
         <RInterface_Add>
         
         
-    Macro: RInterface_Add
+    Macro: (Obsoleted)RInterface_Add
 
         Add a method to a RInterface method.
         

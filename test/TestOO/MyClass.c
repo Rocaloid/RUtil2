@@ -27,3 +27,6 @@ int MyClass_Method(MyClass* This)
     return TopOf(This -> MyArray);
 }
 
+RInterface_Make(IObject_Method);
+RInterface_AddMethod(IObject_Method, MyClass_Method, MyClass);
+

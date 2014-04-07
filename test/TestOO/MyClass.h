@@ -12,6 +12,8 @@ RClass(MyClass)
     Array_Define(int, MyArray);
 };
 
+RInterface_Define(int, IObject_Method, void*);
+
 int MyClass_Method(MyClass* This);
 
 #endif

@@ -87,24 +87,24 @@
 
 #define Array_Define(Type, Name) \
     Type* Name; \
-    int Name##_Index; \
-    int Name##_Size
+    int _C1(Name, _Index); \
+    int _C1(Name, _Size)
 
 #define Array_Gtor(Type, Name) \
     Type* Name = (Type*)malloc(sizeof(Type) * 10); \
-    int Name##_Index = -1; \
-    int Name##_Size = 10
+    int _C1(Name, _Index) = -1; \
+    int _C1(Name, _Size)  = 10
 
 #define Array_Ctor(Type, Name) \
     Name = (Type*)malloc(sizeof(Type) * 10); \
-    Name##_Index = -1; \
-    Name##_Size = 10
+    _C1(Name, _Index) = -1; \
+    _C1(Name, _Size)  = 10
 
 //Omit unused warnings.
 #define Array_Dtor(Type, Name) \
     free(Name); \
-    Name##_Size = Name##_Size; \
-    Name##_Index = Name##_Index
+    _C1(Name, _Size)  = _C1(Name, _Size); \
+    _C1(Name, _Index) = _C1(Name, _Index)
 
 #define Array_ObjDtor(Type, Name); \
     do{ \
@@ -119,7 +119,7 @@
     _ProtoArray_Resize(Type, Array, Array##_Index, Array##_Size, NewSize)
 
 #define Array_Push(Type, Array, Data) \
-    _ProtoArray_Push(Type, Array, Array##_Index, Array##_Size, Data)
+    _ProtoArray_Push(Type, Array, _C1(Array, _Index), _C1(Array, _Size), Data)
 
 #define Array_PushNull(Type, Array) \
     _ProtoArray_PushNull(Type, Array, Array##_Index, Array##_Size)

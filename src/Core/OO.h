@@ -89,7 +89,7 @@ void __RDelete(void* a, ...);
     BaseClass _Base
 
 #define RCtor(Name) \
-    void __attribute__ ((constructor)) _C2(__, Name, _ClassInit__)() \
+    void __attribute__  ((constructor (499))) _C2(__, Name, _ClassInit__)() \
     { \
         if(__ClassID__ == 0) \
             __AutoCDtor_Init(); \
@@ -108,13 +108,63 @@ void __RDelete(void* a, ...);
 #define MyBase(Name) \
     ((Name*)This)
 
+//Obsoleted!
 #define RInterface_Start() \
     if(0) \
         __ClassID__ = __ClassID__
 
+//Obsoleted!
 #define RInterface_Add(Class, Method) \
     else if(This -> ClassID == _C2(__ClassID_, Class, __)) \
         return _C2(Class, _, Method)
+
+#define RInterface_Define(RetType, Name, ...) \
+    typedef RetType (*_C(__Itfc_, Name, _CallType))(__VA_ARGS__); \
+    int _C(__Itfc_, Name, _Inited); \
+    Array_Define(int, _C(__Itfc_, Name, _ClassID)); \
+    Array_Define(_C(__Itfc_, Name, _, CallType), _C(__Itfc_, Name, _CallPtr)); \
+    RetType Name(__VA_ARGS__);
+
+#define RInterface_DefCall(Name, ...) \
+    int i;\
+    RObject* RThis = (RObject*) This; \
+    for(i = 0; i <= _C(__Itfc_, Name, _ClassID_Index); i ++) \
+        if(_C(__Itfc_, Name, _ClassID)[i] == RThis -> ClassID) \
+            return _C(__Itfc_, Name, _CallPtr)[i](__VA_ARGS__); \
+    /*TODO: There should be some kind of exception throwing.*/
+
+#define RInterface_Make(Name) \
+    void __attribute__ ((constructor (101))) _C(__Itfc_, Name, _Ctor)() \
+    { \
+        _C(__Itfc_, Name, _Inited) = 0; \
+    } \
+    void __attribute__ ((destructor)) _C(__Itfc_, Name, _Dtor)() \
+    { \
+        if(_C(__Itfc_, Name, _Inited)) \
+        { \
+            Array_Dtor(int, _C(__Itfc_, Name, _ClassID)); \
+            Array_Dtor(_C(__Itfc_, Name, _, CallType), \
+                       _C(__Itfc_, Name, _CallPtr)); \
+        } \
+    }
+
+#define RInterface_AddMethod(IName, MName, ClsName) \
+    void __attribute__ ((constructor (500))) \
+        _C(__Itfc_, IName, _Add_, ClsName)() \
+    { \
+        if(! _C(__Itfc_, IName, _Inited)) \
+        { \
+            _C(__Itfc_, IName, _Inited) = 1; \
+            Array_Ctor(int, _C(__Itfc_, IName, _ClassID)); \
+            Array_Ctor(_C(__Itfc_, IName, _, CallType), \
+                       _C(__Itfc_, IName, _CallPtr)); \
+        } \
+        Array_Push(int, _C(__Itfc_, IName, _ClassID), \
+                        _C(__ClassID_, ClsName, __)); \
+        Array_Push(_C(__Itfc_, IName, _, CallType), \
+                   _C(__Itfc_, IName, _CallPtr), \
+                   (_C(__Itfc_, IName, _, CallType))MName); \
+    }
 
 #define RTMethod(Ret, Name, Method, ...) \
     Ret _C(_RTClassName, _, Method) \

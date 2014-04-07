@@ -31,13 +31,13 @@ int MyInherit_Method(MyInherit* This)
     return TopOf(MyBase(MyClass) -> MyArray);
 }
 
-int IObject_Method(RObject* This)
+RInterface_AddMethod(IObject_Method, MyInherit_Method, MyInherit);
+int IObject_Method(void* This)
 {
-    RInterface_Start();
-    RInterface_Add(MyClass, Method)(MyBase(MyClass));
-    RInterface_Add(MyInherit, Method)(MyBase(MyInherit));
+    RInterface_DefCall(IObject_Method, This);
     return 0;
 }
+
 
 int main(void)
 {
@@ -55,9 +55,8 @@ int main(void)
     
     printf("MyClass_Method: %d\n", MyClass_Method((MyClass*)(& b)));
     printf("MyInherit_Method: %d\n", MyInherit_Method(& b));
-    printf("IObject_Method of MyClass: %d\n", IObject_Method((RObject*)(& a)));
-    printf("IObject_Method of MyInherit: %d\n", 
-        IObject_Method((RObject*)(& b)));
+    printf("IObject_Method of MyClass: %d\n", IObject_Method(& a));
+    printf("IObject_Method of MyInherit: %d\n", IObject_Method(& b));
     
     PMatch c;
     RNew(PMatch, & c);
