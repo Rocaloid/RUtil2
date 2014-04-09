@@ -101,18 +101,20 @@
     _C1(Name, _Size)  = 10
 
 //Omit unused warnings.
+#define RFree(...) __RFree(__VA_ARGS__, (void*)(- 1))
+void __RFree(void* a, ...);
 #define Array_Dtor(Type, Name) \
-    free(Name); \
+    RFree(Name); \
     _C1(Name, _Size)  = _C1(Name, _Size); \
     _C1(Name, _Index) = _C1(Name, _Index)
 
-#define Array_ObjDtor(Type, Name); \
+#define Array_ObjDtor(Type, Name) \
     do{ \
         int Array_i; \
         for(Array_i = 0; Array_i <= Name##_Index; Array_i ++) \
             Type##_Dtor(Name + Array_i); \
         Name##_Size = Name##_Size; \
-        Name##_Index = Name##_Index \
+        Name##_Index = Name##_Index; \
     }while(0)
 
 #define Array_Resize(Type, Array, NewSize) \

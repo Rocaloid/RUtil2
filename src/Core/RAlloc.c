@@ -5,7 +5,8 @@
 
 void* RAlloc(int Size)
 {
-    return malloc(Size);
+    void* ret = malloc(Size);
+    return ret;
 }
 
 void* RAlign(int Align, int Size)
