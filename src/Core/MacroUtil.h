@@ -16,6 +16,10 @@
 //Expand
 #define _E(...) __VA_ARGS__
 
+//Delay
+#define __none()
+#define _D(...) __VA_ARGS__ __none()
+
 //String
 #define _S(a) __S(a)
 #define __S(a) #a

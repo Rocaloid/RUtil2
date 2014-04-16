@@ -158,8 +158,8 @@ void __RDelete(void* a, ...);
     }
 
 #define RTMethod(Ret, Name, Method, ...) \
-    Ret _C(_RTClassName, _, Method) \
-        (_RTClassName* This, ##__VA_ARGS__)
+    Ret _C(Name, _, __Attr, _, Method) \
+        (_C(Name, _, __Attr)* This, ##__VA_ARGS__)
 
 #define RTFunc(Ret, Method, ...) \
     Ret _C(Method, _, __Attr) \

@@ -8,7 +8,7 @@ RCtor(_RTClassName)
 RDtor(_RTClassName)
 {
     Array_Dtor(_T1, This -> X);
-    Array_Dtor(_T2, This -> Y);    
+    Array_Dtor(_T2, This -> Y);
 }
 
 RTMethod(void, PMatch, AddPair, _T1 XVar, _T2 YVar)
