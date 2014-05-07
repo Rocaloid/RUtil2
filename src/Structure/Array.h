@@ -111,40 +111,42 @@ void __RFree(void* a, ...);
 #define Array_ObjDtor(Type, Name) \
     do{ \
         int Array_i; \
-        for(Array_i = 0; Array_i <= Name##_Index; Array_i ++) \
-            Type##_Dtor(Name + Array_i); \
-        Name##_Size = Name##_Size; \
-        Name##_Index = Name##_Index; \
+        for(Array_i = 0; Array_i <= _C1(Name, _Index); Array_i ++) \
+            _C1(Type, _Dtor)(Name + Array_i); \
+        _C1(Name, _Size) = _C1(Name, _Size); \
+        _C1(Name, _Index) = _C1(Name, _Index); \
     }while(0)
 
 #define Array_Resize(Type, Array, NewSize) \
-    _ProtoArray_Resize(Type, Array, Array##_Index, Array##_Size, NewSize)
+    _ProtoArray_Resize(Type, Array, _C1(Array, _Index), _C1(Array, _Size), \
+        NewSize)
 
 #define Array_Push(Type, Array, Data) \
     _ProtoArray_Push(Type, Array, _C1(Array, _Index), _C1(Array, _Size), Data)
 
 #define Array_PushNull(Type, Array) \
-    _ProtoArray_PushNull(Type, Array, Array##_Index, Array##_Size)
+    _ProtoArray_PushNull(Type, Array, _C1(Array, _Index), _C1(Array, _Size))
 
 #define Array_PushObj(Type, Array, ObjRef) \
-    _ProtoArray_PushNull(Type, Array, Array##_Index, Array##_Size); \
-    Type##_Ctor(& Array[Array##_Index]);\
-    Type##_Copy(& Array[Array##_Index], ObjRef)
+    _ProtoArray_PushNull(Type, Array, _C1(Array, _Index), _C1(Array, _Size)); \
+    Type##_Ctor(& Array[_C1(Array, _Index)]);\
+    Type##_Copy(& Array[_C1(Array, _Index)], ObjRef)
 
 #define Array_Pop(Type, Array) \
-    _ProtoArray_Pop(Type, Array, Array##_Index, Array##_Size)
+    _ProtoArray_Pop(Type, Array, _C1(Array, _Index), _C1(Array, _Size))
 
 #define Array_Insert(Type, Array, Index, Data) \
-    _ProtoArray_Insert(Type, Array, Array##_Index, Array##_Size, Index, Data)
+    _ProtoArray_Insert(Type, Array, _C1(Array, _Index), _C1(Array, _Size), \
+        Index, Data)
 
 #define Array_InsertNull(Type, Array, Index) \
-    _ProtoArray_InsertNull(Type, Array, Array##_Index, Array##_Size, Index)
+    _ProtoArray_InsertNull(Type, Array, _C1(Array, _Index), _C1(Array, _Size), Index)
 
 #define Array_Remove(Type, Array, Index) \
-    _ProtoArray_Remove(Type, Array, Array##_Index, Array##_Size, Index)
+    _ProtoArray_Remove(Type, Array, _C1(Array, _Index), _C1(Array, _Size), Index)
 
 #define Array_RemoveRange(Type, Array, LIndex, HIndex) \
-    _ProtoArray_RemoveRange(Type, Array, Array##_Index, Array##_Size, \
+    _ProtoArray_RemoveRange(Type, Array, _C1(Array, _Index), _C1(Array, _Size), \
         LIndex, HIndex)
 
 //---------------------Advanced Macros--------------------
@@ -152,7 +154,7 @@ void __RFree(void* a, ...);
     do \
     { \
         int Array_i; \
-        for(Array_i = 0; Array_i <= Array##_Index; Array_i ++) \
+        for(Array_i = 0; Array_i <= _C1(Array, _Index); Array_i ++) \
             if((Array)[Array_i] > (Data)) \
                 break; \
         Dest = Array_i; \
@@ -162,7 +164,7 @@ void __RFree(void* a, ...);
     do \
     { \
         int Array_i; \
-        for(Array_i = 0; Array_i <= Array##_Index; Array_i ++) \
+        for(Array_i = 0; Array_i <= _C1(Array, _Index); Array_i ++) \
             if(Array[Array_i] < (Data)) \
                 break; \
         Dest = Array_i; \
@@ -170,10 +172,11 @@ void __RFree(void* a, ...);
 
 //---------------------Auxillaries------------------------
 
-#define TopOf(Array) Array[Array##_Index]
+#define TopOf(Array) Array[_C1(Array, _Index)]
 
-#define Array_Par(Type, Array) Type* Array, int Array##_Index, int Array##_Size
-#define Array_Arg(Type, Array) Array, Array##_Index, Array##_Size
+#define Array_Par(Type, Array) Type* Array, int _C1(Array, _Index), \
+    int _C1(Array, _Size)
+#define Array_Arg(Type, Array) Array, _C1(Array, _Index), _C1(Array, _Size)
 
 #endif
 
