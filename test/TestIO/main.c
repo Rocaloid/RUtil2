@@ -44,14 +44,14 @@ int main(void)
     WaveFile Wave, OutputWave;
     RNew(WaveFile, & Wave, & OutputWave);
     
-    String_SetChars(& Path, "/tmp/a.wav");
+    String_SetChars(& Path, "/tmp/test.wav");
     WaveFile_Open(& Wave, & Path);
     WaveFile_PrintInfo(& Wave);
     
     float* temp = (float*)malloc(Wave.Header.DataNum * 4);
     WaveFile_FetchAllFloat(& Wave, temp);
     Sort_Dec_Float(temp, temp, Wave.Header.DataNum);
-    String_SetChars(& Path, "/tmp/b.wav");
+    String_SetChars(& Path, "/tmp/x.wav");
     
     OutputWave.Header = Wave.Header;
     WaveFile_Save(& OutputWave, & Path);

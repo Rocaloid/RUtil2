@@ -96,6 +96,7 @@ int WaveFile_Save(WaveFile* This, String* Dest)
 
     This -> WritePosition = File_GetPosition(WStream);
     This -> WriteCounter = 0;
+    Header.BytePerSample = Header.BitPerSample / 8;
     return 1;
 }
 
