@@ -12,18 +12,16 @@ Tutorial
 
 ####Hello World
 
-<pre>
-#include <RUtil2.h>
-int main()
-{
-    String Hello;
-    String_Ctor(& Hello);
-    String_SetChars(& Hello, "Hello, world!\n");
-    printf("%s", String_GetChars(& Hello));
-    String_Dtor(& Hello);
-    return 0;
-}
-</pre>
+    #include <RUtil2.h>
+    int main()
+    {
+        String Hello;
+        String_Ctor(& Hello);
+        String_SetChars(& Hello, "Hello, world!\n");
+        printf("%s", String_GetChars(& Hello));
+        String_Dtor(& Hello);
+        return 0;
+    }
 
 Compile:
 
@@ -31,47 +29,43 @@ Compile:
 
 ####Join some Strings
 
-<pre>
-#include <RUtil2.h>
-int main()
-{
-    String Str1, Str2;
-    String_Ctor(& Str1);
-    String_Ctor(& Str2);
-
-    String_SetChars(& Str1, "Hello");
-    String_SetChars(& Str2, "World");
-    String_JoinChars(& Str1, ", ");
-    String_Join(& Str1, & Str2);
-    String_JoinChars(& Str1, "!\n");
-    printf("%s", String_GetChars(& Str1));
-
-    String_Dtor(& Str1);
-    String_Dtor(& Str2);
-    return 0;
-}
-</pre>
+    #include <RUtil2.h>
+    int main()
+    {
+        String Str1, Str2;
+        String_Ctor(& Str1);
+        String_Ctor(& Str2);
+    
+        String_SetChars(& Str1, "Hello");
+        String_SetChars(& Str2, "World");
+        String_JoinChars(& Str1, ", ");
+        String_Join(& Str1, & Str2);
+        String_JoinChars(& Str1, "!\n");
+        printf("%s", String_GetChars(& Str1));
+    
+        String_Dtor(& Str1);
+        String_Dtor(& Str2);
+        return 0;
+    }
 
 ####Batch Constructor and Destructor
 
-<pre>
-#include <RUtil2.h>
-int main()
-{
-    String Str1, Str2;
-    RNew(String, & Str1, & Str2);
+    #include <RUtil2.h>
+    int main()
+    {
+        String Str1, Str2;
+        RNew(String, & Str1, & Str2);
 
-    String_SetChars(& Str1, "Hello");
-    String_SetChars(& Str2, "World");
-    String_JoinChars(& Str1, ", ");
-    String_Join(& Str1, & Str2);
-    String_JoinChars(& Str1, "!\n");
-    printf("%s", String_GetChars(& Str1));
-
-    RDelete(& Str1, & Str2);
-    return 0;
-}
-</pre>
+        String_SetChars(& Str1, "Hello");
+        String_SetChars(& Str2, "World");
+        String_JoinChars(& Str1, ", ");
+        String_Join(& Str1, & Str2);
+        String_JoinChars(& Str1, "!\n");
+        printf("%s", String_GetChars(& Str1));
+    
+        RDelete(& Str1, & Str2);
+        return 0;
+    }
 
 ####Define a Class
 
@@ -126,19 +120,17 @@ void MyClass_Print(MyClass* This)
 
 MyClass.h:
 
-<pre>
-#include <RUtil2.h>
-
-RClass(MyClass)
-{
-    //This must be placed on the top.
-    //And make sure every class inherits RObject directly or indirectly.
-    RInherit(RObject);
-
-    int MyVal;
-    String MyString;
-};
-</pre>
+    #include <RUtil2.h>
+    
+    RClass(MyClass)
+    {
+        //This must be placed on the top.
+        //And make sure every class inherits RObject directly or indirectly.
+        RInherit(RObject);
+    
+        int MyVal;
+        String MyString;
+    };
 
 MyClass.c:
 
