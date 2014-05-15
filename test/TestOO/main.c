@@ -58,19 +58,19 @@ int main(void)
     printf("IObject_Method of MyClass: %d\n", IObject_Method(& a));
     printf("IObject_Method of MyInherit: %d\n", IObject_Method(& b));
     
-    PMatch c;
-    RNew(PMatch, & c);
-    //PMatch_Ctor(& c);
-    PMatch_AddPair(& c, 0, 1.5452334545);
-    PMatch_AddPair(& c, 1, 2.53245345);
-    PMatch_AddPair(& c, 5, 0);
-    PMatch_AddPair(& c, 6, 0.3454353545);
+    PMatch_Double_Double c;
+    RNew(PMatch_Double_Double, & c);
+    //PMatch_Double_Double_Ctor(& c);
+    PMatch_Double_Double_AddPair(& c, 0, 1.5452334545);
+    PMatch_Double_Double_AddPair(& c, 1, 2.53245345);
+    PMatch_Double_Double_AddPair(& c, 5, 0);
+    PMatch_Double_Double_AddPair(& c, 6, 0.3454353545);
     int i;
     for(i = 0; i < 10; i ++)
     {
-        printf("%d, %.9lf\n", i, PMatch_Query(& c, (double)i / 2.0).Y);
+        printf("%d, %.9lf\n", i, PMatch_Double_Double_Query(& c, (double)i / 2.0).Y);
     }
-    //PMatch_Dtor(& c);
+    //PMatch_Double_Double_Dtor(& c);
     
     MyPrint_Float(213.234353423);
     MyPrint_Double(213.234353423);
