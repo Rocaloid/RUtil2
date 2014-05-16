@@ -90,7 +90,7 @@ RCtor(MyClass)
     //Important!
     //This assigns a ClassID to the newly created instance of MyClass.
     //Each class in RUtil has a unique ClassID;
-    //Each instance of the same class share the same ClassID.
+    //Each instance of the same class shares the same ClassID.
     RInit(MyClass);
 }
 
@@ -124,8 +124,6 @@ MyClass.h:
     
     RClass(MyClass)
     {
-        //This must be placed on the top.
-        //And make sure every class inherits RObject directly or indirectly.
         RInherit(RObject);
     
         int MyVal;
@@ -140,10 +138,6 @@ MyClass.c:
 RCtor(MyClass)
 {
     String_Ctor(& This -> MyString);
-    //Important!
-    //This assigns a ClassID to the newly created instance of MyClass.
-    //Each class in RUtil has a unique ClassID;
-    //Each instance of the same class share the same ClassID.
     RInit(MyClass);
 }
 
@@ -190,3 +184,162 @@ int main()
 Compile:
 
     gcc MyClass.c main.c -lRUtil2
+
+####Define an Array
+
+    #include <RUtil2.h>
+
+    int main()
+    {
+        Array_Define(int, MyArray);
+        Array_Ctor(int, MyArray);
+        
+        /* Some codes... */
+        
+        Array_Dtor(int, MyArray);
+        return 0;
+    }
+
+####Access & Push elements to an Array
+
+    #include <RUtil2.h>
+
+    int main()
+    {
+        Array_Define(int, MyArray);
+        Array_Ctor(int, MyArray);
+        
+        Array_Push(int, MyArray, 123);
+        Array_Push(int, MyArray, 456);
+        Array_Push(int, MyArray, 789);
+        Array_Push(int, MyArray, 999);
+        
+        printf("%d %d\n", MyArray[0], MyArray[2]);
+        
+        Array_Dtor(int, MyArray);
+        return 0;
+    }
+
+####Traverse an Array
+
+    #include <RUtil2.h>
+
+    int main()
+    {
+        Array_Define(int, MyArray);
+        Array_Ctor(int, MyArray);
+        
+        Array_Push(int, MyArray, 123);
+        Array_Push(int, MyArray, 456);
+        Array_Push(int, MyArray, 789);
+        Array_Push(int, MyArray, 999);
+        
+        int i;
+        //ArrayName_Index is the index of the toppest element in the array.
+        for(i = 0; i <= MyArray_Index; i ++)
+            printf("%d\n", MyArray[i]);
+        
+        Array_Dtor(int, MyArray);
+        return 0;
+    }
+
+####Manually Modify an Array
+
+    #include <RUtil2.h>
+
+    int main()
+    {
+        Array_Define(int, MyArray);
+        Array_Ctor(int, MyArray);
+        Array_Resize(int, MyArray, 4);
+        
+        MyArray[0] = 123;
+        MyArray[1] = 456;
+        MyArray[2] = 789;
+        MyArray[3] = 999;
+        MyArray_Index = 3;
+        
+        int i;
+        for(i = 0; i <= MyArray_Index; i ++)
+            printf("%d\n", MyArray[i]);
+        
+        Array_Dtor(int, MyArray);
+        return 0;
+    }
+
+####Remove an Element
+
+    #include <RUtil2.h>
+
+    int main()
+    {
+        Array_Define(int, MyArray);
+        Array_Ctor(int, MyArray);
+        Array_Resize(int, MyArray, 4);
+        
+        MyArray[0] = 123;
+        MyArray[1] = 456;
+        MyArray[2] = 789;
+        MyArray[3] = 999;
+        MyArray_Index = 3;
+        
+        Array_Remove(int, MyArray, 2);
+        
+        int i;
+        for(i = 0; i <= MyArray_Index; i ++)
+            printf("%d\n", MyArray[i]);
+        
+        Array_Dtor(int, MyArray);
+        return 0;
+    }
+
+####Insert an Element
+
+    Array_Insert(int, MyArray, 2, 333);
+
+####Array of Objects
+
+    #include "MyClass.h"
+
+    int main()
+    {
+        Array_Define(MyClass, MyArray);
+        Array_Ctor(MyClass, MyArray);
+        
+        String Str;
+        String_Ctor(& Str);
+        String_SetChars(& Str, "asdf");
+        
+        Array_PushNull(MyClass, MyArray);
+        MyClass_Ctor(& MyArray[MyArray_Index]);
+        MyClass_Set(& MyArray[MyArray_Index], 123, & Str);
+        Array_PushNull(MyClass, MyArray);
+        MyClass_Ctor(& MyArray[MyArray_Index]);
+        MyClass_Set(& MyArray[MyArray_Index], 456, & Str);
+        /* ... */
+        
+        int i;
+        for(i = 0; i <= MyArray_Index; i ++)
+            MyClass_Print(& MyArray[i]);
+        
+        for(i = 0; i <= MyArray_Index; i ++)
+            MyClass_Dtor(& MyArray[i]);
+        Array_Dtor(MyClass, MyArray);
+        RDelete(& Str);
+        return 0;
+    }
+
+Syntactic sugar:
+
+        for(i = 0; i <= MyArray_Index; i ++)
+            MyClass_Dtor(& MyArray[i]);
+
+is equivalent to and can be replaced by
+
+        Array_ObjDtor(MyClass, MyArray);
+
+and DO NOT forget to
+
+        Array_Dtor(MyClass, MyArray);
+
+**Notice: `Array_Resize` does not offer such automatic destructor call. You have to manually destruct the objects before using `Array_Resize` on an array of objects.**
