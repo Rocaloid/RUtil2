@@ -10,7 +10,7 @@ void* RAlign(int Align, int Size);
 void __RFree(void* a, ...);
 
 #define RAlloc_Class(Name, Size) \
-    (Name*)__RAlloc_Class(Size, sizeof(Name), __ClassID_##Name##__);
+    (Name*)__RAlloc_Class(Size, sizeof(Name), _C(__ClassID_, Name, __));
 void* __RAlloc_Class(int Size, int UnitSize, int ClassID);
 
 #if 0
