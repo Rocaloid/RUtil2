@@ -130,7 +130,7 @@ void __RDelete(void* a, ...);
     for(i = 0; i <= _C(__Itfc_, Name, _ClassID_Index); i ++) \
         if(_C(__Itfc_, Name, _ClassID)[i] == RThis -> ClassID) \
             return _C(__Itfc_, Name, _CallPtr)[i](__VA_ARGS__); \
-    /*TODO: There should be some kind of exception throwing.*/
+    RDebugPrint(Name, ": incompatible type of object.")
 
 #define RInterface_Make(Name) \
     void __attribute__ ((constructor (500))) _C(__Itfc_, Name, _Ctor)() \
@@ -171,6 +171,9 @@ void __RDelete(void* a, ...);
 #define RTAttr_4 _, _T1, _, _T2, _, _T3, _, _T4
 
 #define RCall(Class, Method) _C2(Class, _, Method)
+
+#define RDebugPrint(Field, Str) \
+    printf("[Runtime] " _S(Field) "_" Str "\n");
 
 /*
     Class: RObject
