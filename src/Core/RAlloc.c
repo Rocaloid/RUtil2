@@ -26,7 +26,7 @@ void __RFree(void* a, ...)
     {
         Ptr = va_arg(Args, void*);
         //End
-        if((int)Ptr == - 1)
+        if(Ptr == (void *)-1)
             break;
         free(Ptr);
     }

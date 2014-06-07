@@ -32,7 +32,7 @@ void __RNew(__CDtorFunc Ctor, ...)
     {
         Obj = va_arg(Args, void*);
         //End
-        if((int)Obj == - 1)
+        if(Obj == (RObject *)-1)
             break;
         Ctor(Obj);
     }
@@ -55,7 +55,7 @@ void __RDelete(void* a, ...)
     {
         Obj = va_arg(Args, void*);
         //End
-        if((int)Obj == - 1)
+        if(Obj == (RObject *)-1)
             break;
         Dtor = __AutoDtor[Obj -> ClassID];
         Dtor(Obj);
