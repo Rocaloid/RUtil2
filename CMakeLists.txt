@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.4)
 project(RUtil2)
 
 add_definitions(-std=c99 -Wall)

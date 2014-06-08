@@ -33,9 +33,9 @@ install(FILES Include/RUtil2.h
 install(FILES Include/RUtil2.h
               DESTINATION /usr/include/RUtil2)
 
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    install(TARGETS RUtil2 ARCHIVE DESTINATION /usr/lib64)
-else(CMAKE_SIZEOF_VOID_P EQUAL 8)
+if(CYGWIN OR (NOT CMAKE_SIZEOF_VOID_P EQUAL 8))
     install(TARGETS RUtil2 ARCHIVE DESTINATION /usr/lib)
-endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+else()
+    install(TARGETS RUtil2 ARCHIVE DESTINATION /usr/lib64)
+endif()
 
