@@ -5,8 +5,8 @@
 
 int main(void)
 {
-    float ListF[6] = {9.333, 4.234, 1.234, 6.2343, 3.234, 1.789};
-    double ListD[6] = {9.333, 4.234, 1.234, 6.2343, 3.234, 1.789};
+    //float ListF[6] = {9.333f, 4.234f, 1.234f, 6.2343f, 3.234f, 1.789f};
+    //double ListD[6] = {9.333f, 4.234f, 1.234f, 6.2343f, 3.234f, 1.789f};
     int ListI[6] = {9, 4, 1, 6, 3, 1};
     #define List ListI
     int SIndex[6];
