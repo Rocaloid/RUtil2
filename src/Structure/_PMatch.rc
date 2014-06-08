@@ -1,3 +1,4 @@
+#include <stdio.h>
 RCtor(_RTClassName)
 {
     RInit(_RTClassName);
