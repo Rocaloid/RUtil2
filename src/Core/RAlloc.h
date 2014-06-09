@@ -6,7 +6,7 @@
 void* RAlloc(int Size);
 void* RAlign(int Align, int Size);
 
-#if defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR)
+#if defined(__MINGW32__)
 #define _aligned_malloc __mingw_aligned_malloc
 #define _aligned_free  __mingw_aligned_free
 #define memalign(align, size) _aligned_malloc(size, align)
