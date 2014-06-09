@@ -34,7 +34,10 @@ install(FILES Include/RUtil2.h
               DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2)
 
 if(CYGWIN)
-    message(FATAL_ERROR "Cygwin is unsupported yet!")
+    message(FATAL_ERROR "
+                        Cygwin is unsupported yet!
+                        If you want build it on Windows. Use MinGW32!
+                        ")
 endif()
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
