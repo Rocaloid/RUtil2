@@ -1,5 +1,5 @@
-#ifndef TRANSITION_H
-#define TRANSITION_H
+#ifndef RUTIL2_TRANSITION_H
+#define RUTIL2_TRANSITION_H
 
 #include "../Core/OO.h"
 
@@ -30,5 +30,5 @@
 #define _T2 Double
 #include "../Core/RTemplate.h"
 
-#endif
+#endif //RUTIL2_TRANSITION_H
 

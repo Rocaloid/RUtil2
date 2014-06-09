@@ -1,5 +1,5 @@
-#ifndef FILE_H
-#define FILE_H
+#ifndef RUTIL2_FILE_H
+#define RUTIL2_FILE_H
 
 #include <stdio.h>
 #include "../Structure/String.h"
@@ -61,5 +61,5 @@ void File_WriteLine(File* This, String* Sorc);
 
 #include "../Core/Include_T1AllTypes.h"
 
-#endif
+#endif //RUTIL2_FILE_H
 

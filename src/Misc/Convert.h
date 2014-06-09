@@ -1,5 +1,5 @@
-#ifndef CONVERT_H
-#define CONVERT_H
+#ifndef RUTIL2_CONVERT_H
+#define RUTIL2_CONVERT_H
 #include "../Structure/String.h"
 
 //Wrapper for template definition.
@@ -67,5 +67,5 @@ float CFloatChars(char* Sorc);
 double CDoubleStr(String* Sorc);
 double CDoubleChars(char* Sorc);
 
-#endif
+#endif //RUTIL2_CONVERT_H
 

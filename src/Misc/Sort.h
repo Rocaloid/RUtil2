@@ -1,5 +1,5 @@
-#ifndef SORT_H
-#define SORT_H
+#ifndef RUTIL2_SORT_H
+#define RUTIL2_SORT_H
 
 #include "../Core/OO.h"
 
@@ -16,5 +16,5 @@
 
 #include "../Core/Include_T1AllTypes.h"
 
-#endif
+#endif //RUTIL2_SORT_H
 

@@ -1,10 +1,16 @@
-#ifndef RALLOC_H
-#define RALLOC_H
+#ifndef RUTIL2_RALLOC_H
+#define RUTIL2_RALLOC_H
 
 #include "OO.h"
 
 void* RAlloc(int Size);
 void* RAlign(int Align, int Size);
+
+#if defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR)
+#define _aligned_malloc __mingw_aligned_malloc
+#define _aligned_free  __mingw_aligned_free
+#define memalign(align, size) _aligned_malloc(size, align)
+#endif //For MinGW
 
 #define RFree(...) __RFree(__VA_ARGS__, (void*)(- 1))
 void __RFree(void* a, ...);
@@ -27,5 +33,5 @@ void* __RAlloc_Class(int Size, int UnitSize, int ClassID);
 
 #include "Include_T1AllTypes.h"
 
-#endif
+#endif //RUTIL2_RALLOC_H
 

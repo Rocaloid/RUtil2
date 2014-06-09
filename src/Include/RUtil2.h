@@ -1,6 +1,6 @@
 #ifndef __RUtil2_Install
 #define __RUtil2_Install
-#endif
+#endif //__RUtil2_Install
 
 #include <RUtil2/Core/RAlloc.h>
 #include <RUtil2/Structure/Array.h>

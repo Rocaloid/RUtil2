@@ -1,5 +1,5 @@
-#ifndef PMATCH_H
-#define PMATCH_H
+#ifndef RUTIL2_PMATCH_H
+#define RUTIL2_PMATCH_H
 
 #include "Array.h"
 #include "Transition.h"
@@ -32,5 +32,5 @@
 #define _T2 Double
 #include "../Core/RTemplate.h"
 
-#endif
+#endif //RUTIL2_PMATCH_H
 

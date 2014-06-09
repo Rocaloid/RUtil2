@@ -33,9 +33,18 @@ install(FILES Include/RUtil2.h
 install(FILES Include/RUtil2.h
               DESTINATION /usr/include/RUtil2)
 
-if(CYGWIN OR (NOT CMAKE_SIZEOF_VOID_P EQUAL 8))
+if(CYGWIN)
+    MESSAGE("")
+    MESSAGE("=======     BEGIN WARNING     =======")
+    MESSAGE("You are building this project in Cygwin!")
+    MESSAGE("All static libraries will be installed in /usr/lib!")
+    MESSAGE("And shared libraries will be installed in /usr/bin!")
+    MESSAGE("=======      END WARNING      =======")
+    MESSAGE("")
     install(TARGETS RUtil2 ARCHIVE DESTINATION /usr/lib)
-else()
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
     install(TARGETS RUtil2 ARCHIVE DESTINATION /usr/lib64)
+else()
+    install(TARGETS RUtil2 ARCHIVE DESTINATION /usr/lib)
 endif()
 

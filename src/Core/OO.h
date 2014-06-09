@@ -1,5 +1,5 @@
-#ifndef OO_H
-#define OO_H
+#ifndef RUTIL2_OO_H
+#define RUTIL2_OO_H
 
 #include "MacroUtil.h"
 #include "../Structure/Array.h"
@@ -190,7 +190,7 @@ RClass(RObject)
     int ClassID;
 };
 
-#endif
+#endif //RUTIL2_OO_H
 
 #undef _RTAddress
 #undef _ClassName

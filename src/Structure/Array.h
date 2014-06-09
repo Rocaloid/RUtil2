@@ -1,5 +1,5 @@
-#ifndef ARRAY_H
-#define ARRAY_H
+#ifndef RUTIL2_ARRAY_H
+#define RUTIL2_ARRAY_H
 
 #include <malloc.h>
 #define Array_Addition 100
@@ -178,5 +178,5 @@ void __RFree(void* a, ...);
     int _C1(Array, _Size)
 #define Array_Arg(Type, Array) Array, _C1(Array, _Index), _C1(Array, _Size)
 
-#endif
+#endif //RUTIL2_ARRAY_H
 

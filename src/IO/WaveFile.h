@@ -1,5 +1,5 @@
-#ifndef WAVEFILE_H
-#define WAVEFILE_H
+#ifndef RUTIL2_WAVEFILE_H
+#define RUTIL2_WAVEFILE_H
 
 #include "File.h"
 #include "../Core/OO.h"
@@ -50,5 +50,5 @@ void WaveFile_WriteAllFloatStereo(WaveFile* This, float* SorcL, float* SorcR,
 void WaveFile_Write(WaveFile* This, float Data);
 void WaveFile_WriteStereo(WaveFile* This, float DataL, float DataR);
 
-#endif
+#endif //RUTIL2_WAVEFILE_H
 

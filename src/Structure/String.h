@@ -1,5 +1,5 @@
-#ifndef STRING_H
-#define STRING_H
+#ifndef RUTIL2_STRING_H
+#define RUTIL2_STRING_H
 
 #include "../Core/OO.h"
 #include "Array.h"
@@ -61,5 +61,5 @@ void Trim(String* Dest, String* Sorc);
 void LTrim(String* Dest, String* Sorc);
 void RTrim(String* Dest, String* Sorc);
 
-#endif
+#endif //RUTIL2_STRING_H
 
