@@ -35,7 +35,7 @@ install(FILES Include/RUtil2.h
 
 if(CYGWIN OR WIN32)
     message(STATUS "You are compiling this project as COFF.")
-    install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib64)
+    install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
     message(STATUS "You are compiling this project as 64bit.")
     install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib64)
