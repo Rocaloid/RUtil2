@@ -3,7 +3,7 @@ aux_source_directory(./Structure SRC_LIST)
 aux_source_directory(./Misc SRC_LIST)
 aux_source_directory(./IO SRC_LIST)
 
-add_library(RUtil2 ${SRC_LIST})
+add_library(RUtil2 STATIC ${SRC_LIST})
 include_directories(RUtil2 PUBLIC "${CMAKE_SOURCE_DIR}/src")
 
 install(FILES Core/OO.h
@@ -33,18 +33,14 @@ install(FILES Include/RUtil2.h
 install(FILES Include/RUtil2.h
               DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2)
 
-if(CYGWIN)
-    message(FATAL_ERROR "
-                        Cygwin is unsupported yet!
-                        If you want build it on Windows. Use MinGW32!
-                        ")
-endif()
-
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    message("Your system is 64bit.")
+if(CYGWIN OR WIN32)
+    message("-- You are compiling this project as COFF.")
+    install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib64)
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message("-- You are compiling this project as 64bit.")
     install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib64)
 elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-    message("Your system is 32bit.")
+    message("-- You are compiling this project as 32bit.")
     install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 else()
     message(FATAL_ERROR "Your system is unsupported!")
