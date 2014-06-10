@@ -34,15 +34,14 @@ install(FILES Include/RUtil2.h
               DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2)
 
 if(CYGWIN OR WIN32)
-    message("-- You are compiling this project as COFF.")
+    message(STATUS "You are compiling this project as COFF.")
     install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib64)
 elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    message("-- You are compiling this project as 64bit.")
+    message(STATUS "You are compiling this project as 64bit.")
     install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib64)
 elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-    message("-- You are compiling this project as 32bit.")
+    message(STATUS "You are compiling this project as 32bit.")
     install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 else()
     message(FATAL_ERROR "Your system is unsupported!")
 endif()
-
