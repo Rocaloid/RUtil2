@@ -72,6 +72,7 @@ typedef void (*__CDtorFunc)(void*);
 Array_Define(__CDtorFunc, __AutoCtor);
 Array_Define(__CDtorFunc, __AutoDtor);
 void __AutoCDtor_Init();
+void __AutoCDtor_Exit();
 void __RNew(__CDtorFunc Ctor, ...);
 void __RDelete(void* a, ...);
 #define RNew(Type, ...) \

@@ -12,36 +12,36 @@ install(FILES Core/OO.h
               Core/RTemplate.h
               Core/Include_T1AllTypes.h
               Core/MacroUtil.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Core)
+              DESTINATION /usr/include/RUtil2/Core)
 install(FILES Structure/Array.h
               Structure/PMatch.h
               Structure/_PMatch.h
               Structure/String.h
               Structure/Transition.h
               Structure/_Transition.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Structure)
+              DESTINATION /usr/include/RUtil2/Structure)
 install(FILES Misc/Convert.h
               Misc/Sort.h
               Misc/_Sort.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Misc)
+              DESTINATION /usr/include/RUtil2/Misc)
 install(FILES IO/File.h
               IO/_File.h
               IO/WaveFile.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/IO)
+              DESTINATION /usr/include/RUtil2/IO)
 install(FILES Include/RUtil2.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/)
+              DESTINATION /usr/include/)
 install(FILES Include/RUtil2.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2)
+              DESTINATION /usr/include/RUtil2)
 
 if(CYGWIN OR WIN32)
     message(STATUS "You are compiling this project as COFF.")
-    install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+    install(TARGETS RUtil2 ARCHIVE DESTINATION /usr/lib)
 elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
     message(STATUS "You are compiling this project as 64bit.")
-    install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib64)
+    install(TARGETS RUtil2 ARCHIVE DESTINATION /usr/lib64)
 elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
     message(STATUS "You are compiling this project as 32bit.")
-    install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+    install(TARGETS RUtil2 ARCHIVE DESTINATION /usr/lib)
 else()
     message(FATAL_ERROR "Your system is unsupported!")
 endif()

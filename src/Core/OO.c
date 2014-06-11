@@ -8,7 +8,7 @@ void __attribute__ ((constructor)) __AutoCDtor_Init()
 {
     if(__ClassID__ == 0 && __FirstRun__ == 0)
     {
-        Array_Ctor(__CDtorFunc, __AutoCtor);
+	Array_Ctor(__CDtorFunc, __AutoCtor);
         Array_Ctor(__CDtorFunc, __AutoDtor);
         Array_Resize(__CDtorFunc, __AutoCtor, 100);
         Array_Resize(__CDtorFunc, __AutoDtor, 100);
@@ -18,8 +18,12 @@ void __attribute__ ((constructor)) __AutoCDtor_Init()
 
 void __attribute__ ((destructor)) __AutoCDtor_Exit()
 {
-    Array_Dtor(__CDtorFunc, __AutoCtor);
-    Array_Dtor(__CDtorFunc, __AutoDtor);
+    if(__FirstRun__ != 0)
+    {
+        Array_Dtor(__CDtorFunc, __AutoCtor);
+        Array_Dtor(__CDtorFunc, __AutoDtor);
+        __FirstRun__ = 0;
+    }
 }
 
 void __RNew(__CDtorFunc Ctor, ...)
