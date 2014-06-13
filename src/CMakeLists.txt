@@ -45,3 +45,4 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 else()
     message(FATAL_ERROR "Your system is unsupported!")
 endif()
+

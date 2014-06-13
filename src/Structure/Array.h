@@ -90,6 +90,11 @@
     int _C1(Name, _Index); \
     int _C1(Name, _Size)
 
+#define Array_Extern(Type, Name) \
+    extern Type* Name; \
+    extern int _C1(Name, _Index); \
+    extern int _C1(Name, _Size)
+
 #define Array_Gtor(Type, Name) \
     Type* Name = (Type*)malloc(sizeof(Type) * 10); \
     int _C1(Name, _Index) = -1; \

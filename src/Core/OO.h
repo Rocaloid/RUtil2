@@ -7,7 +7,7 @@
 #include <math.h>
 #include <limits.h>
 
-int __ClassID__;
+extern int __ClassID__;
 
 //Rocaloid-style type aliases.
 typedef float               Float;
@@ -69,8 +69,8 @@ typedef uint64_t            UInt64;
 
 //Automatic constructor/destructor.
 typedef void (*__CDtorFunc)(void*);
-Array_Define(__CDtorFunc, __AutoCtor);
-Array_Define(__CDtorFunc, __AutoDtor);
+Array_Extern(__CDtorFunc, __AutoCtor);
+Array_Extern(__CDtorFunc, __AutoDtor);
 void __AutoCDtor_Init();
 void __AutoCDtor_Exit();
 void __RNew(__CDtorFunc Ctor, ...);
@@ -81,7 +81,7 @@ void __RDelete(void* a, ...);
 
 #define RClass(Name) \
     typedef struct Name Name; \
-    int _C2(__ClassID_, Name, __); \
+    extern int _C2(__ClassID_, Name, __); \
     void _C1(Name, _Ctor)(Name* This); \
     void _C1(Name, _Dtor)(Name* This); \
     struct Name
@@ -90,6 +90,7 @@ void __RDelete(void* a, ...);
     BaseClass _Base
 
 #define RCtor(Name) \
+    int _C2(__ClassID_, Name, __); \
     void __attribute__  ((constructor (499))) _C2(__, Name, _ClassInit__)() \
     { \
         if(__ClassID__ == 0) \
@@ -121,8 +122,8 @@ void __RDelete(void* a, ...);
 
 #define RInterface_Define(RetType, Name, ...) \
     typedef RetType (*_C(__Itfc_, Name, _CallType))(__VA_ARGS__); \
-    Array_Define(int, _C(__Itfc_, Name, _ClassID)); \
-    Array_Define(_C(__Itfc_, Name, _, CallType), _C(__Itfc_, Name, _CallPtr)); \
+    Array_Extern(int, _C(__Itfc_, Name, _ClassID)); \
+    Array_Extern(_C(__Itfc_, Name, _, CallType), _C(__Itfc_, Name, _CallPtr)); \
     RetType Name(__VA_ARGS__);
 
 #define RInterface_DefCall(Name, ...) \
@@ -134,6 +135,8 @@ void __RDelete(void* a, ...);
     RDebugPrint(Name, ": incompatible type of object.")
 
 #define RInterface_Make(Name) \
+    Array_Define(int, _C(__Itfc_, Name, _ClassID)); \
+    Array_Define(_C(__Itfc_, Name, _, CallType), _C(__Itfc_, Name, _CallPtr)); \
     void __attribute__ ((constructor (500))) _C(__Itfc_, Name, _Ctor)() \
     { \
         Array_Ctor(int, _C(__Itfc_, Name, _ClassID)); \

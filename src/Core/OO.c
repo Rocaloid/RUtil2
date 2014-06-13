@@ -1,14 +1,25 @@
 #include "OO.h"
 #include <stdarg.h>
 
-int __ClassID__ = 0;
-int __FirstRun__ = 0;
+int __ClassID__;
+static int __FirstRun__ = 0;
+
+Array_Define(__CDtorFunc, __AutoCtor);
+Array_Define(__CDtorFunc, __AutoDtor);
+
+//Test if all initializations in RUtil2 are called only once./
+/*
+void __attribute__ ((constructor)) __Test_Init()
+{
+    printf("Test %x\n", (int)__Test_Init);
+}
+*/
 
 void __attribute__ ((constructor)) __AutoCDtor_Init()
 {
     if(__ClassID__ == 0 && __FirstRun__ == 0)
     {
-	Array_Ctor(__CDtorFunc, __AutoCtor);
+        Array_Ctor(__CDtorFunc, __AutoCtor);
         Array_Ctor(__CDtorFunc, __AutoDtor);
         Array_Resize(__CDtorFunc, __AutoCtor, 100);
         Array_Resize(__CDtorFunc, __AutoDtor, 100);
