@@ -15,7 +15,6 @@ static const char RB64_Table[]=
     '4', '5', '6', '7', '8', '9', '+', '/' 
     };
 
-
 int Base64_Encode(String *Dest, void *SSrc, int SLen)
 {
     if(!SSrc) return 0;
@@ -58,7 +57,8 @@ int Base64_Encode(String *Dest, void *SSrc, int SLen)
         }
     }
     
-    *(DData)='\0';  
+    *DData='\0';
+    
     return DLen;
 }
 
