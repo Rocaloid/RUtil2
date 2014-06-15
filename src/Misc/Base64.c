@@ -21,7 +21,7 @@ int Base64_Encode(String* Dest, void* SSrc, int SLen)
     char* Src = (char*)SSrc;
     char* SEnd = Src + SLen;
     
-    String_AllocLength(Dest, DLen + 1);
+    String_AllocLength(Dest, DLen);
     
     char* DData = Dest -> Data;
     if(! DData) return - 1;
