@@ -14,19 +14,19 @@ static const char RB64_Table[]=
     'w', 'x', 'y', 'z', '0', '1', '2', '3', 
     '4', '5', '6', '7', '8', '9', '+', '/' 
     };
-    
-static int RB64_Mod_Table[] = {0, 2, 1};
 
-int Base64_Encode(String *Dest, char *Src, int SLen)
+
+int Base64_Encode(String *Dest, void *SSrc, int SLen)
 {
-    if(!Src) return 0;
+    if(!SSrc) return 0;
     
     int DLen=((SLen+2)/3) << 2;
+    char *Src=(char *)SSrc;
     char *SEnd=Src+SLen;
     
-    String_AllocLength(Dest, DLen);
+    String_AllocLength(Dest, DLen+1);
     
-    char *DData=Dest->Data;
+    char *DData=String_GetChars(Dest);
     if(!DData) return -1;
     
     /* 0x30 -> 00110000
@@ -34,19 +34,35 @@ int Base64_Encode(String *Dest, char *Src, int SLen)
        0x3F -> 00111111 */
     while(SEnd-Src>=3)
     {
-        *(DData++)=RB64_Table[(Src[0] >> 2)];
-        *(DData++)=RB64_Table[((Src[0] << 4) & 0x30) | (Src[1] >> 4)];
-        *(DData++)=RB64_Table[((Src[1] << 2) & 0x3C) | (Src[2] >> 6)];
-        *(DData++)=RB64_Table[Src[2] & 0x3F];
+        *(DData++)=RB64_Table[(*Src >> 2)];
+        *(DData++)=RB64_Table[((*Src << 4) & 0x30) | (*(Src+1) >> 4)];
+        *(DData++)=RB64_Table[((*(Src+1) << 2) & 0x3C) | (*(Src+2) >> 6)];
+        *(DData++)=RB64_Table[*(Src+2) & 0x3F];
         Src+=3;
     }
     
-    for(int i=0; i<RB64_Mod_Table[SLen%3]; ++i)
-        DData[DLen-1-i]='=';
+    if(SEnd-Src>0)
+    {
+        *(DData++)=RB64_Table[(*Src >> 2)];  
+        if (SEnd-Src==2)
+        {  
+            *(DData++)=RB64_Table[((*Src << 4) & 0x30 ) | (*(Src+1) >> 4)];  
+            *(DData++)=RB64_Table[(*(Src+1) << 2) & 0x3C];   
+            *(DData++)='=';  
+        }
+        else if (SEnd-Src==1)
+        {  
+            *(DData++)=RB64_Table[(*(Src+1) << 4) & 0x30];  
+            *(DData++)='=';  
+            *(DData++)='=';  
+        }
+    }
+    
+    *(DData)='\0';  
     return DLen;
 }
 
-int Base64_Decode(char *Dest, String *Src)
+int Base64_Decode(void *Dest, String *SSrc)
 {
     
 }
