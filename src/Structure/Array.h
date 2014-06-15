@@ -2,7 +2,7 @@
 #define RUTIL2_ARRAY_H
 
 #include <malloc.h>
-#define Array_Addition 100
+#define Array_Addition 96
 
 #define _ProtoArray_Resize(Type, Array, IndexNumber, Size, NewSize) \
     do{ \
@@ -96,14 +96,14 @@
     extern int _C1(Name, _Size)
 
 #define Array_Gtor(Type, Name) \
-    Type* Name = (Type*)malloc(sizeof(Type) * 10); \
+    Type* Name = (Type*)malloc(sizeof(Type) * 8); \
     int _C1(Name, _Index) = -1; \
-    int _C1(Name, _Size)  = 10
+    int _C1(Name, _Size)  = 8
 
 #define Array_Ctor(Type, Name) \
-    Name = (Type*)malloc(sizeof(Type) * 10); \
+    Name = (Type*)malloc(sizeof(Type) * 8); \
     _C1(Name, _Index) = -1; \
-    _C1(Name, _Size)  = 10
+    _C1(Name, _Size)  = 8
 
 //Omit unused warnings.
 #define RFree(...) __RFree(__VA_ARGS__, (void*)(- 1))
