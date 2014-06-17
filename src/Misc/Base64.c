@@ -47,9 +47,10 @@ int Base64_EncodeSize(int DataLen)
 
 int Base64_Encode(String* Dest, void* SSrc, int SLen)
 {
-    if(!SSrc) return 0;
+    if(!SSrc || !SLen) return 0;
     
     int DLen = Base64_EncodeSize(SLen);
+    
     register char* Src = (char*)SSrc;
     char* SEnd = Src + SLen;
     
@@ -94,7 +95,9 @@ int Base64_Encode(String* Dest, void* SSrc, int SLen)
 
 int Base64_Decode(void* SDest, String* Src)
 {
+    if(! String_GetLength(Src)) return 0;
     assert(SDest);
+    
     register unsigned char* Dest = (unsigned char*)SDest;
     register int RDLen=0;
     Dest[0] = 0;
@@ -129,5 +132,5 @@ int Base64_Decode(void* SDest, String* Src)
         RDLen-=1;
     }
     
-    return RDLen-1;
+    return RDLen;
 }

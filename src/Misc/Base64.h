@@ -4,13 +4,13 @@
 #include "../Core/OO.h"
 #include "../Structure/String.h"
 
-//Return the length after decoding (too large).
+//Return the length after decoding (accurate).
 int Base64_DecodeSize(int StringLen);
 
 //Return the length after encoding (too large).
 int Base64_EncodeSize(int DataLen);
 
-//Return accurate dest string length.
+//Return dest string length.
 int Base64_Encode(String* Dest, void* SSrc, int SLen);
 
 //SDest must be alloced. Use Base64_EncodeSize to get the length after decoding!
