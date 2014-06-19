@@ -6,6 +6,8 @@ aux_source_directory(./IO SRC_LIST)
 add_library(RUtil2 STATIC ${SRC_LIST})
 include_directories(RUtil2 PUBLIC "${CMAKE_SOURCE_DIR}/src")
 
+target_link_libraries(RUtil2 m)
+
 install(FILES Core/OO.h
               Core/RAlloc.h
               Core/_RAlloc.h
@@ -24,6 +26,7 @@ install(FILES Misc/Convert.h
               Misc/Sort.h
               Misc/_Sort.h
               Misc/Base64.h
+              Misc/Tune.h
               DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Misc)
 install(FILES IO/File.h
               IO/_File.h
