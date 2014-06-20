@@ -4,6 +4,7 @@ aux_source_directory(./Misc SRC_LIST)
 aux_source_directory(./IO SRC_LIST)
 
 add_library(RUtil2 STATIC ${SRC_LIST})
+set(CMAKE_C_FLAGS "-fPIC")
 include_directories(RUtil2 PUBLIC "${CMAKE_SOURCE_DIR}/src")
 
 target_link_libraries(RUtil2 m)

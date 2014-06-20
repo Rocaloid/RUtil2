@@ -1,3 +1,4 @@
+/*
 #ifndef RUTIL2_TUNE_H
 #define RUTIL2_TUNE_H
 
@@ -12,6 +13,7 @@ int Tune_SPNToPitch(String* Sorc);
 // If an error occurrs, -10086 is returned.
 float Tune_FreqToPitch(float Freq);
 
+<<<<<<< HEAD
 #if 0
 #include "_Tune.h"
 #endif
@@ -30,3 +32,8 @@ float Tune_FreqToPitch(float Freq);
 #include "../Core/RTemplate.h"
 
 #endif //RUTIL2_TUNE_H
+=======
+#endif //RUTIL2_TUNE_H
+*/
+
+>>>>>>> adbe2ddffc963940344335f928c82edcc56d1783

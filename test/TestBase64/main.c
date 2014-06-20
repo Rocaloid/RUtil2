@@ -6,39 +6,43 @@
 
 int TestNr = 0;
 
-static const char TestCStr1[] = "Hello World!";                      //12 % 4 == 0.
-static const char TestCStr2[] = "What a fucky day today! Isn't it?"; //33 % 4 == 1.
-static const char TestCStr3[] = "How do u think it?";                //18 % 4 == 2.
-static const char TestCStr4[] = "I think you also will think so.";   //31 % 4 == 3.
-static const char TestCStr5[] = "";
+static char TestCStr1[] = "Hello World!";                      //12 % 4 == 0.
+static char TestCStr2[] = "What a fucky day today! Isn't it?"; //33 % 4 == 1.
+static char TestCStr3[] = "How do u think it?";                //18 % 4 == 2.
+static char TestCStr4[] = "I think you also will think so.";   //31 % 4 == 3.
+static char TestCStr5[] = "";
 
-static int TestBase64_Str_Func(const char *CStr)
+static int TestBase64_Str_Func(char *CStr)
 {
-    int retval = 0;
-    printf("Base64 Test, Nr=%d: \n", ++TestNr);
+    int Ret = 0;
+    printf("Base64 Test, Nr = %d: \n", ++ TestNr);
     
     String o;
     String p;
     String_Ctor(& o);
     String_Ctor(& p);
     
-    int RawLen = (int)strlen(CStr);
+    int RawSize = (int)strlen(CStr);
     
-    printf("    Raw string: '%s', Length=%d.\n", CStr, RawLen);
+    printf("    Raw string: '%s', Size = %d.\n", CStr, RawSize);
     
-    Base64_Encode(& o, (void *)CStr, RawLen);
-    printf("    Base64 encoded: String='%s', Length=%d.\n", String_GetChars(& o), String_GetLength(& o));
+    int EncSize = Base64_Encode(& o, (void*)CStr, RawSize);
+    printf("    Base64 encoded: String = '%s', Size = %d, RetS = %d\n",
+        String_GetChars(& o), String_GetLength(& o), EncSize);
     
-    int OLen = Base64_DecodeSize(String_GetLength(& o));
-    String_AllocLength(& p, OLen);
-    p.Data_Index=Base64_Decode((void *)p.Data, & o) - 1;
-    printf("    Base64 decoded: String='%s', Length=%d.\n", String_GetChars(& p), String_GetLength(& p));
+    int OSize = Base64_DecodeSize(String_GetLength(& o));
+    String_AllocLength(& p, OSize);
+    p.Data_Index = Base64_Decode((void*)p.Data, & o) - 1;
+    printf("    Base64 decoded: String = '%s', Size = %d, "
+        "RetS = %d, RetEst = %d.\n",
+        String_GetChars(& p), String_GetLength(& p), p.Data_Index + 1, OSize);
     
-    if((retval=(String_GetLength(& p) != RawLen))) printf("[Error] Test isn't passed! Nr=%d!\n", TestNr);
-    
+    if((Ret = (String_GetLength(& p) != RawSize)))
+        printf("[Error] Test isn't passed! Nr = %d!\n", TestNr);
+
     String_Dtor(& p);
     String_Dtor(& o);
-    return retval;
+    return Ret;
 }
 
 int main()

@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <assert.h>
 
-static const char RB64_Table[] =
+static char RB64_Table[] =
 {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
     'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 
@@ -32,105 +32,114 @@ static int RB64_Decode_Table[] =
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 192 - 207
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 208 - 223
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 224 - 239
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 // 240 - 255
-};  
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1  // 240 - 255
+};
 
-int Base64_DecodeSize(int StringLen)
+int Base64_DecodeSize(int StrSize)
 {
-    return ((StringLen + 3) >> 2) * 3;
+    RDebugPrint(Base64, "Decodesize: This function is experimental and may "
+        "yield wrong result.");
+    return ((StrSize + 3) >> 2) * 3;
 }
 
-int Base64_EncodeSize(int DataLen)
+int Base64_EncodeSize(int DataSize)
 {
-    return ((DataLen + 2) / 3) << 2;
+    return ((DataSize + 2) / 3) << 2;
 }
 
-int Base64_Encode(String* Dest, void* SSrc, int SLen)
+int Base64_Encode(String* Dest, void* Sorc, int Size)
 {
-    if(!SSrc || !SLen) return 0;
+    RDebugPrint(Base64, "Encode: This function is experimental and may "
+        "yield wrong result.");
+    if((! Sorc) || (! Size)) return 0;
     
-    int DLen = Base64_EncodeSize(SLen);
+    int Ret = Base64_EncodeSize(Size);
+    char* CSorc = (char*)Sorc;
+    char* CEnd  = (char*)Sorc + Size;
     
-    register char* Src = (char*)SSrc;
-    char* SEnd = Src + SLen;
+    String_AllocLength(Dest, Ret);
     
-    String_AllocLength(Dest, DLen);
-    
-    register char* DData = (char*)Dest -> Data;
+    char* DData = (char*)Dest -> Data;
     if(! DData) return - 1;
     
     /* 0x30 -> 00110000
        0x3C -> 00111100
        0x3F -> 00111111 */
-    while(SEnd - Src >= 3)
+    while(CEnd - CSorc > 2)
     {
-        *(DData ++) = RB64_Table[(*Src >> 2)];
-        *(DData ++) = RB64_Table[((*Src << 4) & 0x30) | (*(Src + 1) >> 4)];
-        *(DData ++) = RB64_Table[((*(Src+1) << 2) & 0x3C) | (*(Src + 2) >> 6)];
-        *(DData ++) = RB64_Table[*(Src + 2) & 0x3F];
-        Src += 3;
+        *(DData ++) = RB64_Table[(*CSorc >> 2)];
+        *(DData ++) = RB64_Table[((*CSorc << 4) & 0x30)   | (CSorc[1] >> 4)];
+        *(DData ++) = RB64_Table[((CSorc[1] << 2) & 0x3C) | (CSorc[2] >> 6)];
+        *(DData ++) = RB64_Table[CSorc[2] & 0x3F];
+        CSorc += 3;
     }
     
-    if(SEnd - Src > 0)
+    if(CEnd - CSorc > 0)
     {
-        *(DData ++) = RB64_Table[(*Src >> 2)];  
-        if(SEnd - Src == 2)
-        {  
-            *(DData ++) = RB64_Table[((*Src << 4) & 0x30 ) | (*(Src + 1) >> 4)];
-            *(DData ++) = RB64_Table[(*(Src + 1) << 2) & 0x3C];   
+        *(DData ++) = RB64_Table[(*CSorc >> 2)];
+        if(CEnd - CSorc == 2)
+        {
+            *(DData ++) = RB64_Table[((*CSorc << 4) & 0x30) | (CSorc[1] >> 4)];
+            *(DData ++) = RB64_Table[(CSorc[1] << 2) & 0x3C];
             *(DData ++) = '=';
         }
-        else if(SEnd - Src == 1)
-        {  
-            *(DData ++) = RB64_Table[(*(Src + 1) << 4) & 0x30];  
+        else if(CEnd - CSorc == 1)
+        {
+            *(DData ++) = RB64_Table[(CSorc[1] << 4) & 0x30];
             *(DData ++) = '=';
             *(DData ++) = '=';
         }
     }
     
-    Dest -> Data_Index = DLen - 1;
+    Dest -> Data_Index = Ret - 1;
     
-    return DLen;
+    return Ret;
 }
 
-int Base64_Decode(void* SDest, String* Src)
+int Base64_Decode(void* Dest, String* Sorc)
 {
-    if(! String_GetLength(Src)) return 0;
-    assert(SDest);
+    RDebugPrint(Base64, "Decode: This function is experimental and may "
+        "yield wrong result.");
+    if(! String_GetLength(Sorc)) return 0;
+    assert(Dest);
     
-    register unsigned char* Dest = (unsigned char*)SDest;
-    register int RDLen=0;
-    Dest[0] = 0;
+    unsigned char* CDest = (unsigned char*)Dest;
+    int Ret = 0;
+    CDest[0] = 0;
     
-    int SLen = String_GetLength(Src);  
-    if (SLen < 4 || SLen % 4 != 0) return -1;
-    unsigned char* Input_Chars = (unsigned char*)Src -> Data;
-  
-    // 0xFC -> 11111100  
-    // 0x03 -> 00000011  
-    // 0xF0 -> 11110000  
-    // 0x0F -> 00001111  
-    // 0xC0 -> 11000000  
-    register unsigned char* Curr = Input_Chars;
-    unsigned char* SEnd = (unsigned char*)Curr + SLen;
-    for (; Curr < SEnd; Curr += 4)
+    int SLen = String_GetLength(Sorc);
+    if (SLen < 4 || SLen % 4 != 0) return - 1;
+    unsigned char* InputChars = (unsigned char*)Sorc -> Data;
+    
+    // 0xFC -> 11111100
+    // 0x03 -> 00000011
+    // 0xF0 -> 11110000
+    // 0x0F -> 00001111
+    // 0xC0 -> 11000000
+    unsigned char* Curr;
+    unsigned char* SEnd = InputChars + SLen;
+    for(Curr = InputChars; Curr < SEnd; Curr += 4)
     {
-        *Dest++ = ((RB64_Decode_Table[Curr[0]] << 2) & 0xFC) | ((RB64_Decode_Table[Curr[1]] >> 4) & 0x03);
-        *Dest++ = ((RB64_Decode_Table[Curr[1]] << 4) & 0xF0) | ((RB64_Decode_Table[Curr[2]] >> 2) & 0x0F);
-        *Dest++ = ((RB64_Decode_Table[Curr[2]] << 6) & 0xC0) | (RB64_Decode_Table[Curr[3]]);
-        RDLen+=3;
-    }
-  
-    if (*(Input_Chars + SLen - 2) == '=')
-    {
-        *(Dest - 2) = '\0';
-        RDLen-=2;
-    }
-    else if (*(Input_Chars + SLen - 1) == '=')
-    {
-        *(Dest - 1) = '\0';
-        RDLen-=1;
+        *CDest++ = ((RB64_Decode_Table[Curr[0]] << 2) & 0xFC) | 
+                   ((RB64_Decode_Table[Curr[1]] >> 4) & 0x03);
+        *CDest++ = ((RB64_Decode_Table[Curr[1]] << 4) & 0xF0) |
+                   ((RB64_Decode_Table[Curr[2]] >> 2) & 0x0F);
+        *CDest++ = ((RB64_Decode_Table[Curr[2]] << 6) & 0xC0) |
+                   (RB64_Decode_Table[Curr[3]]);
+        Ret += 3;
     }
     
-    return RDLen;
+    if(*(InputChars + SLen - 2) == '=')
+    {
+        *(CDest - 2) = '\0';
+        Ret -= 2;
+    }
+    else if(*(InputChars + SLen - 1) == '=')
+    {
+        *(CDest - 1) = '\0';
+        Ret -= 1;
+    }
+    
+    return Ret;
 }
+

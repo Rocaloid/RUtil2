@@ -1,3 +1,4 @@
+/*
 #include "Tune.h" 
 #include <assert.h>
 #include <stdlib.h>
@@ -42,6 +43,7 @@ float Tune_FreqToPitch(float Freq)
 {
     if (Freq <= 5)
         return -10086;
+<<<<<<< HEAD
     return 69.0f + 12.0f * log2f(Freq / 440.0f);
 }
 
@@ -57,3 +59,8 @@ float Tune_FreqToPitch(float Freq)
 
 #define _T1 Int
 #include "../Core/RTemplate.h"
+=======
+    return 69.0f + 12.0f * log2(Freq / 440.0f);
+}
+*/
+>>>>>>> adbe2ddffc963940344335f928c82edcc56d1783
