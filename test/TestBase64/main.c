@@ -37,7 +37,8 @@ static int TestBase64_Str_Func(char *CStr)
         "RetS = %d, RetEst = %d.\n",
         String_GetChars(& p), String_GetLength(& p), p.Data_Index + 1, OSize);
     
-    if((Ret = (String_GetLength(& p) != RawSize)) || strcmp(String_GetChars(& p), CStr))
+    if((Ret = ( String_GetLength(& p) != RawSize)) || 
+                strcmp(String_GetChars(& p), CStr))
         printf("[Error] Test isn't passed! Nr = %d!\n", TestNr);
 
     String_Dtor(& p);
