@@ -85,7 +85,7 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
         }
         else if(CEnd - CSorc == 1)
         {
-            *(DData ++) = 'g';//RB64_Table[(CSorc[1] << 4) & 0x30];
+            *(DData ++) = RB64_Table[(CSorc[1] << 4) & 0x30];
             *(DData ++) = '=';
             *(DData ++) = '=';
         }
