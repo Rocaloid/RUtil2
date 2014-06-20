@@ -6,11 +6,11 @@
 
 int TestNr = 0;
 
-static char TestCStr1[] = "Hello World!";                      //12 % 4 == 0.
-static char TestCStr2[] = "What a fucky day today! Isn't it?"; //33 % 4 == 1.
-static char TestCStr3[] = "How do u think it?";                //18 % 4 == 2.
-static char TestCStr4[] = "I think you also will think so.";   //31 % 4 == 3.
-static char TestCStr5[] = "";
+static char TestCStr1[] = "What a fucky day yesterday!";        //27 % 3 == 0.
+static char TestCStr2[] = "Bad luck always around me!!!";       //28 % 3 == 1.
+static char TestCStr3[] = "So is today. Do you think so?";      //29 % 3 == 2.
+static char TestCStr4[] = "";                                   //Empty string.
+static char TestCStr5[] = "All tests should be passed~!!";      //29 % 3 == 2.
 
 static int TestBase64_Str_Func(char *CStr)
 {
@@ -37,7 +37,7 @@ static int TestBase64_Str_Func(char *CStr)
         "RetS = %d, RetEst = %d.\n",
         String_GetChars(& p), String_GetLength(& p), p.Data_Index + 1, OSize);
     
-    if((Ret = (String_GetLength(& p) != RawSize)))
+    if((Ret = (String_GetLength(& p) != RawSize)) || strcmp(String_GetChars(& p), CStr))
         printf("[Error] Test isn't passed! Nr = %d!\n", TestNr);
 
     String_Dtor(& p);
