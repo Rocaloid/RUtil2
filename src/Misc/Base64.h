@@ -4,10 +4,10 @@
 #include "../Core/OO.h"
 #include "../Structure/String.h"
 
-//Return the length after encoding (est.).
+//Return the length after decoding (est.).
 int Base64_DecodeSize(int StrSize);
 
-//Return the length after encoding (est.).
+//Return the length after encoding.
 int Base64_EncodeSize(int DataSize);
 
 //Return accurate dest string length.

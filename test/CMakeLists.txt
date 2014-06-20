@@ -18,11 +18,16 @@ aux_source_directory(./TestBase64 Test5)
 add_executable(TestBase64 ${Test5})
 target_link_libraries(TestBase64 RUtil2)
 
+#aux_source_directory(./TestTune Test6)
+#add_executable(TestTune ${Test6})
+#target_link_libraries(TestTune RUtil2)
+
 add_test(TestOO TestOO)
 add_test(TestString TestString)
 add_test(TestSort TestSort)
 add_test(TestIO TestIO)
 add_test(TestBase64 TestBase64)
+#add_test(TestTune TestTune)
 
 get_filename_component(TestDir "." ABSOLUTE)
 get_filename_component(TopDir ${CMAKE_SOURCE_DIR} ABSOLUTE)
