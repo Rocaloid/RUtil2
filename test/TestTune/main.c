@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "Core/OO.h"
 #include "Structure/String.h"
 #include "Misc/Tune.h"
 
@@ -11,7 +12,8 @@ int PitchToolTest(float Freq)
     String_Ctor(& s);
     
     printf("    PtichToolTest Nr = %d: Freq = %f, Pitch = %f", ++PTTNr, Freq, Tune_FreqToPitch(Freq));
-    Tune_PitchToSPN_Float(& s, Tune_FreqToPitch(Freq));
+    if (Tune_PitchToSPN_Float(& s, Tune_FreqToPitch(Freq)))
+        return 1;
     printf(", Name = %s", String_GetChars(& s));
     
     printf(", RetPit = %d", Tune_SPNToPitch(& s));
@@ -25,7 +27,7 @@ int main()
 {
     printf("RUtil2 Tune Test: \n");
 
-    if(PitchToolTest(441.0f)) return 1;
+    if (PitchToolTest(441.0f)) return 1;
     
     return 0;
 }

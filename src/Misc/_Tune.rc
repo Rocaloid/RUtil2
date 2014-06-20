@@ -1,0 +1,12 @@
+RTFunc(int, Tune_PitchToSPN, String* Dest, _T1 PitchNumA)
+{
+    int PitchNum=(int)round(PitchNumA);
+    char StrBuffer[5];
+    int RetV = snprintf(StrBuffer, 5, "%s%d", 
+                        Tune_PitchName[PitchNum % 12], (PitchNum / 12 - 1));
+    if (! ((RetV > 0) && (RetV < 5)))
+        return 1;
+    StrBuffer[4] = '\0';
+    String_SetChars(Dest, StrBuffer);
+    return 0;
+}
