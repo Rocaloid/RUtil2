@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <assert.h>
 
-static char RB64_Table[] =
+static unsigned char RB64_Encoding_Table[] =
 {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
     'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 
@@ -15,7 +15,7 @@ static char RB64_Table[] =
     '4', '5', '6', '7', '8', '9', '+', '/' 
 };
 
-static int RB64_Decode_Table[] =
+static unsigned char RB64_Decoding_Table[] =
 {
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 0   - 15
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 16  - 31
@@ -37,8 +37,8 @@ static int RB64_Decode_Table[] =
 
 int Base64_DecodeSize(int StrSize)
 {
-    RDebugPrint(Base64, "Decodesize: This function is experimental and may "
-        "yield wrong result.");
+    //RDebugPrint(Base64, "Decodesize: This function is experimental and may "
+    //    "yield wrong result.");
     return ((StrSize + 3) >> 2) * 3;
 }
 
@@ -49,57 +49,51 @@ int Base64_EncodeSize(int DataSize)
 
 int Base64_Encode(String* Dest, void* Sorc, int Size)
 {
-    RDebugPrint(Base64, "Encode: This function is experimental and may "
-        "yield wrong result.");
+    //RDebugPrint(Base64, "Encode: This function is experimental and may "
+    //    "yield wrong result.");
     if((! Sorc) || (! Size)) return 0;
     
     int Ret = Base64_EncodeSize(Size);
-    char* CSorc = (char*)Sorc;
-    char* CEnd  = (char*)Sorc + Size;
     
     String_AllocLength(Dest, Ret);
     
-    char* DData = (char*)Dest -> Data;
-    if(! DData) return - 1;
+    unsigned char* CSorc = (unsigned char*)Sorc;
+    unsigned char* DData = (unsigned char*)Dest -> Data;
+    int Remaining = Size % 3;
+    unsigned char* FDEnd = CSorc + Size - Remaining;
     
-    /* 0x30 -> 00110000
-       0x3C -> 00111100
-       0x3F -> 00111111 */
-    while(CEnd - CSorc > 2)
+    unsigned char* CurrCSrc = CSorc;
+    unsigned char* CurrDest = DData;
+    
+    if (! DData) return - 1;
+    
+    while (CurrCSrc != FDEnd)
     {
-        *(DData ++) = RB64_Table[(*CSorc >> 2)];
-        *(DData ++) = RB64_Table[((*CSorc << 4) & 0x30)   | (CSorc[1] >> 4)];
-        *(DData ++) = RB64_Table[((CSorc[1] << 2) & 0x3C) | (CSorc[2] >> 6)];
-        *(DData ++) = RB64_Table[CSorc[2] & 0x3F];
-        CSorc += 3;
+        CurrDest[0] = (unsigned char) RB64_Encoding_Table[CurrCSrc[0] >> 2];
+        CurrDest[1] = (unsigned char) RB64_Encoding_Table[((CurrCSrc[0] & 0x03) << 4) | ((CurrCSrc[1] & 0xf0) >> 4)];
+        CurrDest[2] = (unsigned char) RB64_Encoding_Table[((CurrCSrc[1] & 0x0f) << 2) | ((CurrCSrc[2] & 0xc0) >> 6)];
+        CurrDest[3] = (unsigned char) RB64_Encoding_Table[CurrCSrc[2] & 0x3f];
+        CurrCSrc += 3;
+        CurrDest += 4;
     }
     
-    if(CEnd - CSorc > 0)
+    if (Remaining > 0)
     {
-        *(DData ++) = RB64_Table[(*CSorc >> 2)];
-        if(CEnd - CSorc == 2)
-        {
-            *(DData ++) = RB64_Table[((*CSorc << 4) & 0x30) | (CSorc[1] >> 4)];
-            *(DData ++) = RB64_Table[(CSorc[1] << 2) & 0x3C];
-            *(DData ++) = '=';
-        }
-        else if(CEnd - CSorc == 1)
-        {
-            *(DData ++) = RB64_Table[(CSorc[1] << 4) & 0x30];
-            *(DData ++) = '=';
-            *(DData ++) = '=';
-        }
+        CurrDest[0] = (unsigned char) RB64_Encoding_Table[CurrCSrc[0] >> 2];
+        CurrDest[1] = (unsigned char) RB64_Encoding_Table[((CurrCSrc[0] & 0x03) << 4) | ((CurrCSrc[1] & 0xf0) >> 4)];
+        CurrDest[2] = (unsigned char) (Remaining > 1 ? RB64_Encoding_Table[((CurrCSrc[1] & 0x0f) << 2) | ((CurrCSrc[2] & 0xc0) >> 6)] : '=');
+        CurrDest[3] = (unsigned char) (Remaining > 2 ? RB64_Encoding_Table[CurrCSrc[2] & 0x3f] : '=');
     }
     
     Dest -> Data_Index = Ret - 1;
-    
+
     return Ret;
 }
 
 int Base64_Decode(void* Dest, String* Sorc)
 {
-    RDebugPrint(Base64, "Decode: This function is experimental and may "
-        "yield wrong result.");
+    //RDebugPrint(Base64, "Decode: This function is experimental and may "
+    //    "yield wrong result.");
     if(! String_GetLength(Sorc)) return 0;
     assert(Dest);
     
@@ -120,12 +114,12 @@ int Base64_Decode(void* Dest, String* Sorc)
     unsigned char* SEnd = InputChars + SLen;
     for(Curr = InputChars; Curr < SEnd; Curr += 4)
     {
-        *CDest++ = ((RB64_Decode_Table[Curr[0]] << 2) & 0xFC) | 
-                   ((RB64_Decode_Table[Curr[1]] >> 4) & 0x03);
-        *CDest++ = ((RB64_Decode_Table[Curr[1]] << 4) & 0xF0) |
-                   ((RB64_Decode_Table[Curr[2]] >> 2) & 0x0F);
-        *CDest++ = ((RB64_Decode_Table[Curr[2]] << 6) & 0xC0) |
-                   (RB64_Decode_Table[Curr[3]]);
+        *CDest++ = ((RB64_Decoding_Table[Curr[0]] << 2) & 0xFC) | 
+                   ((RB64_Decoding_Table[Curr[1]] >> 4) & 0x03);
+        *CDest++ = ((RB64_Decoding_Table[Curr[1]] << 4) & 0xF0) |
+                   ((RB64_Decoding_Table[Curr[2]] >> 2) & 0x0F);
+        *CDest++ = ((RB64_Decoding_Table[Curr[2]] << 6) & 0xC0) |
+                   (RB64_Decoding_Table[Curr[3]]);
         Ret += 3;
     }
     
