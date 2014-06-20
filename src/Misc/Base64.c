@@ -17,22 +17,22 @@ static unsigned char RB64_Encoding_Table[] =
 
 static unsigned char RB64_Decoding_Table[] =
 {
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 0   - 15
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 16  - 31
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, // 32  - 47
-    52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, // 48  - 63
-    -1,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, // 64  - 79
-    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, // 80  - 95
-    -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, // 96  - 111
-    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1, // 112 - 127
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 128 - 143
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 144 - 159
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 160 - 175
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 176 - 191
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 192 - 207
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 208 - 223
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 224 - 239
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1  // 240 - 255
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //0   - 15
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //16  - 31
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, //32  - 47
+    52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, //48  - 63
+    -1,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, //64  - 79
+    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, //80  - 95
+    -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, //96  - 111
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1, //112 - 127
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //128 - 143
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //144 - 159
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //160 - 175
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //176 - 191
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //192 - 207
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //208 - 223
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //224 - 239
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1  //240 - 255
 };
 
 int Base64_DecodeSize(int StrSize)
@@ -70,8 +70,12 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
     while (CurrCSrc != FDEnd)
     {
         CurrDest[0] = (unsigned char) RB64_Encoding_Table[CurrCSrc[0] >> 2];
-        CurrDest[1] = (unsigned char) RB64_Encoding_Table[((CurrCSrc[0] & 0x03) << 4) | ((CurrCSrc[1] & 0xf0) >> 4)];
-        CurrDest[2] = (unsigned char) RB64_Encoding_Table[((CurrCSrc[1] & 0x0f) << 2) | ((CurrCSrc[2] & 0xc0) >> 6)];
+        CurrDest[1] = (unsigned char) RB64_Encoding_Table
+                                        [ ((CurrCSrc[0] & 0x03) << 4) | 
+                                          ((CurrCSrc[1] & 0xf0) >> 4) ];
+        CurrDest[2] = (unsigned char) RB64_Encoding_Table
+                                        [ ((CurrCSrc[1] & 0x0f) << 2) | 
+                                          ((CurrCSrc[2] & 0xc0) >> 6) ];
         CurrDest[3] = (unsigned char) RB64_Encoding_Table[CurrCSrc[2] & 0x3f];
         CurrCSrc += 3;
         CurrDest += 4;
@@ -80,9 +84,15 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
     if (Remaining > 0)
     {
         CurrDest[0] = (unsigned char) RB64_Encoding_Table[CurrCSrc[0] >> 2];
-        CurrDest[1] = (unsigned char) RB64_Encoding_Table[((CurrCSrc[0] & 0x03) << 4) | ((CurrCSrc[1] & 0xf0) >> 4)];
-        CurrDest[2] = (unsigned char) (Remaining > 1 ? RB64_Encoding_Table[((CurrCSrc[1] & 0x0f) << 2) | ((CurrCSrc[2] & 0xc0) >> 6)] : '=');
-        CurrDest[3] = (unsigned char) (Remaining > 2 ? RB64_Encoding_Table[CurrCSrc[2] & 0x3f] : '=');
+        CurrDest[1] = (unsigned char) RB64_Encoding_Table
+                                        [ ((CurrCSrc[0] & 0x03) << 4) | 
+                                          ((CurrCSrc[1] & 0xf0) >> 4) ];
+        CurrDest[2] = (unsigned char) (Remaining > 1 ? 
+                                        RB64_Encoding_Table
+                                        [ ((CurrCSrc[1] & 0x0f) << 2) | 
+                                          ((CurrCSrc[2] & 0xc0) >> 6) ] : '=');
+        CurrDest[3] = (unsigned char) (Remaining > 2 ? 
+                                        RB64_Encoding_Table[CurrCSrc[2] & 0x3f] : '=');
     }
     
     Dest -> Data_Index = Ret - 1;
@@ -114,11 +124,11 @@ int Base64_Decode(void* Dest, String* Sorc)
     unsigned char* SEnd = InputChars + SLen;
     for(Curr = InputChars; Curr < SEnd; Curr += 4)
     {
-        *CDest++ = ((RB64_Decoding_Table[Curr[0]] << 2) & 0xFC) | 
+        *CDest ++ = ((RB64_Decoding_Table[Curr[0]] << 2) & 0xFC) | 
                    ((RB64_Decoding_Table[Curr[1]] >> 4) & 0x03);
-        *CDest++ = ((RB64_Decoding_Table[Curr[1]] << 4) & 0xF0) |
+        *CDest ++ = ((RB64_Decoding_Table[Curr[1]] << 4) & 0xF0) |
                    ((RB64_Decoding_Table[Curr[2]] >> 2) & 0x0F);
-        *CDest++ = ((RB64_Decoding_Table[Curr[2]] << 6) & 0xC0) |
+        *CDest ++ = ((RB64_Decoding_Table[Curr[2]] << 6) & 0xC0) |
                    (RB64_Decoding_Table[Curr[3]]);
         Ret += 3;
     }
