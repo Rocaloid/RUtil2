@@ -57,6 +57,7 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
     
     String_AllocLength(Dest, Ret);
     
+    //TODO: UChar* CSorc = (UChar*)Sorc; (see OO.h: 20)
     unsigned char* CSorc = (unsigned char*)Sorc;
     unsigned char* DData = (unsigned char*)Dest -> Data;
     int Remaining = Size % 3;
@@ -65,11 +66,15 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
     unsigned char* CurrCSrc = CSorc;
     unsigned char* CurrDest = DData;
     
+    //TODO: No space after if.
     if (! DData) return - 1;
     
     while (CurrCSrc != FDEnd)
     {
+        //TODO: No need of type conversion.
         CurrDest[0] = (unsigned char) RB64_Encoding_Table[CurrCSrc[0] >> 2];
+        
+        //TODO: No space after [ and before ].
         CurrDest[1] = (unsigned char) RB64_Encoding_Table
                                         [ ((CurrCSrc[0] & 0x03) << 4) | 
                                           ((CurrCSrc[1] & 0xf0) >> 4) ];
@@ -81,6 +86,7 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
         CurrDest += 4;
     }
     
+    //TODO: No space after if.
     if (Remaining > 0)
     {
         CurrDest[0] = (unsigned char) RB64_Encoding_Table[CurrCSrc[0] >> 2];
@@ -91,6 +97,7 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
                                         RB64_Encoding_Table
                                         [ ((CurrCSrc[1] & 0x0f) << 2) | 
                                           ((CurrCSrc[2] & 0xc0) >> 6) ] : '=');
+        //TODO: Length of line exceeds Col 80.
         CurrDest[3] = (unsigned char) (Remaining > 2 ? 
                                         RB64_Encoding_Table[CurrCSrc[2] & 0x3f] : '=');
     }
@@ -107,6 +114,7 @@ int Base64_Decode(void* Dest, String* Sorc)
     if(! String_GetLength(Sorc)) return 0;
     assert(Dest);
     
+    //TODO: UChar
     unsigned char* CDest = (unsigned char*)Dest;
     int Ret = 0;
     CDest[0] = 0;
@@ -124,6 +132,7 @@ int Base64_Decode(void* Dest, String* Sorc)
     unsigned char* SEnd = InputChars + SLen;
     for(Curr = InputChars; Curr < SEnd; Curr += 4)
     {
+        //TODO: Align.
         *CDest ++ = ((RB64_Decoding_Table[Curr[0]] << 2) & 0xFC) | 
                    ((RB64_Decoding_Table[Curr[1]] >> 4) & 0x03);
         *CDest ++ = ((RB64_Decoding_Table[Curr[1]] << 4) & 0xF0) |
