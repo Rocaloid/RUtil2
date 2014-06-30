@@ -31,5 +31,5 @@ add_test(TestBase64 TestBase64)
 
 get_filename_component(TestDir "." ABSOLUTE)
 get_filename_component(TopDir ${CMAKE_SOURCE_DIR} ABSOLUTE)
-set(CMAKE_C_FLAGS "-I${TestDir}/TestOO -I${TestDir}/TestString -I${TestDir}/TestSort -I${TestDir}/TestIO -I${TopDir}/src")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${TestDir}/TestOO -I${TestDir}/TestString -I${TestDir}/TestSort -I${TestDir}/TestIO -I${TopDir}/src")
 
