@@ -8,7 +8,7 @@ endif()
 add_definitions(-std=gnu99 -Wall)
 
 set(CMAKE_C_FLAGS_DEBUG "-O0 -g")
-set(CMAKE_C_FLAGS_RELEASE "-Ofast")
+set(CMAKE_C_FLAGS_RELEASE "-Ofast -DNDEBUG")
 
 set(CMAKE_LD_FLAGS_DEBUG "-Wl,-O0,-rdynamic")
 set(CMAKE_LD_FLAGS_RELEASE "-Wl,-O1,--as-needed,--sort-common")

@@ -4,30 +4,80 @@
 #include "Structure/String.h"
 #include "Misc/Tune.h"
 
-int PTTNr = 0;
-
-int PitchToolTest(float Freq)
+int Tune_PitSPN_Test(int L, int R)
 {
-    String s;
-    String_Ctor(& s);
+    int Ret = 0;
+    String o;
+    String_Ctor(& o);
+    for(int i = L; i < R; ++i)
+    {
+        Tune_PitchToSPN_Int(i, & o);
+        if(Tune_SPNToPitch_Int(& o) != i)
+        {
+            printf("[Error] Test is not passed @ i = %d.\n", i);
+            Ret = 1;
+        }
+    }
     
-    printf("    PtichToolTest Nr = %d: Freq = %f, Pitch = %f", ++PTTNr, Freq, Tune_FreqToPitch(Freq));
-    if (Tune_PitchToSPN_Float(& s, Tune_FreqToPitch(Freq)))
-        return 1;
-    printf(", Name = %s", String_GetChars(& s));
+    for(float i = (float)L; i < (float)R; i += 0.3)
+    {
+        Tune_PitchToSPN_Float(i, & o);
+        if(Tune_SPNToPitch_Float(& o) != round(i))
+        {
+            printf("[Error] Test is not passed @ i = %f.\n", i);
+            Ret = 2;
+        }
+    }
     
-    printf(", RetPit = %d", Tune_SPNToPitch(& s));
+    RDelete(& o);
     
-    printf(".\n");
-    String_Dtor(& s);
-    return 0;
+    return Ret;
+}
+
+int Tune_PitFreq_Test(int L, int R)
+{
+    int Ret = 0;
+    for(float i = L + 0.1f; i < R; i += 0.3)
+    {
+        if(fabsf(Tune_PitchToFreq_Float(Tune_FreqToPitch_Float(i)) - i) >= 0.1)
+        {
+            printf("[Error] Test is not passed @ i = %f.\n", i);
+            Ret = 3;
+        }
+    }
+    
+    for(double i = L + 0.1f; i < R; i += 0.3)
+    {
+        if(fabs(Tune_PitchToFreq_Double(
+            Tune_FreqToPitch_Double(i)) - i) >= 0.5)
+        {
+            printf("[Error] Test is not passed @ i = %lf.\n", i);
+            Ret = 4;
+        }
+    }
+    
+    return Ret;
 }
 
 int main()
 {
-    printf("RUtil2 Tune Test: \n");
-
-    if (PitchToolTest(441.0f)) return 1;
+    int Ret = 0;
     
-    return 0;
+    Tune_SetPitchNameMode(AlwaysRising);
+    if((Ret = Tune_PitSPN_Test(-2000, 2000)))
+        goto StopTest;
+    
+    Tune_SetPitchNameMode(AlwaysFalling);
+    if((Ret = Tune_PitSPN_Test(-2000, 2000)))
+        goto StopTest;
+    
+    Tune_SetPitchNameMode(Mixing);
+    if((Ret = Tune_PitSPN_Test(-2000, 2000)))
+        goto StopTest;
+    
+    if((Ret = Tune_PitFreq_Test(0, 50000)))
+        goto StopTest;
+    
+StopTest:
+    return Ret;
 }
