@@ -3,6 +3,7 @@
 
 #include "MacroUtil.h"
 #include "../Structure/Array.h"
+#include <stdio.h>
 #include <stdint.h>
 #include <math.h>
 #include <limits.h>
@@ -178,6 +179,25 @@ void __RDelete(void* a, ...);
 
 #define RDebugPrint(Field, Str) \
     printf("[Runtime] " _S(Field) "_" Str "\n");
+
+#ifdef WITH_ASSERT_ABORT
+    #define _DUMMY_ABORT abort
+#else
+    #define _DUMMY_ABORT() (void)0
+#endif
+
+#ifndef NDEBUG
+    #define RAssert(a)                                                              \
+        (void)((!(a)) ?  (                                                          \
+            (                                                                       \
+            fprintf(stderr,                                                         \
+                "RAssert failed: %s:%d, %s(), at \'%s\'\n",                         \
+                __FILE__, __LINE__, __func__, _S(a)),                               \
+            _DUMMY_ABORT(),                                                         \
+            NULL)) : NULL)
+#else
+    #define RAssert(a) (void)0
+#endif
 
 /*
     Class: RObject
