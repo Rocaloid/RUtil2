@@ -21,7 +21,7 @@ static char PNTable[12][3][4] =
     {"A#", "Bb", "Bb"}, {"B"}
 };
 
-static enum Tune_PitchNameMode PNMode = AlwaysRising;
+static enum Tune_PitchNameMode PNMode = Tune_AlwaysRising;
 
 void Tune_SetPitchNameMode(enum Tune_PitchNameMode m)
 {
