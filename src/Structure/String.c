@@ -85,10 +85,23 @@ int String_Equal(String* This, String* Sorc)
            (! strncmp(This -> Data, Sorc -> Data, This -> Data_Index + 1));
 }
 
+int String_EqualN(String* This, String* Sorc, int n)
+{
+    return (n == Sorc -> Data_Index + 1) &&
+           (! strncmp(This -> Data, Sorc -> Data, n));
+}
+
 int String_EqualChars(String* This, char* Sorc)
 {
     if(strlen(Sorc) == (size_t)This -> Data_Index + 1)
         return ! strncmp(This -> Data, Sorc, This -> Data_Index + 1);
+    return 0;
+}
+
+int String_EqualNChars(String* This, char* Sorc, int n)
+{
+    if(n == strlen(Sorc))
+        return ! strncmp(This -> Data, Sorc, n);
     return 0;
 }
 
