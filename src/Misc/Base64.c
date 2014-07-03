@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <assert.h>
 
-static unsigned char RB64_Encoding_Table[] =
+static UChar RB64_Encoding_Table[] =
 {
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
     'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 
@@ -15,7 +15,7 @@ static unsigned char RB64_Encoding_Table[] =
     '4', '5', '6', '7', '8', '9', '+', '/' 
 };
 
-static unsigned char RB64_Decoding_Table[] =
+static UChar RB64_Decoding_Table[] =
 {
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //0   - 15
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, //16  - 31
@@ -37,8 +37,8 @@ static unsigned char RB64_Decoding_Table[] =
 
 int Base64_DecodeSize(int StrSize)
 {
-    //RDebugPrint(Base64, "Decodesize: This function is experimental and may "
-    //    "yield wrong result.");
+    // RDebugPrint(Base64, "Decodesize: This function is experimental and may "
+    //     "yield wrong result.");
     return ((StrSize + 3) >> 2) * 3;
 }
 
@@ -49,57 +49,46 @@ int Base64_EncodeSize(int DataSize)
 
 int Base64_Encode(String* Dest, void* Sorc, int Size)
 {
-    //RDebugPrint(Base64, "Encode: This function is experimental and may "
-    //    "yield wrong result.");
+    // RDebugPrint(Base64, "Encode: This function is experimental and may "
+    //     "yield wrong result.");
     if((! Sorc) || (! Size)) return 0;
     
     int Ret = Base64_EncodeSize(Size);
     
     String_AllocLength(Dest, Ret);
     
-    //TODO: UChar* CSorc = (UChar*)Sorc; (see OO.h: 20)
-    unsigned char* CSorc = (unsigned char*)Sorc;
-    unsigned char* DData = (unsigned char*)Dest -> Data;
+    UChar* CSorc = (UChar*)Sorc;
+    UChar* DData = (UChar*)Dest -> Data;
     int Remaining = Size % 3;
-    unsigned char* FDEnd = CSorc + Size - Remaining;
+    UChar* FDEnd = CSorc + Size - Remaining;
     
-    unsigned char* CurrCSrc = CSorc;
-    unsigned char* CurrDest = DData;
+    UChar* CurrCSrc = CSorc;
+    UChar* CurrDest = DData;
     
-    //TODO: No space after if.
-    if (! DData) return - 1;
+    if(! DData) return - 1;
     
     while (CurrCSrc != FDEnd)
     {
-        //TODO: No need of type conversion.
-        CurrDest[0] = (unsigned char) RB64_Encoding_Table[CurrCSrc[0] >> 2];
-        
-        //TODO: No space after [ and before ].
-        CurrDest[1] = (unsigned char) RB64_Encoding_Table
-                                        [ ((CurrCSrc[0] & 0x03) << 4) | 
-                                          ((CurrCSrc[1] & 0xf0) >> 4) ];
-        CurrDest[2] = (unsigned char) RB64_Encoding_Table
-                                        [ ((CurrCSrc[1] & 0x0f) << 2) | 
-                                          ((CurrCSrc[2] & 0xc0) >> 6) ];
-        CurrDest[3] = (unsigned char) RB64_Encoding_Table[CurrCSrc[2] & 0x3f];
+        CurrDest[0] = RB64_Encoding_Table[CurrCSrc[0] >> 2];
+        CurrDest[1] = RB64_Encoding_Table[((CurrCSrc[0] & 0x03) << 4) | 
+                                          ((CurrCSrc[1] & 0xf0) >> 4)];
+        CurrDest[2] = RB64_Encoding_Table[((CurrCSrc[1] & 0x0f) << 2) | 
+                                          ((CurrCSrc[2] & 0xc0) >> 6)];
+        CurrDest[3] = RB64_Encoding_Table[CurrCSrc[2] & 0x3f];
         CurrCSrc += 3;
         CurrDest += 4;
     }
     
-    //TODO: No space after if.
-    if (Remaining > 0)
+    if(Remaining > 0)
     {
-        CurrDest[0] = (unsigned char) RB64_Encoding_Table[CurrCSrc[0] >> 2];
-        CurrDest[1] = (unsigned char) RB64_Encoding_Table
-                                        [ ((CurrCSrc[0] & 0x03) << 4) | 
-                                          ((CurrCSrc[1] & 0xf0) >> 4) ];
-        CurrDest[2] = (unsigned char) (Remaining > 1 ? 
-                                        RB64_Encoding_Table
-                                        [ ((CurrCSrc[1] & 0x0f) << 2) | 
-                                          ((CurrCSrc[2] & 0xc0) >> 6) ] : '=');
-        //TODO: Length of line exceeds Col 80.
-        CurrDest[3] = (unsigned char) (Remaining > 2 ? 
-                                        RB64_Encoding_Table[CurrCSrc[2] & 0x3f] : '=');
+        CurrDest[0] = RB64_Encoding_Table[CurrCSrc[0] >> 2];
+        CurrDest[1] = RB64_Encoding_Table[((CurrCSrc[0] & 0x03) << 4) | 
+                                          ((CurrCSrc[1] & 0xf0) >> 4)];
+        CurrDest[2] = (Remaining > 1 ? RB64_Encoding_Table
+                                        [((CurrCSrc[1] & 0x0f) << 2) | 
+                                          ((CurrCSrc[2] & 0xc0) >> 6)] : '=');
+        CurrDest[3] = (Remaining > 2 ? 
+                       RB64_Encoding_Table[CurrCSrc[2] & 0x3f] : '=');
     }
     
     Dest -> Data_Index = Ret - 1;
@@ -109,36 +98,34 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
 
 int Base64_Decode(void* Dest, String* Sorc)
 {
-    //RDebugPrint(Base64, "Decode: This function is experimental and may "
-    //    "yield wrong result.");
+    // RDebugPrint(Base64, "Decode: This function is experimental and may "
+    //     "yield wrong result.");
     if(! String_GetLength(Sorc)) return 0;
     assert(Dest);
     
-    //TODO: UChar
-    unsigned char* CDest = (unsigned char*)Dest;
+    UChar* CDest = (UChar*)Dest;
     int Ret = 0;
     CDest[0] = 0;
     
     int SLen = String_GetLength(Sorc);
-    if (SLen < 4 || SLen % 4 != 0) return - 1;
-    unsigned char* InputChars = (unsigned char*)Sorc -> Data;
+    if(SLen < 4 || SLen % 4 != 0) return - 1;
+    UChar* InputChars = (UChar*)Sorc -> Data;
     
     // 0xFC -> 11111100
     // 0x03 -> 00000011
     // 0xF0 -> 11110000
     // 0x0F -> 00001111
     // 0xC0 -> 11000000
-    unsigned char* Curr;
-    unsigned char* SEnd = InputChars + SLen;
+    UChar* Curr;
+    UChar* SEnd = InputChars + SLen;
     for(Curr = InputChars; Curr < SEnd; Curr += 4)
     {
-        //TODO: Align.
         *CDest ++ = ((RB64_Decoding_Table[Curr[0]] << 2) & 0xFC) | 
-                   ((RB64_Decoding_Table[Curr[1]] >> 4) & 0x03);
+                    ((RB64_Decoding_Table[Curr[1]] >> 4) & 0x03);
         *CDest ++ = ((RB64_Decoding_Table[Curr[1]] << 4) & 0xF0) |
-                   ((RB64_Decoding_Table[Curr[2]] >> 2) & 0x0F);
+                    ((RB64_Decoding_Table[Curr[2]] >> 2) & 0x0F);
         *CDest ++ = ((RB64_Decoding_Table[Curr[2]] << 6) & 0xC0) |
-                   (RB64_Decoding_Table[Curr[3]]);
+                    (RB64_Decoding_Table[Curr[3]]);
         Ret += 3;
     }
     
