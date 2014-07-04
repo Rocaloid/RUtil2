@@ -119,6 +119,18 @@ int Base64_Decode(void* Dest, String* Sorc)
         InputChars[SLen ++] = Sorc -> Data[i];
     }
     
+    // Check whether the input is valid.
+    for(int i = 0; i < SLen; ++i)
+    {
+        if(! (InputChars[i] >= '0' || InputChars[i] <='9' ||
+              InputChars[i] >= 'A' || InputChars[i] <='Z' ||
+              InputChars[i] >= 'a' || InputChars[i] <='z'))
+        {
+            fprintf(stderr, "[Error] Base64_Decode: Invalid input string!");
+            return -2;
+        }
+    }
+    
     if(SLen < 4 || SLen % 4 != 0) return -1;
     
     // 0xFC -> 11111100
