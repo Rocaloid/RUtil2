@@ -14,7 +14,7 @@ static char TestCStr1[] = "What a fucky day yesterday!";        //27 % 3 == 0.
 static char TestCStr2[] = "Bad luck always around me!!!";       //28 % 3 == 1.
 static char TestCStr3[] = "So is today. Do you think so?";      //29 % 3 == 2.
 static char TestCStr4[] = "";                                   //Empty string.
-static char TestCStr5[] = "我\n能\n竖\n着\n发\n弹\n幕";            // String with '\n'
+static char TestCStr5[] = "I\nC\nA\nN\nF\nL\nY\n!";             // with '\n'.
 static char TestCStr6[] = "All tests should be passed~!!";      //29 % 3 == 2.
 
 static void TestBase64_StrAutoWrap(String *Str, int WarpLen)
