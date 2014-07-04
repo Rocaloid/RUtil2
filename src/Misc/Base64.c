@@ -107,9 +107,19 @@ int Base64_Decode(void* Dest, String* Sorc)
     int Ret = 0;
     CDest[0] = 0;
     
-    int SLen = String_GetLength(Sorc);
-    if(SLen < 4 || SLen % 4 != 0) return - 1;
-    UChar* InputChars = (UChar*)Sorc -> Data;
+    int RawLen = String_GetLength(Sorc);
+    int SLen = 0;
+    
+    // Remove the '\n'.
+    UChar* InputChars = calloc(RawLen, 1);
+    for(int i = 0; i < RawLen; ++i)
+    {
+        if(Sorc -> Data[i] == '\n')
+            continue;
+        InputChars[SLen ++] = Sorc -> Data[i];
+    }
+    
+    if(SLen < 4 || SLen % 4 != 0) return -1;
     
     // 0xFC -> 11111100
     // 0x03 -> 00000011
@@ -139,6 +149,8 @@ int Base64_Decode(void* Dest, String* Sorc)
         *(CDest - 1) = '\0';
         Ret -= 1;
     }
+    
+    free(InputChars);
     
     return Ret;
 }
