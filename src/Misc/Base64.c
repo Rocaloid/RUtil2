@@ -114,7 +114,7 @@ int Base64_Decode(void* Dest, String* Sorc)
     UChar* InputChars = calloc(RawLen, 1);
     for(int i = 0; i < RawLen; ++i)
     {
-        if(Sorc -> Data[i] == '\n')
+        if(Sorc -> Data[i] == '\n' || Sorc -> Data[i] == ' ')
             continue;
         InputChars[SLen ++] = Sorc -> Data[i];
     }
