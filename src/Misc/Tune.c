@@ -5,13 +5,13 @@
 #include "Tune.h"
 #include "../Core/OO.h"
 
-static bool SemitoneTable[12] =
+static const bool SemitoneTable[12] =
 {
     false, true, false, true, false, false, true,
     false, true, false, true, false  
 };
 
-static char PNTable[12][3][4] =
+static const char PNTable[12][3][4] =
 {
     {"C"}, {"C#", "Db", "C#"}, 
     {"D"}, {"D#", "Eb", "Eb"}, 
