@@ -17,7 +17,7 @@ static char TestCStr4[] = "";                                   //Empty string.
 static char TestCStr5[] = "I\nC\nA\nN\nF\nL\nY\n!";             // with '\n'.
 static char TestCStr6[] = "All tests should be passed~!!";      //29 % 3 == 2.
 
-static void TestBase64_StrAutoWrap(String *Str, int WarpLen)
+static void TestBase64_StrAddChar(String *Str, int WarpLen, char ToAdd)
 {
     RAssert(WarpLen > 0);
     int SLen = String_GetLength(Str);
@@ -30,7 +30,7 @@ static void TestBase64_StrAutoWrap(String *Str, int WarpLen)
     for(i = 0; i < SLen - Rem; i += WarpLen)
     {
         memcpy(Buffer + i + WNr, Str -> Data + i, WarpLen);
-        *(Buffer + i + WarpLen + WNr) = '\n';
+        *(Buffer + i + WarpLen + WNr) = ToAdd;
         ++WNr;
     }
     
@@ -60,9 +60,15 @@ static int TestBase64_SubStrTest(char *CStr)
     gettimeofday(&tv, NULL);
     
     srand((int)tv.tv_usec);
+    TestBase64_StrAddChar(& o, 
+                          (int)(10.0f * rand() / (RAND_MAX + 1.0f)) + 1.0f, 
+                          '\n');
     
-    TestBase64_StrAutoWrap(& o, 
-                           (int)(10.0f * rand() / (RAND_MAX + 1.0f)) + 1.0f);
+    gettimeofday(&tv, NULL);
+    srand((int)tv.tv_usec);
+    TestBase64_StrAddChar(& o, 
+                          (int)(10.0f * rand() / (RAND_MAX + 1.0f)) + 1.0f, 
+                          ' ');
     
     printf("    Base64 encoded:"
         "String"    "= '%s', "
@@ -108,3 +114,12 @@ int main()
     return 0;
 }
 
+char *BLI_str_find_prev_char_utf8(const char *str, const char *p)
+{
+    for (--p; p >= str; --p) {
+        if ((*p & 0xc0) != 0x80) {
+            return (char *)p;
+        }
+    }
+    return NULL;
+}
