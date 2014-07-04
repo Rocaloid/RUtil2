@@ -14,7 +14,7 @@ RDtor(_RTClassName)
 RTMethod(void, PMatch, From, _RTClassName* Sorc)
 {
     Array_Resize(_T1, This -> X, Sorc -> X_Index + 1);
-    Array_Resize(_T1, This -> Y, Sorc -> Y_Index + 1);
+    Array_Resize(_T2, This -> Y, Sorc -> Y_Index + 1);
     This -> X_Index = Sorc -> X_Index;
     This -> Y_Index = Sorc -> Y_Index;
     int i;
