@@ -67,7 +67,7 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
     
     if(! DData) return - 1;
     
-    while (CurrCSrc != FDEnd)
+    while(CurrCSrc != FDEnd)
     {
         CurrDest[0] = RB64_Encoding_Table[CurrCSrc[0] >> 2];
         CurrDest[1] = RB64_Encoding_Table[((CurrCSrc[0] & 0x03) << 4) | 

@@ -61,7 +61,8 @@ static int TestBase64_SubStrTest(char *CStr)
     
     srand((int)tv.tv_usec);
     
-    TestBase64_StrAutoWrap(& o, (int)(10.0f * rand() / (RAND_MAX+1.0f)) + 1.0f);
+    TestBase64_StrAutoWrap(& o, 
+                           (int)(10.0f * rand() / (RAND_MAX+1.0f)) + 1.0f);
     
     printf("    Base64 encoded:"
         "String"    "= '%s', "
