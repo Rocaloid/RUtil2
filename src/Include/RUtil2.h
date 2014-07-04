@@ -11,6 +11,7 @@
 #include <RUtil2/Misc/Convert.h>
 #include <RUtil2/Misc/Sort.h>
 #include <RUtil2/Misc/Base64.h>
+#include <RUtil2/Misc/Tune.h>
 
 #include <RUtil2/IO/File.h>
 #include <RUtil2/IO/WaveFile.h>
