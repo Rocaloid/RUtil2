@@ -5,6 +5,7 @@ RClass(_RTClassName)
     Array_Define(_T2, Y);
 };
 
+RTMethod(void, PMatch, From, _RTClassName* Sorc);
 RTMethod(void, PMatch, AddPair, _T1 XVar, _T2 YVar);
 RTMethod(void, PMatch, Clear);
 RTMethod(void, PMatch, Print);

@@ -11,6 +11,19 @@ RDtor(_RTClassName)
     Array_Dtor(_T2, This -> Y);
 }
 
+RTMethod(void, PMatch, From, _RTClassName* Sorc)
+{
+    Array_Resize(_T1, This -> X, Sorc -> X_Index + 1);
+    Array_Resize(_T2, This -> Y, Sorc -> Y_Index + 1);
+    This -> X_Index = Sorc -> X_Index;
+    This -> Y_Index = Sorc -> Y_Index;
+    int i;
+    for(i = 0; i <= This -> X_Index; i ++)
+        This -> X[i] = Sorc -> X[i];
+    for(i = 0; i <= This -> Y_Index; i ++)
+        This -> Y[i] = Sorc -> Y[i];
+}
+
 RTMethod(void, PMatch, AddPair, _T1 XVar, _T2 YVar)
 {
     int Index;
