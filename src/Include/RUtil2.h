@@ -6,7 +6,9 @@
 
 #include <RUtil2/Structure/Array.h>
 #include <RUtil2/Structure/String.h>
+#include <RUtil2/Structure/String_Utf8.h>
 #include <RUtil2/Structure/PMatch.h>
+#include <RUtil2/Structure/UtfString.h>
 
 #include <RUtil2/Misc/Convert.h>
 #include <RUtil2/Misc/Sort.h>

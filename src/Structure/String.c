@@ -70,7 +70,7 @@ void String_Join(String* This, String* Sorc)
     This -> Data_Index += Sorc -> Data_Index + 1;
 }
 
-void String_JoinChars(String* This, char* Sorc)
+void String_JoinChars(String* This, const char* Sorc)
 {
     int Len = strlen(Sorc);
     Array_Resize(char, This -> Data,
@@ -91,14 +91,14 @@ int String_EqualN(String* This, String* Sorc, int n)
            (! strncmp(This -> Data, Sorc -> Data, n));
 }
 
-int String_EqualChars(String* This, char* Sorc)
+int String_EqualChars(String* This, const char* Sorc)
 {
     if(strlen(Sorc) == (size_t)This -> Data_Index + 1)
         return ! strncmp(This -> Data, Sorc, This -> Data_Index + 1);
     return 0;
 }
 
-int String_EqualNChars(String* This, char* Sorc, int n)
+int String_EqualNChars(String* This, const char* Sorc, int n)
 {
     if(n == strlen(Sorc))
         return ! strncmp(This -> Data, Sorc, n);

@@ -32,12 +32,12 @@ char String_GetChar(String* This, int Index);
 void String_SetChar(String* This, int Index, char Data);
 
 void String_Join(String* This, String* Sorc);
-void String_JoinChars(String* This, char* Sorc);
+void String_JoinChars(String* This, const char* Sorc);
 
 int String_Equal(String* This, String* Sorc);
 int String_EqualN(String* This, String* Sorc, int n);
-int String_EqualChars(String* This, char* Sorc);
-int String_EqualNChars(String* This, char* Sorc, int n);
+int String_EqualChars(String* This, const char* Sorc);
+int String_EqualNChars(String* This, const char* Sorc, int n);
 
 int String_InStrFrom(String* This, String* Sorc, int From);
 int String_InStr(String* This, String* Sorc);

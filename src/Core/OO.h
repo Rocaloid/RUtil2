@@ -187,17 +187,20 @@ void __RDelete(void* a, ...);
 #endif
 
 #ifndef NDEBUG
-    #define RAssert(a)                                                              \
-        (void)((!(a)) ?  (                                                          \
-            (                                                                       \
-            fprintf(stderr,                                                         \
-                "RAssert failed: %s:%d, %s(), at \'%s\'\n",                         \
-                __FILE__, __LINE__, __func__, _S(a)),                               \
-            _DUMMY_ABORT(),                                                         \
+    #define RAssert(a)                                                        \
+        (void)((!(a)) ?  (                                                    \
+            (                                                                 \
+            fprintf(stderr,                                                   \
+                "RAssert failed: %s:%d, %s(), at \'%s\'\n",                   \
+                __FILE__, __LINE__, __func__, _S(a)),                         \
+            _DUMMY_ABORT(),                                                   \
             NULL)) : NULL)
 #else
     #define RAssert(a) (void)0
 #endif
+
+#define Likely(x)       __builtin_expect(!!(x), 1)
+#define Unlikely(x)      __builtin_expect(!!(x), 0)
 
 /*
     Class: RObject
