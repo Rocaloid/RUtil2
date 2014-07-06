@@ -4,9 +4,14 @@
 #include <malloc.h>
 #define Array_Addition 96
 
+static inline int RUTMO8(int v) // RoundUpToMultipleOf8
+{
+    return (v+7) & 0xFFFFFFF8; //(value+roundto) & ~(roundto-1)
+}
+
 #define _ProtoArray_Resize(Type, Array, IndexNumber, Size, NewSize) \
     do{ \
-        (Array) = (Type*)realloc((Array), sizeof(Type) * (NewSize)); \
+        (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * (NewSize))); \
         (Size) = NewSize; \
         if((NewSize) <= (IndexNumber)) \
             (IndexNumber) = (NewSize) - 1; \
@@ -16,8 +21,8 @@
     do{ \
         if((IndexNumber) > (Size) - 2) \
         { \
-            (Array) = (Type*)realloc((Array), sizeof(Type) * \
-                      ((Array_Addition) + (Size))); \
+            (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * \
+                      ((Array_Addition) + (Size)))); \
             (Size) += Array_Addition; \
         } \
         (Array)[++ IndexNumber] = Data; \
@@ -27,8 +32,8 @@
     do{ \
         if((IndexNumber) > (Size) - 2) \
         { \
-            (Array) = (Type*)realloc((Array), sizeof(Type) * \
-                      ((Array_Addition) + (Size))); \
+            (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * \
+                      ((Array_Addition) + (Size)))); \
             (Size) += Array_Addition; \
         } \
         (IndexNumber) ++; \
@@ -42,8 +47,8 @@
         int Array_i; \
         if((IndexNumber) > (Size) - 2) \
         { \
-            (Array) = (Type*)realloc((Array), sizeof(Type) * \
-                      ((Array_Addition) + (Size))); \
+            (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * \
+                      ((Array_Addition) + (Size)))); \
             (Size) += Array_Addition; \
         } \
         for(Array_i = (IndexNumber) + 1; Array_i > (Index); Array_i --) \
@@ -57,8 +62,8 @@
         int Array_i; \
         if((IndexNumber) > (Size) - 2) \
         { \
-            (Array) = (Type*)realloc((Array), sizeof(Type) * \
-                      ((Array_Addition) + (Size))); \
+            (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * \
+                      ((Array_Addition) + (Size)))); \
             (Size) += Array_Addition; \
         } \
         for(Array_i = (IndexNumber) + 1; Array_i > (Index); Array_i --) \
