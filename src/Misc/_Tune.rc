@@ -1,3 +1,8 @@
+#define _PitchToSPN _C(Tune_PitchToSPN, _, _T1)
+#define _SPNToPitch _C(Tune_SPNToPitch, _, _T1)
+#define _PitchToFreq _C(Tune_PitchToFreq, _, _T1)
+#define _FreqToPitch _C(Tune_FreqToPitch, _, _T1)
+
 RTFunc(_T1, Tune_PitchToSPN, _T1 Pitch_Raw, String* Dest)
 {
     int Pitch;
@@ -90,3 +95,8 @@ RTFunc(_T1, Tune_SPNToFreq, String* SPN)
 {
     return _PitchToFreq(_SPNToPitch(SPN));
 }
+
+#undef _FreqToPitch
+#undef _PitchToSPN
+#undef _SPNToPitch
+#undef _PitchToFreq

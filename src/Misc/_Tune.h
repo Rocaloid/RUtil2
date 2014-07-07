@@ -12,3 +12,8 @@ RTFunc(_T1, Tune_PitchToFreq, _T1 Pitch);
 // These functions are sugar.
 RTFunc(_T1, Tune_FreqToSPN, _T1 Freq, String* Dest);
 RTFunc(_T1, Tune_SPNToFreq, String* SPN);
+
+#undef _FreqToPitch
+#undef _PitchToSPN
+#undef _SPNToPitch
+#undef _PitchToFreq

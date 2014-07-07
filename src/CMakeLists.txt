@@ -22,12 +22,14 @@ install(FILES Structure/Array.h
               Structure/String.h
               Structure/Transition.h
               Structure/_Transition.h
+              Structure/UtfString.h
               DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Structure)
 install(FILES Misc/Convert.h
               Misc/Sort.h
               Misc/_Sort.h
               Misc/Base64.h
               Misc/Tune.h
+              Misc/_Tune.h
               DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Misc)
 install(FILES IO/File.h
               IO/_File.h

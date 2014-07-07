@@ -6,9 +6,9 @@
 
 enum Tune_PitchNameMode
 {
-    AlwaysRising = 0,
-    AlwaysFalling,
-    Mixing,
+    Tune_AlwaysRising = 0,
+    Tune_AlwaysFalling,
+    Tune_Mixing,
     __PADDING__ = INT_MAX
 };
 

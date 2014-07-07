@@ -63,15 +63,15 @@ int main()
 {
     int Ret = 0;
     
-    Tune_SetPitchNameMode(AlwaysRising);
+    Tune_SetPitchNameMode(Tune_AlwaysRising);
     if((Ret = Tune_PitSPN_Test(-2000, 2000)))
         goto StopTest;
     
-    Tune_SetPitchNameMode(AlwaysFalling);
+    Tune_SetPitchNameMode(Tune_AlwaysFalling);
     if((Ret = Tune_PitSPN_Test(-2000, 2000)))
         goto StopTest;
     
-    Tune_SetPitchNameMode(Mixing);
+    Tune_SetPitchNameMode(Tune_Mixing);
     if((Ret = Tune_PitSPN_Test(-2000, 2000)))
         goto StopTest;
     

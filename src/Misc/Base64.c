@@ -67,7 +67,7 @@ int Base64_Encode(String* Dest, void* Sorc, int Size)
     
     if(! DData) return - 1;
     
-    while (CurrCSrc != FDEnd)
+    while(CurrCSrc != FDEnd)
     {
         CurrDest[0] = RB64_Encoding_Table[CurrCSrc[0] >> 2];
         CurrDest[1] = RB64_Encoding_Table[((CurrCSrc[0] & 0x03) << 4) | 
@@ -107,9 +107,31 @@ int Base64_Decode(void* Dest, String* Sorc)
     int Ret = 0;
     CDest[0] = 0;
     
-    int SLen = String_GetLength(Sorc);
-    if(SLen < 4 || SLen % 4 != 0) return - 1;
-    UChar* InputChars = (UChar*)Sorc -> Data;
+    int RawLen = String_GetLength(Sorc);
+    int SLen = 0;
+    
+    // Remove the '\n'.
+    UChar* InputChars = calloc(RawLen, 1);
+    for(int i = 0; i < RawLen; ++i)
+    {
+        if(Sorc -> Data[i] == '\n' || Sorc -> Data[i] == ' ')
+            continue;
+        InputChars[SLen ++] = Sorc -> Data[i];
+    }
+    
+    // Check whether the input is valid.
+    for(int i = 0; i < SLen; ++i)
+    {
+        if(! (InputChars[i] >= '0' || InputChars[i] <='9' ||
+              InputChars[i] >= 'A' || InputChars[i] <='Z' ||
+              InputChars[i] >= 'a' || InputChars[i] <='z'))
+        {
+            fprintf(stderr, "[Error] Base64_Decode: Invalid input string!");
+            return -2;
+        }
+    }
+    
+    if(SLen < 4 || SLen % 4 != 0) return -1;
     
     // 0xFC -> 11111100
     // 0x03 -> 00000011
@@ -140,6 +162,13 @@ int Base64_Decode(void* Dest, String* Sorc)
         Ret -= 1;
     }
     
+    free(InputChars);
+    
     return Ret;
 }
 
+short Base64_Decode_Int12(char* Sorc)
+{
+    return (RB64_Decoding_Table[(UChar)Sorc[0]] << 6) + 
+           (RB64_Decoding_Table[(UChar)Sorc[1]]);
+}

@@ -5,13 +5,13 @@
 #include "Tune.h"
 #include "../Core/OO.h"
 
-static bool SemitoneTable[12] =
+static const bool SemitoneTable[12] =
 {
     false, true, false, true, false, false, true,
     false, true, false, true, false  
 };
 
-static char PNTable[12][3][4] =
+static const char PNTable[12][3][4] =
 {
     {"C"}, {"C#", "Db", "C#"}, 
     {"D"}, {"D#", "Eb", "Eb"}, 
@@ -21,7 +21,7 @@ static char PNTable[12][3][4] =
     {"A#", "Bb", "Bb"}, {"B"}
 };
 
-static enum Tune_PitchNameMode PNMode = AlwaysRising;
+static enum Tune_PitchNameMode PNMode = Tune_AlwaysRising;
 
 void Tune_SetPitchNameMode(enum Tune_PitchNameMode m)
 {
