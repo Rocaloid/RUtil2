@@ -4,6 +4,7 @@
 #include "MacroUtil.h"
 #include "../Structure/Array.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdint.h>
 #include <math.h>
 #include <limits.h>
@@ -187,18 +188,34 @@ void __RDelete(void* a, ...);
 #endif
 
 #ifndef NDEBUG
-    #define RAssert(a)                                                              \
-        (void)((!(a)) ?  (                                                          \
-            (                                                                       \
-            fprintf(stderr,                                                         \
-                "RAssert failed: %s:%d, %s(), at \'%s\'\n",                         \
-                __FILE__, __LINE__, __func__, _S(a)),                               \
-            _DUMMY_ABORT(),                                                         \
+    #define RAssert(a)                                                        \
+        (void)((!(a)) ?  (                                                    \
+            (                                                                 \
+            fprintf(stderr,                                                   \
+                "RAssert failed: %s:%d, %s(), at \'%s\'\n",                   \
+                __FILE__, __LINE__, __func__, _S(a)),                         \
+            _DUMMY_ABORT(),                                                   \
             NULL)) : NULL)
 #else
     #define RAssert(a) (void)0
 #endif
 
+#define Likely(x)       __builtin_expect(!!(x), 1)
+#define Unlikely(x)      __builtin_expect(!!(x), 0)
+
+#ifndef RInline
+    /* little macro so inline keyword works */
+    #if defined(_MSC_VER)
+        #define RInline static __forceinline
+    #else
+        #if (defined(__APPLE__) && defined(__ppc__))
+    /* static inline __attribute__ here breaks osx ppc gcc42 build */
+            #define RInline static __attribute__((always_inline))
+        #else
+            #define RInline static inline __attribute__((always_inline))
+        #endif
+    #endif
+#endif
 /*
     Class: RObject
     
