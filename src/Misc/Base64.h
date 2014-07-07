@@ -18,7 +18,7 @@ int Base64_Encode(String* Dest, void* Sorc, int Size);
 int Base64_Decode(void* Dest, String* Sorc);
 
 // Decode a encoded 12bit integer to a int16.
-short Base64_Decode_Int12(char Sorc[1]);
+short Base64_Decode_Int12(char* Sorc);
 
 #endif //RUTIL2_BASE64_H
 

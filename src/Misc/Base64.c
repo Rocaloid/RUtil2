@@ -167,7 +167,7 @@ int Base64_Decode(void* Dest, String* Sorc)
     return Ret;
 }
 
-short Base64_Decode_Int12(char Sorc[1])
+short Base64_Decode_Int12(char* Sorc)
 {
     return (RB64_Decoding_Table[(UChar)Sorc[0]] << 6) + 
            (RB64_Decoding_Table[(UChar)Sorc[1]]);
