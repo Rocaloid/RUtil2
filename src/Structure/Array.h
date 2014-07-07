@@ -4,27 +4,14 @@
 #include <malloc.h>
 #define Array_Addition 96
 
-#ifndef RINLINE
-    #if defined(_MSC_VER)
-        #define RINLINE static __forceinline
-    #else
-        #if (defined(__APPLE__) && defined(__ppc__))
-    /* static inline __attribute__ here breaks osx ppc gcc42 build */
-            #define RINLINE static __attribute__((always_inline))
-        #else
-            #define RINLINE static inline __attribute__((always_inline))
-        #endif
-    #endif
-#endif
-
-RINLINE int RUTMO8(int v) // RoundUpToMultipleOf8
-{
-    return (v+7) & 0xFFFFFFF8; //(value+roundto) & ~(roundto-1)
-}
+// RoundUpToMultipleOf8
+// (value + roundto) & (~ (roundto - 1))
+#define __Round8(v) \
+    ((v + 7) & 0xFFFFFFF8)
 
 #define _ProtoArray_Resize(Type, Array, IndexNumber, Size, NewSize) \
     do{ \
-        (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * (NewSize))); \
+        (Array) = (Type*)realloc((Array), __Round8(sizeof(Type) * (NewSize))); \
         (Size) = NewSize; \
         if((NewSize) <= (IndexNumber)) \
             (IndexNumber) = (NewSize) - 1; \
@@ -34,7 +21,7 @@ RINLINE int RUTMO8(int v) // RoundUpToMultipleOf8
     do{ \
         if((IndexNumber) > (Size) - 2) \
         { \
-            (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * \
+            (Array) = (Type*)realloc((Array), __Round8(sizeof(Type) * \
                       ((Array_Addition) + (Size)))); \
             (Size) += Array_Addition; \
         } \
@@ -45,7 +32,7 @@ RINLINE int RUTMO8(int v) // RoundUpToMultipleOf8
     do{ \
         if((IndexNumber) > (Size) - 2) \
         { \
-            (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * \
+            (Array) = (Type*)realloc((Array), __Round8(sizeof(Type) * \
                       ((Array_Addition) + (Size)))); \
             (Size) += Array_Addition; \
         } \
@@ -60,7 +47,7 @@ RINLINE int RUTMO8(int v) // RoundUpToMultipleOf8
         int Array_i; \
         if((IndexNumber) > (Size) - 2) \
         { \
-            (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * \
+            (Array) = (Type*)realloc((Array), __Round8(sizeof(Type) * \
                       ((Array_Addition) + (Size)))); \
             (Size) += Array_Addition; \
         } \
@@ -75,7 +62,7 @@ RINLINE int RUTMO8(int v) // RoundUpToMultipleOf8
         int Array_i; \
         if((IndexNumber) > (Size) - 2) \
         { \
-            (Array) = (Type*)realloc((Array), RUTMO8(sizeof(Type) * \
+            (Array) = (Type*)realloc((Array), __Round8(sizeof(Type) * \
                       ((Array_Addition) + (Size)))); \
             (Size) += Array_Addition; \
         } \
