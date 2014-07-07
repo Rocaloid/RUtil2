@@ -257,6 +257,7 @@ void TestTrim()
     RAssert(String_Utf8_EqualChars(&d, "    桜"));
     
     String_Utf8_Dtor(& d);
+    String_Utf8_Dtor(& c);
     String_Utf8_Dtor(& b);
     String_Utf8_Dtor(& a);
 }
