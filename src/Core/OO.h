@@ -4,6 +4,7 @@
 #include "MacroUtil.h"
 #include "../Structure/Array.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdint.h>
 #include <math.h>
 #include <limits.h>
@@ -202,6 +203,19 @@ void __RDelete(void* a, ...);
 #define Likely(x)       __builtin_expect(!!(x), 1)
 #define Unlikely(x)      __builtin_expect(!!(x), 0)
 
+#ifndef RINLINE
+    /* little macro so inline keyword works */
+    #if defined(_MSC_VER)
+        #define RINLINE static __forceinline
+    #else
+        #if (defined(__APPLE__) && defined(__ppc__))
+    /* static inline __attribute__ here breaks osx ppc gcc42 build */
+            #define RINLINE static __attribute__((always_inline))
+        #else
+            #define RINLINE static inline __attribute__((always_inline))
+        #endif
+    #endif
+#endif
 /*
     Class: RObject
     
