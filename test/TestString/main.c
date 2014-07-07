@@ -104,6 +104,7 @@ void TestEqual()
     String_FromChars(x, "Rocaloid");
 
     //String_Equal should return bool?
+    //Re: Needn't. When operating, bool will be treated as int.
     assert(!String_Equal(&a, &b));
     assert(String_Equal(&a, &x));
 
@@ -121,7 +122,6 @@ void TestEqualChars()
 
     String_Dtor(&x);
 }
-
 
 int main()
 {
@@ -141,4 +141,3 @@ int main()
     
     return 0;
 }
-
