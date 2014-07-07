@@ -1,5 +1,5 @@
-#ifndef RUTIL2_STRING_UTF8_H
-#define RUTIL2_STRING_UTF8_H
+#ifndef RUTIL2_STRING_H
+#define RUTIL2_STRING_H
 
 #include "../Core/OO.h"
 
@@ -68,5 +68,5 @@ void Trim(String* Dest, String* Sorc);
 void LTrim(String* Dest, String* Sorc);
 void RTrim(String* Dest, String* Sorc);
 
-#endif //RUTIL2_STRING_UTF8_H
+#endif //RUTIL2_STRING_H
 

@@ -34,7 +34,7 @@ void String_SetCharsN(String* This, const char* Chars, int WordNum)
 {
     const char* Chars_End = Chars;
     int i;
-    for(i = 0; i < WordNum && * Chars_End; ++i)
+    for(i = 0; i < WordNum && * Chars_End; ++ i)
         Chars_End = next_char_utf8(Chars_End);
     
     int DataLength = Chars_End - Chars;
@@ -90,7 +90,7 @@ void String_SetChar(String* This, int Index, char Data)
 void String_GetWord(String* This, String* Dest, int Index)
 {
     const char* Curr = This -> Data;
-    for(int i = 0; i < Index; ++i, Curr = next_char_utf8(Curr))
+    for(int i = 0; i < Index; ++ i, Curr = next_char_utf8(Curr))
         RAssert(* Curr);
     int WordLength = GetWordLength_Utf8(Curr[0]);
     String_AllocLength(Dest, WordLength);
@@ -105,8 +105,11 @@ void String_SetWord(String* This, int Index, String* Data)
     char* Curr = This -> Data;
     int RIndex = 0;
     
-    for(int i = 0; i < Index; ++i, Curr = next_char_utf8(Curr), ++RIndex)
-        RAssert(* Curr);
+    for(int i = 0; i < Index && * Curr; ++ i, ++ RIndex)
+        Curr = next_char_utf8(Curr);
+    
+    RAssert(* Curr);
+    
     int WordLengthT = GetWordLength_Utf8(Curr[0]);
     int WordLengthD = GetWordLength_Utf8(Data -> Data[0]);
     
@@ -180,29 +183,29 @@ int String_InStrFrom(String* This, String* Part, int From)
     int CurrWord = From;
     
     Array_Push(char, This -> Data, 0);
-    --This -> Data_Index;
+    -- This -> Data_Index;
     
     Array_Push(char, Part -> Data, 0);
-    --Part -> Data_Index;
+    -- Part -> Data_Index;
     
     char* Curr = This -> Data;
     
     int ThisLen = String_GetLength(This);
     int PartLen = String_GetLength(Part);
     
-    for(int i = 0; i < From; ++i)
+    for(int i = 0; i < From; ++ i)
         Curr = next_char_safe_utf8(Curr, Curr + ThisLen);
     
     do
     {
-        for(int j = 0; j < PartLen; ++j)
+        for(int j = 0; j < PartLen; ++ j)
         {
             if(Part -> Data[j] != Curr[j])
                 goto cont;
         }
         return CurrWord;
         cont:;
-        ++CurrWord;
+        ++ CurrWord;
     } while((Curr = next_char_safe_utf8(Curr, Curr + ThisLen)));
     
     return -1;
@@ -218,29 +221,29 @@ int String_InStrRevFrom(String* This, String* Part, int From)
     int CurrWord = From;
     
     Array_Push(char, This -> Data, 0);
-    --This -> Data_Index;
+    -- This -> Data_Index;
     
     Array_Push(char, Part -> Data, 0);
-    --Part -> Data_Index;
+    -- Part -> Data_Index;
     
     char* Curr = This -> Data;
     
     int ThisLen = String_GetLength(This);
     int PartLen = String_GetLength(Part);
     
-    for(int i = 0; i < From; ++i)
+    for(int i = 0; i < From; ++ i)
         Curr = next_char_safe_utf8(Curr, Curr + ThisLen);
     
     do
     {
-        for(int j = 0; j < PartLen; ++j)
+        for(int j = 0; j < PartLen; ++ j)
         {
             if(Part -> Data[j] != Curr[j])
                 goto cont;
         }
         return CurrWord;
         cont:;
-        --CurrWord;
+        -- CurrWord;
     } while((Curr = prev_char_safe_utf8(Curr, This -> Data)));
     
     return -1;
@@ -256,14 +259,14 @@ void Mid(String* Dest, String* Sorc, int From, int Count)
     char* Begin = Sorc -> Data;
     char* End = NULL;
     
-    for(int i = 0; i < From && Begin; ++i)
+    for(int i = 0; i < From && Begin; ++ i)
         Begin = next_char_safe_utf8(Begin, 
                                     Sorc -> Data + 
                                     Sorc -> Data_Index + 1);
     RAssert(Begin);
     End = Begin;
     
-    for(int i = 0; i < Count && End; ++i)
+    for(int i = 0; i < Count && End; ++ i)
         End = next_char_safe_utf8(End, 
                                   Sorc -> Data + 
                                   Sorc -> Data_Index + 1);
@@ -283,7 +286,7 @@ void MidFrom(String* Dest, String* Sorc, int From)
     char* Begin = Sorc -> Data;
     char* End = Sorc -> Data + Sorc -> Data_Index + 1;
     
-    for(int i = 0; i < From; ++i)
+    for(int i = 0; i < From; ++ i)
         Begin = next_char_safe_utf8(Begin, 
                                     End);
     RAssert(Begin);
@@ -300,7 +303,7 @@ void Right(String* Dest, String* Sorc, int Count)
 {
     char* End = Sorc -> Data + Sorc -> Data_Index + 1;
     char* Begin = End;
-    for(int i = 0; i < Count; ++i)
+    for(int i = 0; i < Count; ++ i)
         Begin = prev_char_safe_utf8(Begin, 
                                     Sorc -> Data);
     RAssert(Begin);
@@ -317,7 +320,7 @@ void Left(String* Dest, String* Sorc, int Count)
 {
     char* Begin = Sorc -> Data;
     char* End = Begin;
-    for(int i = 0; i < Count; ++i)
+    for(int i = 0; i < Count; ++ i)
         End = next_char_safe_utf8(End, 
                                   Sorc -> Data + 
                                   Sorc -> Data_Index + 1);
@@ -365,13 +368,13 @@ void Trim(String* Dest, String* Sorc)
     char* End = Sorc -> Data + Sorc -> Data_Index;
     int LSkip, RSkip;
     
-    for(LSkip = 0; Begin && (Begin[0] == ' ' || Begin[0] == '\t'); 
-        ++LSkip, Begin = next_char_safe_utf8(Begin, End));
+    for(LSkip = 0; Begin && (Begin[0] == ' ' || Begin[0] == '\t'); ++ LSkip)
+        Begin = next_char_safe_utf8(Begin, End);
     if(! Begin)
         return;
     
-    for(RSkip = 0; End && (End[0] == ' ' || End[0] == '\t'); 
-        ++RSkip, End = prev_char_safe_utf8(End, Begin));
+    for(RSkip = 0; End && (End[0] == ' ' || End[0] == '\t'); ++ RSkip)
+        End = prev_char_safe_utf8(End, Begin);
     if(! End)
         return;
     
@@ -391,8 +394,8 @@ void LTrim(String* Dest, String* Sorc)
     char* End = Sorc -> Data + Sorc -> Data_Index;
     int LSkip;
     
-    for(LSkip = 0; Begin && (Begin[0] == ' ' || Begin[0] == '\t'); 
-        ++LSkip, Begin = next_char_safe_utf8(Begin, End));
+    for(LSkip = 0; Begin && (Begin[0] == ' ' || Begin[0] == '\t'); ++ LSkip)
+        Begin = next_char_safe_utf8(Begin, End);
     if(! Begin)
         return;
     
@@ -412,8 +415,8 @@ void RTrim(String* Dest, String* Sorc)
     char* End = Sorc -> Data + Sorc -> Data_Index;
     int RSkip;
     
-    for(RSkip = 0; End && (End[0] == ' ' || End[0] == '\t'); 
-        ++RSkip, End = prev_char_safe_utf8(End, Begin));
+    for(RSkip = 0; End && (End[0] == ' ' || End[0] == '\t'); ++ RSkip)
+        End = prev_char_safe_utf8(End, Begin);
     if(! End)
         return;
     
