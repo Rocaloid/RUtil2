@@ -2,22 +2,48 @@
 #define RUTIL2_UTFSTRING_H
 
 #include <unistd.h>
+#include <string.h>
 #include "../Core/OO.h"
 
-size_t strlen_utf8(const char* s);
-size_t strnlen_utf8(const char* s, size_t n);
+RINLINE int strlen_utf8(char* s) 
+{
+    return strlen(s);
+}
+
+RINLINE char* strcpy_utf8(char* Dest, char* Sorc)
+{
+    return strcpy(Dest, Sorc);
+}
+
+RINLINE int strcmp_utf8(char* a, char* b)
+{
+    return strcmp(a, b);
+}
+
+RINLINE char* strcat_utf8(char* Dest, char* Sorc)
+{
+    return strcat(Dest, Sorc);
+}
+
+int strnum_utf8(const char* s);
+int strnnum_utf8(const char* s, int n);
+int strwlen_utf8(const char* s, int w);
+
+int strwcmp_utf8(const char* a, const char* b, int w);
 
 char* strncpy_utf8(char* __restrict Dest, 
                    const char* __restrict Sorc, 
-                   size_t n);
+                   int n);
 
 char* strncat_utf8(char* __restrict Dest, 
                    const char* __restrict Sorc, 
-                   size_t n);
+                   int n);
 
 char* next_char_safe_utf8(const char* p, const char* StrEnd);
 char* next_char_utf8(const char* p);
 char* prev_char_safe_utf8(const char* StrBegin, const char* p);
 char* prev_char_utf8(const char* p);
 
-#endif //RUTIL2_UTFSTRING_H
+int GetWordLength_Utf8(const char Head);
+
+#endif //RUTIL2_UTFSTRING_INTERN_H

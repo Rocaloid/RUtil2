@@ -4,7 +4,7 @@
 #include <memory.h>
 #include "../Core/OO.h"
 
-static const size_t Utf8_Skip_Data[256] = 
+static const int Utf8_Skip_Data[256] = 
 {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -26,8 +26,8 @@ static const size_t Utf8_Skip_Data[256] =
 
 #define _Utf8_NCopy_Core(Dest, Sorc, n)                                       \
     {                                                                         \
-        size_t U8Size;                                                        \
-        while(* Sorc && (U8Size = Utf8_Skip_Data[(UChar)(* Sorc)]) < n)     \
+        int U8Size;                                                        \
+        while(* Sorc && (U8Size = Utf8_Skip_Data[(UChar)(* Sorc)]) < n)      \
         {                                                                     \
             n -= U8Size;                                                      \
             memcpy(Dest, Sorc, U8Size);                                       \
@@ -37,12 +37,9 @@ static const size_t Utf8_Skip_Data[256] =
         * Dest = '\0';                                                        \
     } (void)0
 
-#define strcpy_utf8(Dest, Sorc) strcpy(Dest, Sorc)
-#define strcat_utf8(Dest, Sorc) strcat(Dest, Sorc)
-
-size_t strlen_utf8(const char* s)
+int strnum_utf8(const char* s)
 {
-    size_t Len;
+    int Len;
     
     for (Len = 0; * s; ++Len)
         s += Utf8_Skip_Data[(UChar)(* s)];
@@ -50,20 +47,34 @@ size_t strlen_utf8(const char* s)
     return Len;
 }
 
-size_t strnlen_utf8(const char* s, size_t n)
+int strnnum_utf8(const char* s, int n)
 {
-    size_t Len;
+    int Len;
     const char* s_end = s + n;
     
     for (Len = 0; * s && s < s_end; ++Len)
         s += Utf8_Skip_Data[(UChar)(* s)];
     
+    if(s > s_end)
+        --Len;
+    
     return Len;
+}
+
+int strwlen_utf8(const char* s, int w)
+{
+    int Len;
+    const char* Curr = s;
+    
+    for (Len = 0; Len < w && (* Curr); ++Len)
+        Curr += Utf8_Skip_Data[(UChar)(* s)];
+    
+    return Curr - s;
 }
 
 char* strncpy_utf8(char* __restrict Dest, 
                    const char* __restrict Sorc, 
-                   size_t n)
+                   int n)
 {
     char* Dest_Raw = Dest;
     
@@ -75,9 +86,42 @@ char* strncpy_utf8(char* __restrict Dest,
     return (char *)Dest_Raw;
 }
 
+char* strwcpy_utf8(char* __restrict Dest, 
+                   const char* __restrict Sorc, 
+                   int n)
+{
+    char* Dest_Raw = Dest;
+    
+    RAssert(n);
+
+    /* NOTE: currently we don't attempt to deal with invalid utf8 chars */
+    _Utf8_NCopy_Core(Dest, Sorc, n);
+    
+    return (char *)Dest_Raw;
+}
+
+int strwcmp_utf8(const char* a, const char* b, int w)
+{
+    char tmp;
+    
+    for(int i = 0; i < w; ++i)
+    {
+        int WLenA = Utf8_Skip_Data[(UChar)(a[0])];
+        for(int j = 0; j < WLenA; ++j)
+        {
+            if((tmp = a[j] - b[j]))
+                return tmp;
+        }
+        a = next_char_utf8(a);
+        b = next_char_utf8(b);
+    }
+    
+    return 0;
+}
+
 char* strncat_utf8(char* __restrict Dest, 
                    const char* __restrict Sorc, 
-                   size_t n)
+                   int n)
 {
     while(* Dest && n > 0)
     {
@@ -99,7 +143,7 @@ char* next_char_safe_utf8(const char* p, const char* StrEnd)
         else
             for(++p; (* p & 0xc0) == 0x80; ++p);
     }
-    return (p == StrEnd) ? NULL : (char* )p;
+    return (p > StrEnd) ? NULL : (char* )p;
 }
 
 char* next_char_utf8(const char* p)
@@ -111,7 +155,7 @@ char* next_char_utf8(const char* p)
     return (char*)p;
 }
 
-char* prev_char_safe_utf8(const char* StrBegin, const char* p)
+char* prev_char_safe_utf8(const char* p, const char* StrBegin)
 {
     for(--p; p >= StrBegin; --p)
     {
@@ -130,4 +174,9 @@ char* prev_char_utf8(const char* p)
         if ((* p & 0xc0) != 0x80)
             return (char*)p;
     }
+}
+
+int GetWordLength_Utf8(const char Head)
+{
+    return Utf8_Skip_Data[(UChar)Head];
 }
