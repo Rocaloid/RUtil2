@@ -19,8 +19,8 @@ RClass(String)
     } while(0)
 
 //Member Functions
-void String_SetChars(String* This, char* Chars);
-void String_SetCharsN(String* This, char* Chars, int Length);
+void String_SetChars(String* This, const char* Chars);
+void String_SetCharsN(String* This, const char* Chars, int Length);
 char* String_GetChars(String* This);
 
 void String_Copy(String* This, String* Sorc);
@@ -39,10 +39,10 @@ int String_EqualN(String* This, String* Sorc, int n);
 int String_EqualChars(String* This, const char* Sorc);
 int String_EqualNChars(String* This, const char* Sorc, int n);
 
-int String_InStrFrom(String* This, String* Sorc, int From);
-int String_InStr(String* This, String* Sorc);
-int String_InStrRevFrom(String* This, String* Sorc, int From);
-int String_InStrRev(String* This, String* Sorc);
+int String_InStrFrom(String* This, String* Part, int From);
+int String_InStr(String* This, String* Part);
+int String_InStrRevFrom(String* This, String* Part, int From);
+int String_InStrRev(String* This, String* Part);
 
 //Abbreviations
 #define InStrFrom    String_InStrFrom

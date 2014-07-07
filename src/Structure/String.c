@@ -12,7 +12,7 @@ RDtor(String)
     Array_Dtor(char, This -> Data);
 }
 
-void String_SetChars(String* This, char* Chars)
+void String_SetChars(String* This, const char* Chars)
 {
     int Len = strlen(Chars);
     Array_Resize(char, This -> Data, Len);
@@ -20,8 +20,11 @@ void String_SetChars(String* This, char* Chars)
     This -> Data_Index = Len - 1;
 }
 
-void String_SetCharsN(String* This, char* Chars, int Length)
+void String_SetCharsN(String* This, const char* Chars, int Length)
 {
+    int SLen = strlen(Chars);
+    if(SLen < Length)
+        Length = SLen;
     Array_Resize(char, This -> Data, Length);
     memcpy(This -> Data, Chars, Length);
     This -> Data_Index = Length - 1;
@@ -93,15 +96,13 @@ int String_EqualN(String* This, String* Sorc, int n)
 
 int String_EqualChars(String* This, const char* Sorc)
 {
-    if(strlen(Sorc) == (size_t)This -> Data_Index + 1)
-        return ! strncmp(This -> Data, Sorc, This -> Data_Index + 1);
+    return (! strncmp(This -> Data, Sorc, This -> Data_Index + 1));
     return 0;
 }
 
 int String_EqualNChars(String* This, const char* Sorc, int n)
 {
-    if(n == strlen(Sorc))
-        return ! strncmp(This -> Data, Sorc, n);
+    return ! strncmp(This -> Data, Sorc, n);
     return 0;
 }
 
@@ -302,4 +303,3 @@ void RTrim(String* Dest, String* Sorc)
         Dest -> Data[i] = Sorc -> Data[i + Start];
     Dest -> Data_Index = RetLen - 1;
 }
-
