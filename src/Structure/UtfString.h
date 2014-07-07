@@ -5,22 +5,22 @@
 #include <string.h>
 #include "../Core/OO.h"
 
-RINLINE int strlen_utf8(char* s) 
+RInline int strlen_utf8(char* s) 
 {
     return strlen(s);
 }
 
-RINLINE char* strcpy_utf8(char* Dest, char* Sorc)
+RInline char* strcpy_utf8(char* Dest, char* Sorc)
 {
     return strcpy(Dest, Sorc);
 }
 
-RINLINE int strcmp_utf8(char* a, char* b)
+RInline int strcmp_utf8(char* a, char* b)
 {
     return strcmp(a, b);
 }
 
-RINLINE char* strcat_utf8(char* Dest, char* Sorc)
+RInline char* strcat_utf8(char* Dest, char* Sorc)
 {
     return strcat(Dest, Sorc);
 }

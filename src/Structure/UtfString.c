@@ -24,7 +24,7 @@ static const int Utf8_Skip_Data[256] =
     4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 1, 1
 };
 
-#define _Utf8_NCopy_Core(Dest, Sorc, n)                                       \
+#define _utf8_NCopy_Core(Dest, Sorc, n)                                       \
     {                                                                         \
         int U8Size;                                                        \
         while(* Sorc && (U8Size = Utf8_Skip_Data[(UChar)(* Sorc)]) < n)      \
@@ -81,7 +81,7 @@ char* strncpy_utf8(char* __restrict Dest,
     RAssert(n);
 
     /* NOTE: currently we don't attempt to deal with invalid utf8 chars */
-    _Utf8_NCopy_Core(Dest, Sorc, n);
+    _utf8_NCopy_Core(Dest, Sorc, n);
     
     return (char *)Dest_Raw;
 }
@@ -95,7 +95,7 @@ char* strwcpy_utf8(char* __restrict Dest,
     RAssert(n);
 
     /* NOTE: currently we don't attempt to deal with invalid utf8 chars */
-    _Utf8_NCopy_Core(Dest, Sorc, n);
+    _utf8_NCopy_Core(Dest, Sorc, n);
     
     return (char *)Dest_Raw;
 }
@@ -129,7 +129,7 @@ char* strncat_utf8(char* __restrict Dest,
         --n;
     }
     
-    _Utf8_NCopy_Core(Dest, Sorc, n);
+    _utf8_NCopy_Core(Dest, Sorc, n);
 
     return (char *)Dest;
 }
