@@ -4,7 +4,20 @@
 #include <malloc.h>
 #define Array_Addition 96
 
-static inline int RUTMO8(int v) // RoundUpToMultipleOf8
+#ifndef RINLINE
+    #if defined(_MSC_VER)
+        #define RINLINE static __forceinline
+    #else
+        #if (defined(__APPLE__) && defined(__ppc__))
+    /* static inline __attribute__ here breaks osx ppc gcc42 build */
+            #define RINLINE static __attribute__((always_inline))
+        #else
+            #define RINLINE static inline __attribute__((always_inline))
+        #endif
+    #endif
+#endif
+
+RINLINE int RUTMO8(int v) // RoundUpToMultipleOf8
 {
     return (v+7) & 0xFFFFFFF8; //(value+roundto) & ~(roundto-1)
 }
