@@ -74,7 +74,8 @@ void TestAllocWordNum()
     String_FromChars(s, "水平線に一人きり　孤独に包み込まれて");
     String_AllocWordNum(&s, 0);
     String_AllocWordNum(&s, 0xff);
-    //String_AllocWordNum(&s, -0xff); //should be String_AllocWordNum(String *, size_t)
+    //should be String_AllocWordNum(String *, size_t)
+    //String_AllocWordNum(&s, -0xff);
     String_Dtor(&s);
 }
 
@@ -303,3 +304,4 @@ int main()
 }
 
 #undef WITH_ASSERT_ABORT
+
