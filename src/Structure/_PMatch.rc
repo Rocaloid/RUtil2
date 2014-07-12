@@ -24,12 +24,13 @@ RTMethod(void, PMatch, From, _RTClassName* Sorc)
         This -> Y[i] = Sorc -> Y[i];
 }
 
-RTMethod(void, PMatch, AddPair, _T1 XVar, _T2 YVar)
+RTMethod(int , PMatch, AddPair, _T1 XVar, _T2 YVar)
 {
     int Index;
     Array_IncFind(Index, _T1, This -> X, XVar);
     Array_Insert(_T2, This -> Y, Index, YVar);
     Array_Insert(_T1, This -> X, Index, XVar);
+    return Index;
 }
 
 RTMethod(void, PMatch, Clear)
