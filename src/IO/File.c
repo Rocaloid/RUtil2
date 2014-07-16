@@ -94,6 +94,7 @@ void File_Read_String(File* This, String* Dest)
         File_Read_Array_Core
     }
     while(tmpchar != 0 && This -> FilePtr < This -> Length - 1);
+    Array_Push(char, tmp, '\0');
     
     String_SetChars(Dest, tmp);
     File_SetPosition(This, This -> FilePtr);
