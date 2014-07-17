@@ -34,6 +34,12 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
+include(TestBigEndian)
+test_big_endian(IS_BIG_ENDIAN)
+if(IS_BIG_ENDIAN)
+    add_definitions(-D__BIG_ENDIAN__)
+endif()
+
 add_subdirectory(src)
 add_subdirectory(doc)
 add_subdirectory(test)
