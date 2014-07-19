@@ -48,6 +48,98 @@
     #define _T4_IntLike
 #endif
 
+#undef _T1_DataLen
+// 1
+#if _T1_TID == _TID_Char || _T1_TID == _TID_UChar
+    #define _T1_DataLen 1
+#endif
+
+// 2
+#if _T1_TID == _TID_Short || _T1_TID == _TID_Short || \
+     _T1_TID == _TID_Int16 || _T1_TID == _TID_UInt16
+    #define _T1_DataLen 2
+#endif
+
+// 4
+#if _T1_TID == _TID_Float || _T1_TID == _TID_Int || _T1_TID == _TID_UInt || \
+    _T1_TID == _TID_Int32 || _T1_TID == _TID_UInt32
+    #define _T1_DataLen 4
+#endif
+
+// 8
+#if _T1_TID == _TID_Double || _T1_TID == _TID_Int64 || _T1_TID == _TID_UInt64
+    #define _T1_DataLen 8
+#endif
+
+#undef _T2_DataLen
+// 1
+#if _T2_TID == _TID_Char || _T2_TID == _TID_UChar
+    #define _T2_DataLen 1
+#endif
+
+// 2
+#if _T2_TID == _TID_Short || _T2_TID == _TID_Short || \
+     _T2_TID == _TID_Int16 || _T2_TID == _TID_UInt16
+    #define _T2_DataLen 2
+#endif
+
+// 4
+#if _T2_TID == _TID_Float || _T2_TID == _TID_Int || _T2_TID == _TID_UInt || \
+    _T2_TID == _TID_Int32 || _T2_TID == _TID_UInt32
+    #define _T2_DataLen 4
+#endif
+
+// 8
+#if _T2_TID == _TID_Double || _T2_TID == _TID_Int64 || _T2_TID == _TID_UInt64
+    #define _T2_DataLen 8
+#endif
+
+#undef _T3_DataLen
+// 1
+#if _T3_TID == _TID_Char || _T3_TID == _TID_UChar
+    #define _T3_DataLen 1
+#endif
+
+// 2
+#if _T3_TID == _TID_Short || _T3_TID == _TID_Short || \
+     _T3_TID == _TID_Int16 || _T3_TID == _TID_UInt16
+    #define _T3_DataLen 2
+#endif
+
+// 4
+#if _T3_TID == _TID_Float || _T3_TID == _TID_Int || _T3_TID == _TID_UInt || \
+    _T3_TID == _TID_Int32 || _T3_TID == _TID_UInt32
+    #define _T3_DataLen 4
+#endif
+
+// 8
+#if _T3_TID == _TID_Double || _T3_TID == _TID_Int64 || _T3_TID == _TID_UInt64
+    #define _T3_DataLen 8
+#endif
+
+#undef _T4_DataLen
+// 1
+#if _T4_TID == _TID_Char || _T4_TID == _TID_UChar
+    #define _T4_DataLen 1
+#endif
+
+// 2
+#if _T4_TID == _TID_Short || _T4_TID == _TID_Short || \
+     _T4_TID == _TID_Int16 || _T4_TID == _TID_UInt16
+    #define _T4_DataLen 2
+#endif
+
+// 4
+#if _T4_TID == _TID_Float || _T4_TID == _TID_Int || _T4_TID == _TID_UInt || \
+    _T4_TID == _TID_Int32 || _T4_TID == _TID_UInt32
+    #define _T4_DataLen 4
+#endif
+
+// 8
+#if _T4_TID == _TID_Double || _T4_TID == _TID_Int64 || _T4_TID == _TID_UInt64
+    #define _T4_DataLen 8
+#endif
+
 #undef _RTClassName
 #if _Attr == 1
     #define _RTClassName _C1(_ClassName, __Attr)

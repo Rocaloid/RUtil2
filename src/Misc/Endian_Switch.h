@@ -2,28 +2,53 @@
 #define ENDIAN_SWITCH_H
 
 #include "../Core/OO.h"
-#include <inttypes.h>
 
-/* Endian_Switch_Inline.h */
-RInline void Endian_Switch_Int16(short* val);
-RInline void Endian_Switch_UInt16(unsigned short* val);
-RInline void Endian_Switch_Int32(int* val);
-RInline void Endian_Switch_UInt32(unsigned int* val);
-RInline void Endian_Switch_Float(float* val);
-RInline void Endian_Switch_Int64(int64_t* val);
-RInline void Endian_Switch_UInt64(uint64_t* val);
-RInline void Endian_Switch_Double(double* val);
+#if 0
+#include "_Endian_Switch.h"
+#endif
+#ifdef __RUtil2_Install
+#define _RTAddress "RUtil2/Misc/_Endian_Switch.h"
+#else
+#define _RTAddress "Misc/_Endian_Switch.h"
+#endif
 
-/* Endian_Switch.c */
-void Endian_Switch_Int16_Array(short* val, const int size);
-void Endian_Switch_UInt16_Array(unsigned short* val, const int size);
-void Endian_Switch_Int32_Array(int* val, const int size);
-void Endian_Switch_UInt32_Array(unsigned int* val, const int size);
-void Endian_Switch_Float_Array(float* val, const int size);
-void Endian_Switch_Int64_Array(int64_t* val, const int size);
-void Endian_Switch_UInt64_Array(uint64_t* val, const int size);
-void Endian_Switch_Double_Array(double* val, const int size);
+#define _ClassName
+#define _Attr 1
 
-#include "Endian_Switch_Inline.h"
+#define _T1 Float
+#include "../Core/RTemplate.h"
+
+#define _T1 Double
+#include "../Core/RTemplate.h"
+
+#define _T1 Int
+#include "../Core/RTemplate.h"
+
+#define _T1 UInt
+#include "../Core/RTemplate.h"
+
+#define _T1 Short
+#include "../Core/RTemplate.h"
+
+#define _T1 UShort
+#include "../Core/RTemplate.h"
+
+#define _T1 Int16
+#include "../Core/RTemplate.h"
+
+#define _T1 UInt16
+#include "../Core/RTemplate.h"
+
+#define _T1 Int32
+#include "../Core/RTemplate.h"
+
+#define _T1 UInt32
+#include "../Core/RTemplate.h"
+
+#define _T1 Int64
+#include "../Core/RTemplate.h"
+
+#define _T1 UInt64
+#include "../Core/RTemplate.h"
 
 #endif // ENDIAN_SWITCH_H

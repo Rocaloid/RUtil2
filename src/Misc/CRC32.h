@@ -4,6 +4,6 @@
 #include <unistd.h>
 #include "../Core/OO.h"
 
-UInt Crc32Sum(const void* Buffer_P, size_t Size, UInt Crc);
+UInt CRC32Sum(const void* Buffer_P, size_t Size, UInt Crc);
 
 #endif //RUTIL2_CRC32_H

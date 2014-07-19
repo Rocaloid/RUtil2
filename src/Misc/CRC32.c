@@ -23,21 +23,21 @@
 #include "../Core/OO.h"
 
 
-UInt Crc32Sum(const void* Buffer_P, size_t Size, UInt Crc)
+UInt CRC32Sum(const void* Buffer_P, size_t Size, UInt CRC)
 {
     const UChar* Buffer = Buffer_P;
     
-    Crc = ~Crc;
+    CRC = ~CRC;
 
 #ifdef __BIG_ENDIAN__
-    Crc = Endian_Switch_Uint32(Crc);
+    CRC = Endian_Switch_Uint32(CRC);
 #endif
 
     if (Size > 8) {
         // Fix the alignment, if needed. The if statement above
         // ensures that this won't read past the end of Buffer[].
         while ((uintptr_t)(Buffer) & 7) {
-            Crc = CRC32_TABLE[0][*Buffer ++ ^ A(Crc)] ^ S8(Crc);
+            CRC = CRC32_TABLE[0][*Buffer ++ ^ A(CRC)] ^ S8(CRC);
             --Size;
         }
 
@@ -50,34 +50,34 @@ UInt Crc32Sum(const void* Buffer_P, size_t Size, UInt Crc)
 
         // Calculate the CRC32 using the slice-by-eight algorithm.
         while (Buffer < limit) {
-            Crc ^=*(const UInt*)(Buffer);
+            CRC ^=*(const UInt*)(Buffer);
             Buffer += 4;
 
-            Crc = CRC32_TABLE[7][A(Crc)]
-                ^ CRC32_TABLE[6][B(Crc)]
-                ^ CRC32_TABLE[5][C(Crc)]
-                ^ CRC32_TABLE[4][D(Crc)];
+            CRC = CRC32_TABLE[7][A(CRC)]
+                ^ CRC32_TABLE[6][B(CRC)]
+                ^ CRC32_TABLE[5][C(CRC)]
+                ^ CRC32_TABLE[4][D(CRC)];
 
             const UInt tmp =*(const UInt*)(Buffer);
             Buffer += 4;
 
             // At least with some compilers, it is critical for
-            // performance, that the Crc variable is XORed
+            // performance, that the CRC variable is XORed
             // between the two table-lookup pairs.
-            Crc = CRC32_TABLE[3][A(tmp)]
+            CRC = CRC32_TABLE[3][A(tmp)]
                 ^ CRC32_TABLE[2][B(tmp)]
-                ^ Crc
+                ^ CRC
                 ^ CRC32_TABLE[1][C(tmp)]
                 ^ CRC32_TABLE[0][D(tmp)];
         }
     }
 
     while ((Size --) != 0)
-        Crc = CRC32_TABLE[0][*(Buffer ++) ^ A(Crc)] ^ S8(Crc);
+        CRC = CRC32_TABLE[0][*(Buffer ++) ^ A(CRC)] ^ S8(CRC);
 
 #ifdef __BIG_ENDIAN__
-    Crc = Endian_Switch_UInt32(Crc);
+    CRC = Endian_Switch_UInt32(CRC);
 #endif
 
-    return ~Crc;
+    return ~CRC;
 }

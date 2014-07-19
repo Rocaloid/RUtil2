@@ -9,11 +9,11 @@ static int SPTNr = 0;
 
 static int CRC32_Str_Compare(const char* Sorc, UInt Correct)
 {
-    UInt Crc = Crc32Sum(Sorc, strlen(Sorc), 0);
-    if(Crc != Correct)
+    UInt CRC = CRC32Sum(Sorc, strlen(Sorc), 0);
+    if(CRC != Correct)
     {
         fprintf(stderr, "[Error] CRC32 worked out a wrong result: %08x\n"
-                        "Correct is %08x.\n", Crc, Correct);
+                        "Correct is %08x.\n", CRC, Correct);
         return 0;
     }
     return 1;
@@ -44,7 +44,7 @@ static float __CRC32_SpeedTest_Core__(UInt TestCount, UInt TestSize)
     gettimeofday(& bgn, NULL);
     
     for(int i = 0; i < TestCount; ++ i)
-        Crc32Sum(Data[i], TestSize, 0);
+        CRC32Sum(Data[i], TestSize, 0);
     
     gettimeofday(& end, NULL);
     

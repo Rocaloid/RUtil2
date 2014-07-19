@@ -11,7 +11,7 @@
 
 extern int __ClassID__;
 
-//Rocaloid-style type aliases.
+//Rocaloid-style type aliases. Never use long!
 typedef float               Float;
 typedef double              Double;
 typedef int                 Int;

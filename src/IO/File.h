@@ -47,6 +47,8 @@ void File_ReadLine(File* This, String* Dest);
 void File_ReadAll(File* This, String* Dest);
 void File_WriteLine(File* This, String* Sorc);
 
+int File_IsFile(String* Path);
+
 //Template Reads & Writes
 #if 0
 #include "_File.h"
