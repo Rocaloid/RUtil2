@@ -1,5 +1,8 @@
 #include "File.h"
 #include <string.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include "../Core/OO.h"
 
 static char FModes[5][5] = {"rb", "wb", "rwb+", "ab+", "wb+"};
@@ -202,6 +205,17 @@ void File_WriteLine(File* This, String* Sorc)
 {
     File_Write_Chars(This, String_GetChars(Sorc));
     File_Write_Char(This, '\n');
+}
+
+int File_IsFile(String* Path)
+{
+    struct stat Info;
+    if (stat(String_GetChars(Path),& Info) != 0)
+        return -1;
+    if( Info.st_mode & S_IFDIR )
+        return 0;
+    else
+        return 1;
 }
 
 //Template Reads & Writes

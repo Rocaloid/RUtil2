@@ -13,6 +13,8 @@
 #include <RUtil2/Misc/Sort.h>
 #include <RUtil2/Misc/Base64.h>
 #include <RUtil2/Misc/Tune.h>
+#include <RUtil2/Misc/CRC32.h>
+#include <RUtil2/Misc/Endian_Switch.h>
 
 #include <RUtil2/IO/File.h>
 #include <RUtil2/IO/WaveFile.h>
