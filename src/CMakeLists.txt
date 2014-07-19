@@ -32,6 +32,7 @@ install(FILES Misc/Convert.h
               Misc/_Tune.h
               Misc/CRC32.h
               Misc/Endian_Switch.h
+              Misc/_Endian_Switch.h
               DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Misc)
 install(FILES IO/File.h
               IO/_File.h
