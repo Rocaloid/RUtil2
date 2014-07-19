@@ -35,7 +35,7 @@ RTFunc(RInline void, Endian_Switch, _T1* val)
 
 RTFunc(RInline void, Endian_Switch_Array, _T1* val, int Size)
 {
-    if (size > 0)
+    if (Size > 0)
     {
         int i = Size;
         val = val + (Size - 1);
