@@ -1,7 +1,6 @@
 #include <unistd.h>
 #include "CRC32.h"
 #ifdef __BIG_ENDIAN__
-    #include "CRC32_TABLE_BE.h"
     #define A(x) ((x) >> 24)
     #define B(x) (((x) >> 16) & 0xFF)
     #define C(x) (((x) >> 8) & 0xFF)
@@ -11,7 +10,6 @@
     #define S32(x) ((x) << 32)
 
 #else
-    #include "CRC32_TABLE_LE.h"
     #define A(x) ((x) & 0xFF)
     #define B(x) (((x) >> 8) & 0xFF)
     #define C(x) (((x) >> 16) & 0xFF)
@@ -22,6 +20,35 @@
 #endif
 #include "../Core/OO.h"
 
+static uint32_t CRC32_TABLE[8][256];
+
+void __attribute__ ((constructor(1000))) __Create_CRC32_Table()
+{
+    static const uint32_t poly32 = UINT32_C(0xEDB88320);
+
+    for (size_t s = 0; s < 8; ++ s) {
+        for (size_t b = 0; b < 256; ++ b) {
+            uint32_t r = s == 0 ? b : CRC32_TABLE[s - 1][b];
+
+            for (size_t i = 0; i < 8; ++ i) {
+                if (r & 1)
+                    r = (r >> 1) ^ poly32;
+                else
+                    r >>= 1;
+            }
+
+            CRC32_TABLE[s][b] = r;
+        }
+    }
+
+    #ifdef __BIG_ENDIAN__
+        for (size_t s = 0; s < 8; ++ s)
+        {
+            for (size_t b = 0; b < 256; ++ b)
+                Endian_Switch_Uint32(& (CRC32_TABLE[s][b]));
+        }
+    #endif
+}
 
 UInt CRC32Sum(const void* Buffer_P, size_t Size, UInt CRC)
 {
