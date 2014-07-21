@@ -43,3 +43,4 @@ RTFunc(RInline void, Endian_Switch_Array, _T1* val, int Size)
             _Endian_Switch(val --);
     }
 }
+

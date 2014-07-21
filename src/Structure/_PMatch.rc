@@ -3,6 +3,7 @@ RCtor(_RTClassName)
     RInit(_RTClassName);
     Array_Ctor(_T1, This -> X);
     Array_Ctor(_T2, This -> Y);
+    This -> LastIndex = 0;
 }
 
 RDtor(_RTClassName)
@@ -17,6 +18,7 @@ RTMethod(void, PMatch, From, _RTClassName* Sorc)
     Array_Resize(_T2, This -> Y, Sorc -> Y_Index + 1);
     This -> X_Index = Sorc -> X_Index;
     This -> Y_Index = Sorc -> Y_Index;
+    This -> LastIndex = Sorc -> LastIndex;
     int i;
     for(i = 0; i <= This -> X_Index; i ++)
         This -> X[i] = Sorc -> X[i];
@@ -51,7 +53,12 @@ RTMethod(void, PMatch, Print)
 RTMethod(TransType, PMatch, Query, _T1 XVar)
 {
     TransType Ret;
-    Array_IncFind(Ret.LowerIndex, _T1, This -> X, XVar);
+    Array_IncFindFrom(Ret.LowerIndex, _T1, This -> X, XVar, This -> LastIndex);
+    
+    if(Ret.LowerIndex > 0 && This -> X[Ret.LowerIndex - 1] > XVar)
+        Array_IncFind(Ret.LowerIndex, _T1, This -> X, XVar);
+    
+    This -> LastIndex = Ret.LowerIndex;
     if(Ret.LowerIndex > 0)
         Ret.LowerIndex --;
     if(Ret.LowerIndex < This -> X_Index)
