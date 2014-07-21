@@ -3,6 +3,9 @@ RClass(_RTClassName)
     RInherit(RObject);
     Array_Define(_T1, X);
     Array_Define(_T2, Y);
+    
+    //Private
+    int LastIndex;
 };
 
 RTMethod(void, PMatch, From, _RTClassName* Sorc);

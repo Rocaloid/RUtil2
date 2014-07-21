@@ -161,20 +161,26 @@ void __RFree(void* a, ...);
 
 //---------------------Advanced Macros--------------------
 #define Array_IncFind(Dest, Type, Array, Data) \
+    Array_IncFindFrom(Dest, Type, Array, Data, 0)
+
+#define Array_IncFindFrom(Dest, Type, Array, Data, Index) \
     do \
     { \
         int Array_i; \
-        for(Array_i = 0; Array_i <= _C1(Array, _Index); Array_i ++) \
+        for(Array_i = Index; Array_i <= _C1(Array, _Index); Array_i ++) \
             if((Array)[Array_i] > (Data)) \
                 break; \
         Dest = Array_i; \
     } while(0)
 
 #define Array_DecFind(Dest, Type, Array, Data) \
+    Array_DecFindFrom(Dest, Type, Array, Data, 0)
+
+#define Array_DecFindFrom(Dest, Type, Array, Data, Index) \
     do \
     { \
         int Array_i; \
-        for(Array_i = 0; Array_i <= _C1(Array, _Index); Array_i ++) \
+        for(Array_i = Index; Array_i <= _C1(Array, _Index); Array_i ++) \
             if(Array[Array_i] < (Data)) \
                 break; \
         Dest = Array_i; \
