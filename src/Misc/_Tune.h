@@ -9,6 +9,10 @@ RTFunc(_T1, Tune_SPNToPitch, String* SPN);
 RTFunc(_T1, Tune_FreqToPitch, _T1 Freq);
 RTFunc(_T1, Tune_PitchToFreq, _T1 Pitch);
 
+// Time unit is sec.
+RTFunc(_T1, Tune_BeatToTime, _T1 BPM, _T1 BeatCnt);
+RTFunc(_T1, Tune_TimeToBeat, _T1 BPM, _T1 Time);
+
 // These functions are sugar.
 RTFunc(_T1, Tune_FreqToSPN, _T1 Freq, String* Dest);
 RTFunc(_T1, Tune_SPNToFreq, String* SPN);

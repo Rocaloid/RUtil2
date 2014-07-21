@@ -86,6 +86,16 @@ RTFunc(_T1, Tune_PitchToFreq, _T1 Pitch)
     #endif
 }
 
+RTFunc(_T1, Tune_BeatToTime, _T1 BPM, _T1 BeatCnt)
+{
+    return BeatCnt / BPM * 60;
+}
+
+RTFunc(_T1, Tune_TimeToBeat, _T1 BPM, _T1 Time)
+{
+    return BPM / (Time / 60);
+}
+
 RTFunc(_T1, Tune_FreqToSPN, _T1 Freq, String* Dest)
 {
     return _PitchToSPN(_FreqToPitch(Freq), Dest);
