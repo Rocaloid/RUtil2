@@ -80,20 +80,38 @@ RTFunc(_T1, Tune_FreqToPitch, _T1 Freq)
 RTFunc(_T1, Tune_PitchToFreq, _T1 Pitch)
 {
     #if _T1_TID == _TID_Float || defined(_T1_IntLike)
-    return (_T1)(440 * powf(2, (Pitch - 69) / 12));
+    return (_T1)(440 * powf(2.0f, (Pitch - 69.0f) / 12.0f));
     #else
-    return 440 * pow(2, (Pitch - 69) / 12);
+    return 440 * pow(2.0f, (Pitch - 69.0f) / 12.0f);
+    #endif
+}
+
+RTFunc(_T1, Tune_AddCentToFreq, _T1 Freq, _T1 Cent)
+{
+    #if _T1_TID == _TID_Float || defined(_T1_IntLike)
+    return (_T1)(Freq * powf(2.0f, Cent / 1200.0f));
+    #else
+    return Freq * pow(2.0f, Cent / 1200.0f);
+    #endif
+}
+
+RTFunc(_T1, Tune_CalcCentFromFreq, _T1 Freq1, _T1 Freq2)
+{
+    #if _T1_TID == _TID_Float || defined(_T1_IntLike)
+    return (_T1)(1200.0f * log2f(Freq1 / Freq2));
+    #else
+    return 1200.0f * log2(Freq1 / Freq2);
     #endif
 }
 
 RTFunc(_T1, Tune_BeatToTime, _T1 BPM, _T1 BeatCnt)
 {
-    return BeatCnt / BPM * 60;
+    return (_T1)(BeatCnt / BPM * 60.0f);
 }
 
 RTFunc(_T1, Tune_TimeToBeat, _T1 BPM, _T1 Time)
 {
-    return BPM / (Time / 60);
+    return (_T1)(BPM / (Time / 60.0f));
 }
 
 RTFunc(_T1, Tune_FreqToSPN, _T1 Freq, String* Dest)
