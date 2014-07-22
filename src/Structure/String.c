@@ -337,7 +337,7 @@ void Left(String* Dest, String* Sorc, int Count)
 void UpperCase(String* Dest, String* Sorc)
 {
     String_Copy(Dest, Sorc);
-    char* Curr = Dest -> Data;
+    char* Curr = String_GetChars(Dest);
     
     do
     {
@@ -351,7 +351,7 @@ void UpperCase(String* Dest, String* Sorc)
 void LowerCase(String* Dest, String* Sorc)
 {
     String_Copy(Dest, Sorc);
-    char* Curr = Dest -> Data;
+    char* Curr = String_GetChars(Dest);
     
     do
     {
