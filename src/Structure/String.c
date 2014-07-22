@@ -339,13 +339,14 @@ void UpperCase(String* Dest, String* Sorc)
     String_Copy(Dest, Sorc);
     char* Curr = String_GetChars(Dest);
     
-    do
+    while(Curr && *Curr)
     {
-        if(Curr[0] >= 'a' || Curr[0] <= 'z')
+        if(GetWordLength_Utf8(Curr[0]) == 1 && 
+           (Curr[0] >= 'a' && Curr[0] <= 'z'))
             Curr[0] += ('A' - 'a');
-    } while((Curr = next_char_safe_utf8(Curr, 
-                                        Dest -> Data + 
-                                        Dest -> Data_Index + 1)));
+        Curr = next_char_safe_utf8(Curr, 
+                                   Dest -> Data + Dest -> Data_Index + 1);
+    }
 }
 
 void LowerCase(String* Dest, String* Sorc)
@@ -353,13 +354,14 @@ void LowerCase(String* Dest, String* Sorc)
     String_Copy(Dest, Sorc);
     char* Curr = String_GetChars(Dest);
     
-    do
+    while(Curr && *Curr)
     {
-        if(Curr[0] >= 'A' || Curr[0] <= 'Z')
+        if(GetWordLength_Utf8(Curr[0]) == 1 && 
+           (Curr[0] >= 'A' && Curr[0] <= 'Z'))
             Curr[0] -= ('A' - 'a');
-    } while((Curr = next_char_safe_utf8(Curr, 
-                                        Dest -> Data + 
-                                        Dest -> Data_Index + 1)));
+        Curr = next_char_safe_utf8(Curr, 
+                                   Dest -> Data + Dest -> Data_Index + 1);
+    }
 }
 
 void Trim(String* Dest, String* Sorc)

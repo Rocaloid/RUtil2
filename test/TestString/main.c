@@ -278,6 +278,21 @@ void TestTrim()
     String_Dtor(& a);
 }
 
+void TestCase()
+{
+    String_FromChars(a, "这是Test啊啊啊 HAHAHAHahaha!");
+    String_FromChars(b, "");
+    
+    UpperCase(& b, & a);
+    RAssert(String_EqualChars(& b, "这是TEST啊啊啊 HAHAHAHAHAHA!"));
+    
+    LowerCase(& b, & a);
+    RAssert(String_EqualChars(& b, "这是test啊啊啊 hahahahahaha!"));
+    
+    String_Dtor(& b);
+    String_Dtor(& a);
+}
+
 int main()
 {
     TestTor(); // Will great water wall block it? LOL
@@ -299,6 +314,7 @@ int main()
     TestMid();
     TestLR();
     TestTrim();
+    TestCase();
     
     return 0;
 }
