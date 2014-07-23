@@ -65,8 +65,11 @@ RTMethod(TransType, PMatch, Query, _T1 XVar)
     {
         Ret.X = (XVar - This -> X[Ret.LowerIndex]) /
                 (This -> X[Ret.LowerIndex + 1] - This -> X[Ret.LowerIndex]);
-        Ret.Y = This -> Y[Ret.LowerIndex] * (1.0 - Ret.X) +
-                This -> Y[Ret.LowerIndex + 1] * Ret.X;
+        if(Ret.X < This -> X[0])
+            Ret.Y = This -> Y[0];
+        else
+            Ret.Y = This -> Y[Ret.LowerIndex] * (1.0 - Ret.X) +
+                    This -> Y[Ret.LowerIndex + 1] * Ret.X;
     }else
     {
         Ret.X = 1;
