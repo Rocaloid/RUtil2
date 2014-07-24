@@ -127,9 +127,45 @@ void __RFree(void* a, ...);
         _C1(Name, _Index) = _C1(Name, _Index); \
     }while(0)
 
+//Resize means to allocate required capacity but do not change Array_Index.
 #define Array_Resize(Type, Array, NewSize) \
     _ProtoArray_Resize(Type, Array, _C1(Array, _Index), _C1(Array, _Size), \
         NewSize)
+
+#define Array_ObjResize(Type, Array, NewSize) \
+    do{ \
+        int Array_i; \
+        if(NewSize < _C1(Array, _Index) + 1) \
+        { \
+            for(Array_i = _C1(Array, _Index); Array_i > NewSize; Array_i --) \
+                _C1(Type, _Dtor)(Array + Array_i); \
+            Array_Resize(Type, Array, NewSize); \
+        }else if(NewSize > _C1(Array, _Index) + 1) \
+        { \
+            Array_Resize(Type, Array, NewSize); \
+            for(Array_i = _C1(Array, _Index) + 1; Array_i < NewSize; \
+                Array_i ++) \
+                _C1(Type, _Ctor)(Array + Array_i); \
+        } \
+    }while(0)
+
+#define Array_From(Type, DestArray, SorcArray) \
+    do{ \
+        int Array_i; \
+        Array_Resize(Type, DestArray, _C1(SorcArray, _Index) + 1); \
+        _C1(DestArray, _Index) = _C1(SorcArray, _Index); \
+        for(Array_i = 0; Array_i <= _C1(SorcArray, _Index); Array_i ++) \
+            DestArray[Array_i] = SorcArray[Array_i]; \
+    }while(0)
+
+#define Array_ObjFrom(Type, DestArray, SorcArray) \
+    do{ \
+        int Array_i; \
+        Array_ObjResize(Type, DestArray, _C1(SorcArray, _Index) + 1); \
+        _C1(DestArray, _Index) = _C1(SorcArray, _Index); \
+        for(Array_i = 0; Array_i <= _C1(SorcArray, _Index); Array_i ++) \
+            RCall(Type, From)(DestArray + Array_i, SorcArray + Array_i); \
+    }while(0)
 
 #define Array_Push(Type, Array, Data) \
     _ProtoArray_Push(Type, Array, _C1(Array, _Index), _C1(Array, _Size), Data)

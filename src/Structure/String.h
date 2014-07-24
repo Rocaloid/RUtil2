@@ -25,6 +25,7 @@ void String_SetCharsN(String* This, const char* Chars, int WordNum);
 char* String_GetChars(String* This);
 
 void String_Copy(String* This, String* Sorc);
+#define String_From(This, Sorc) String_Copy(This, Sorc)
 
 int String_GetLength(String* This);
 void String_AllocLength(String* This, int Length);
