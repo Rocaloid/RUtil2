@@ -49,6 +49,9 @@ void File_WriteLine(File* This, String* Sorc);
 
 int File_IsFile(String* Path);
 
+void DirFromFilePath(String* Dest, String* Sorc);
+void BaseFromFilePath(String* Dest, String* Sorc);
+
 //Template Reads & Writes
 #if 0
 #include "_File.h"

@@ -1,4 +1,6 @@
 #include "File.h"
+#include <libgen.h>
+#include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -216,6 +218,22 @@ int File_IsFile(String* Path)
         return 0;
     else
         return 1;
+}
+
+void DirFromFilePath(String* Dest, String* Sorc)
+{
+    char* Temp = strdup(String_GetChars(Sorc));
+    char* DirName = dirname(Temp);
+    String_SetChars(Dest, DirName);
+    free(Temp);
+}
+
+void BaseFromFilePath(String* Dest, String* Sorc)
+{
+    char* Temp = strdup(String_GetChars(Sorc));
+    char* DirName = basename(Temp);
+    String_SetChars(Dest, DirName);
+    free(Temp);
 }
 
 //Template Reads & Writes
