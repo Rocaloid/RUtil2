@@ -186,12 +186,7 @@ void File_ReadLine(File* This, String* Dest)
     do
     {
         File_Read_Array_Core
-        if(tmpchar == 10)
-        {
-            File_Read_Array_Core
-            tmp_Index --;
-            break;
-        }
+        if(tmpchar == 10) tmp_Index --;
     }
     while(tmpchar != '\n' && tmpchar != 0 && This -> FilePtr < This -> Length);
     
