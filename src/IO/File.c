@@ -182,14 +182,19 @@ void File_ReadLine(File* This, String* Dest)
 {
     Array_Gtor(char, tmp);
     char tmpchar;
-
+    
     do
     {
         File_Read_Array_Core
+        if(tmpchar == 10)
+        {
+            File_Read_Array_Core
+            tmp_Index --;
+            break;
+        }
     }
-    while(tmpchar != '\n' && tmpchar != '\r' && tmpchar != 0 && 
-          This -> FilePtr < This -> Length);
-
+    while(tmpchar != '\n' && tmpchar != 0 && This -> FilePtr < This -> Length);
+    
     tmp[tmp_Index] = 0;
     String_SetChars(Dest, tmp);
     Array_Dtor(char, tmp);
