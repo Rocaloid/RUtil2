@@ -1,4 +1,4 @@
-#include <string.h>
+﻿#include <string.h>
 #include "String.h"
 #include "UtfString.h"
 #include "Array.h"
@@ -430,4 +430,30 @@ void RTrim(String* Dest, String* Sorc)
     Dest -> Data_Index = End - Begin - 1;
     
     memcpy(Dest -> Data, Begin, End - Begin);
+}
+
+int _Wildcard_Match_Core(const char *WC, const char *Str)
+{  
+    if (*WC == '\0')  
+        return *Str == '\0';  
+    if (*WC == '?')  
+        return _Wildcard_Match_Core(WC = next_char_utf8(WC), Str = next_char_utf8(Str));  
+    else if (*WC == '*')
+    {  
+        for (WC = next_char_utf8(WC); *Str; Str = next_char_utf8(Str)) 
+            if (_Wildcard_Match_Core(WC, Str))  
+                return 1;  
+        return *WC == '\0';  
+    }
+    else  
+        return *WC == *Str && _Wildcard_Match_Core(WC = next_char_utf8(WC), Str = next_char_utf8(Str));
+    
+    return -1;
+}  
+
+int Wildcard_Match(String* Sorc, String* Wildcard)
+{
+    const char* Str = String_GetChars(Sorc);
+    const char* WC = String_GetChars(Wildcard);
+    return _Wildcard_Match_Core(WC, Str);
 }

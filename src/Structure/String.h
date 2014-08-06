@@ -1,4 +1,4 @@
-#ifndef RUTIL2_STRING_H
+﻿#ifndef RUTIL2_STRING_H
 #define RUTIL2_STRING_H
 
 #include "../Core/OO.h"
@@ -68,6 +68,8 @@ void LowerCase(String* Dest, String* Sorc);
 void Trim(String* Dest, String* Sorc);
 void LTrim(String* Dest, String* Sorc);
 void RTrim(String* Dest, String* Sorc);
+
+int Wildcard_Match(String* Sorc, String* Wildcard);
 
 #endif //RUTIL2_STRING_H
 
