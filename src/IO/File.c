@@ -1,8 +1,7 @@
-#include "File.h"
+﻿#include "File.h"
 #include <libgen.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include "../Core/OO.h"
@@ -21,6 +20,24 @@ RDtor(File)
 {
     if(This -> IsOpen)
         fclose(This -> BaseStream);
+}
+
+RCtor(Directory)
+{
+    This -> Dir = NULL;
+    This -> Curr = NULL;
+    String_Ctor(& This -> Wildcard);
+    String_Ctor(& This -> Path);
+    String_SetChars(& This -> Wildcard, "*");
+    This -> Flags = NOFLAG;
+    RInit(File);
+}
+
+RDtor(Directory)
+{
+    if(This -> Dir) File_CloseDir(This);
+    String_Dtor(& This -> Wildcard);
+    String_Dtor(& This -> Path);
 }
 
 static void File_RefreshLength(File* This)
@@ -234,6 +251,72 @@ void BaseFromFilePath(String* Dest, String* Sorc)
     char* DirName = basename(Temp);
     String_SetChars(Dest, DirName);
     free(Temp);
+}
+
+int File_OpenDir(Directory* This, String* Path)
+{
+    String_Copy(& (This -> Path), Path);
+    This -> Dir = opendir(String_GetChars(Path));
+    
+    if(! This -> Dir) return -1;
+    return 1;
+}
+
+int File_CloseDir(Directory* This)
+{
+    if(This -> Dir) closedir(This -> Dir);
+    else return -1;
+    This -> Dir = NULL;
+    This -> Curr = NULL;
+    return 1;
+}
+
+void File_SetDirFlags(Directory* This, DirFlags Flags)
+{
+    This -> Flags = Flags;
+}
+
+void File_SetDirFilter(Directory* This, String* Wildcard)
+{
+    String_Copy(& (This -> Wildcard), Wildcard);
+}
+
+int File_ReadDir(Directory* This, String* Dest)
+{
+    String Tmp;
+    String_Ctor(& Tmp);
+    RAssert(This -> Dir);
+    This -> Curr = readdir(This -> Dir);
+    while(1)
+    {
+        if(! This -> Curr)
+        {
+            String_Dtor(& Tmp);
+            return 1;
+        }
+        String_SetChars(Dest, This -> Curr -> d_name);
+        if((!(This -> Flags & SHOWHIDDEN)) && (This -> Curr -> d_name[0] == '.' || This -> Curr -> d_name[Dest -> Data_Index] == '~'))
+        {
+            This -> Curr = readdir(This -> Dir);
+            continue;
+        }
+        String_Copy(& Tmp, & (This -> Path));
+        String_JoinChars(& Tmp, DIR_SPLIT);
+        String_Join(& Tmp, Dest);
+        if((This -> Flags & FILEONLY) && (! File_IsFile(& Tmp)))
+        {
+            This -> Curr = readdir(This -> Dir);
+            continue;
+        }
+        if(Wildcard_Match(Dest, & (This -> Wildcard)))
+        {
+            String_Dtor(& Tmp);
+            return 0;
+        }
+        This -> Curr = readdir(This -> Dir);
+    }
+    String_Dtor(& Tmp);
+    return 1;
 }
 
 //Template Reads & Writes
