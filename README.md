@@ -7,8 +7,20 @@ Rocaloid Coding Utility 2
 
 * License: MIT License
 
+Requirements
+===
+* CMake 2.8.4 or higher
+
 Tutorial
 ===
+
+####BUILD
+    mkdir build
+    cd build
+    cmake ../RUtil2
+    make
+    sudo make install
+
 
 ####Hello World
 
