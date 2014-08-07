@@ -138,7 +138,8 @@ void String_SetWord(String* This, int Index, String* Data)
 void String_Join(String* This, String* Sorc)
 {
     Array_Resize(char, This -> Data, 
-                 This -> Data_Index + Sorc -> Data_Index + 2 + This -> Data_Index / 10);
+                 This -> Data_Index + Sorc -> Data_Index + 2 + 
+                 This -> Data_Index / 10);
     memcpy(This -> Data + This -> Data_Index + 1, Sorc -> Data,
            Sorc -> Data_Index + 1);
     This -> Data_Index += Sorc -> Data_Index + 1;
@@ -158,7 +159,7 @@ void String_JoinChars(String* This, char* Sorc)
 int String_Equal(String* This, String* Sorc)
 {
     return (This -> Data_Index == Sorc -> Data_Index) &&
-    (! strncmp(This -> Data, Sorc -> Data, This -> Data_Index + 1));
+           (! strncmp(This -> Data, Sorc -> Data, This -> Data_Index + 1));
 }
 
 int String_EqualN(String* This, String* Sorc, int w)
@@ -261,15 +262,13 @@ void Mid(String* Dest, String* Sorc, int From, int Count)
     
     for(int i = 0; i < From && Begin; ++ i)
         Begin = next_char_safe_utf8(Begin, 
-                                    Sorc -> Data + 
-                                    Sorc -> Data_Index + 1);
+                                    Sorc -> Data + Sorc -> Data_Index + 1);
         RAssert(Begin);
     End = Begin;
     
     for(int i = 0; i < Count && End; ++ i)
         End = next_char_safe_utf8(End, 
-                                  Sorc -> Data + 
-                                  Sorc -> Data_Index + 1);
+                                  Sorc -> Data + Sorc -> Data_Index + 1);
         RAssert(End);
     
     int MidLen = End - Begin;
@@ -287,8 +286,7 @@ void MidFrom(String* Dest, String* Sorc, int From)
     char* End = Sorc -> Data + Sorc -> Data_Index + 1;
     
     for(int i = 0; i < From; ++ i)
-        Begin = next_char_safe_utf8(Begin, 
-                                    End);
+        Begin = next_char_safe_utf8(Begin, End);
         RAssert(Begin);
     
     int MidLen = End - Begin;
@@ -304,8 +302,7 @@ void Right(String* Dest, String* Sorc, int Count)
     char* End = Sorc -> Data + Sorc -> Data_Index + 1;
     char* Begin = End;
     for(int i = 0; i < Count; ++ i)
-        Begin = prev_char_safe_utf8(Begin, 
-                                    Sorc -> Data);
+        Begin = prev_char_safe_utf8(Begin, Sorc -> Data);
         RAssert(Begin);
     
     int Len = End - Begin;
@@ -322,8 +319,7 @@ void Left(String* Dest, String* Sorc, int Count)
     char* End = Begin;
     for(int i = 0; i < Count; ++ i)
         End = next_char_safe_utf8(End, 
-                                  Sorc -> Data + 
-                                  Sorc -> Data_Index + 1);
+                                  Sorc -> Data + Sorc -> Data_Index + 1);
         RAssert(End);
     
     int Len = End - Begin;
@@ -437,18 +433,17 @@ int _Wildcard_Match_Core(const char *WC, const char *Str)
     if (*WC == '\0')  
         return *Str == '\0';  
     if (*WC == '?')  
-        return _Wildcard_Match_Core(WC = next_char_utf8(WC), Str = 
-        next_char_utf8(Str));  
+        return _Wildcard_Match_Core(WC = next_char_utf8(WC), 
+                                    Str = next_char_utf8(Str));  
     else if (*WC == '*')
     {  
         for (WC = next_char_utf8(WC); *Str; Str = next_char_utf8(Str)) 
-            if (_Wildcard_Match_Core(WC, Str))  
-                return 1;  
-            return *WC == '\0';  
+            if (_Wildcard_Match_Core(WC, Str)) return 1;  
+        return *WC == '\0';  
     }
     else  
-        return *WC == *Str && _Wildcard_Match_Core(WC = next_char_utf8(WC), Str 
-        = next_char_utf8(Str));
+        return *WC == *Str && _Wildcard_Match_Core(WC = next_char_utf8(WC),
+                                                   Str = next_char_utf8(Str));
     
     return -1;
 }  
