@@ -255,7 +255,7 @@ void BaseFromFilePath(String* Dest, String* Sorc)
 
 int File_OpenDir(Directory* This, String* Path)
 {
-    String_Copy(& (This -> Path), Path);
+    String_Copy(& This -> Path, Path);
     This -> Dir = opendir(String_GetChars(Path));
     
     if(! This -> Dir) return -1;
@@ -295,7 +295,8 @@ int File_ReadDir(Directory* This, String* Dest)
             return 1;
         }
         String_SetChars(Dest, This -> Curr -> d_name);
-        if((!(This -> Flags & SHOWHIDDEN)) && (This -> Curr -> d_name[0] == '.' || This -> Curr -> d_name[Dest -> Data_Index] == '~'))
+        if((!(This -> Flags & SHOWHIDDEN)) && (This -> Curr -> d_name[0] == '.' 
+|| This -> Curr -> d_name[Dest -> Data_Index] == '~'))
         {
             This -> Curr = readdir(This -> Dir);
             continue;

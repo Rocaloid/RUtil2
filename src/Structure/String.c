@@ -437,7 +437,8 @@ int _Wildcard_Match_Core(const char *WC, const char *Str)
     if (*WC == '\0')  
         return *Str == '\0';  
     if (*WC == '?')  
-        return _Wildcard_Match_Core(WC = next_char_utf8(WC), Str = next_char_utf8(Str));  
+        return _Wildcard_Match_Core(WC = next_char_utf8(WC), Str = 
+next_char_utf8(Str));  
     else if (*WC == '*')
     {  
         for (WC = next_char_utf8(WC); *Str; Str = next_char_utf8(Str)) 
@@ -446,7 +447,8 @@ int _Wildcard_Match_Core(const char *WC, const char *Str)
         return *WC == '\0';  
     }
     else  
-        return *WC == *Str && _Wildcard_Match_Core(WC = next_char_utf8(WC), Str = next_char_utf8(Str));
+        return *WC == *Str && _Wildcard_Match_Core(WC = next_char_utf8(WC), Str 
+= next_char_utf8(Str));
     
     return -1;
 }  

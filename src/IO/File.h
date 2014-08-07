@@ -41,11 +41,15 @@ RClass(File)
 RClass(Directory)
 {
     RInherit(RObject);
+    
+    // Public
     String Path;
-    DIR* Dir;
-    struct dirent* Curr;
     String Wildcard;
     DirFlags Flags;
+    
+    // Private
+    DIR* Dir;
+    struct dirent* Curr;
 };
 
 int File_Open(File* This, String* Path, OpenMode FileMode);
