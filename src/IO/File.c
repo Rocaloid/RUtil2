@@ -57,12 +57,12 @@ int File_OpenChars(File* This, char* Path, OpenMode FileMode)
     char* chars = Path;
     char* fmode = FModes[FileMode];
     This -> BaseStream = fopen(chars, fmode);
-
+    
     This -> IsOpen = 1;
     if(This -> BaseStream == 0)
         This -> IsOpen = 0;
     This -> FilePtr = 0;
-
+    
     if(This -> IsOpen)
         File_RefreshLength(This);
     return This -> IsOpen;
@@ -101,10 +101,10 @@ int64_t File_GetLength(File* This)
 }
 
 #define File_Read_Array_Core \
-    Trash = fread(&tmpchar, 1, 1, This -> BaseStream); \
-    Array_Push(char, tmp, tmpchar); \
-    This -> FilePtr ++; \
-    fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
+Trash = fread(&tmpchar, 1, 1, This -> BaseStream); \
+Array_Push(char, tmp, tmpchar); \
+This -> FilePtr ++; \
+fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
 
 void File_Read_String(File* This, String* Dest)
 {
@@ -127,7 +127,7 @@ int File_Read_Chars(File* This, char* Dest)
 {
     int count = 0;
     char tmpchar;
-
+    
     do
     {
         Trash = fread(&tmpchar, 1, 1, This -> BaseStream);
@@ -136,7 +136,7 @@ int File_Read_Chars(File* This, char* Dest)
         fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
     }
     while(tmpchar != 0 && This -> FilePtr < This -> Length - 1);
-
+    
     File_SetPosition(This, This -> FilePtr);
     return count;
 }
@@ -172,24 +172,24 @@ void File_ReadWord(File* This, String* Dest)
 {
     Array_Gtor(char, tmp);
     char tmpchar;
-
+    
     Trash = fread(&tmpchar, 1, 1, This -> BaseStream);
     while(tmpchar == ' ' || tmpchar == '\t' ||
-          tmpchar == '\n' || tmpchar == '\r')
+        tmpchar == '\n' || tmpchar == '\r')
     {
         This -> FilePtr ++;
         fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
         Trash = fread(&tmpchar, 1, 1, This -> BaseStream);
     }
-
+    
     fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
     do
     {
         File_Read_Array_Core
     }
     while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && 
-          tmpchar != '\r' && tmpchar != 0 && This -> FilePtr < This -> Length);
-
+        tmpchar != '\r' && tmpchar != 0 && This -> FilePtr < This -> Length);
+    
     tmp[tmp_Index] = 0;
     String_SetChars(Dest, tmp);
     Array_Dtor(char, tmp);
@@ -296,7 +296,7 @@ int File_ReadDir(Directory* This, String* Dest)
         }
         String_SetChars(Dest, This -> Curr -> d_name);
         if((!(This -> Flags & SHOWHIDDEN)) && (This -> Curr -> d_name[0] == '.' 
-|| This -> Curr -> d_name[Dest -> Data_Index] == '~'))
+            || This -> Curr -> d_name[Dest -> Data_Index] == '~'))
         {
             This -> Curr = readdir(This -> Dir);
             continue;
