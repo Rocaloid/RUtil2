@@ -101,10 +101,10 @@ int64_t File_GetLength(File* This)
 }
 
 #define File_Read_Array_Core \
-Trash = fread(&tmpchar, 1, 1, This -> BaseStream); \
-Array_Push(char, tmp, tmpchar); \
-This -> FilePtr ++; \
-fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
+    Trash = fread(&tmpchar, 1, 1, This -> BaseStream); \
+    Array_Push(char, tmp, tmpchar); \
+    This -> FilePtr ++; \
+    fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
 
 void File_Read_String(File* This, String* Dest)
 {
@@ -188,7 +188,7 @@ void File_ReadWord(File* This, String* Dest)
         File_Read_Array_Core
     }
     while(tmpchar != ' ' && tmpchar != '\t' && tmpchar != '\n' && 
-        tmpchar != '\r' && tmpchar != 0 && This -> FilePtr < This -> Length);
+          tmpchar != '\r' && tmpchar != 0 && This -> FilePtr < This -> Length);
     
     tmp[tmp_Index] = 0;
     String_SetChars(Dest, tmp);
