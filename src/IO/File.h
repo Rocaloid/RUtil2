@@ -1,17 +1,31 @@
-#ifndef RUTIL2_FILE_H
+﻿#ifndef RUTIL2_FILE_H
 #define RUTIL2_FILE_H
 
 #include <stdio.h>
+#include <dirent.h>
 #include "../Structure/String.h"
 #include "../Core/OO.h"
+
+#if defined(__MINGW32__)
+    #define DIR_SPLIT "\\"
+#else
+    #define DIR_SPLIT "/"
+#endif
+
+typedef enum
+{
+    NOFLAG = 0,
+    FILEONLY,
+    SHOWHIDDEN
+} DirFlags;
 
 typedef enum
 {
     READONLY = 0,
-    WRITEONLY = 1,
-    READWRITE = 2,
-    APPEND = 3,
-    CREATE = 4
+    WRITEONLY,
+    READWRITE,
+    APPEND,
+    CREATE
 } OpenMode;
 
 RClass(File)
@@ -22,6 +36,20 @@ RClass(File)
     FILE* BaseStream;
     int64_t FilePtr;
     int64_t Length;
+};
+
+RClass(Directory)
+{
+    RInherit(RObject);
+    
+    // Public
+    String Path;
+    String Wildcard;
+    DirFlags Flags;
+    
+    // Private
+    DIR* Dir;
+    struct dirent* Curr;
 };
 
 int File_Open(File* This, String* Path, OpenMode FileMode);
@@ -51,6 +79,12 @@ int File_IsFile(String* Path);
 
 void DirFromFilePath(String* Dest, String* Sorc);
 void BaseFromFilePath(String* Dest, String* Sorc);
+
+int File_OpenDir(Directory* This, String* Path);
+int File_CloseDir(Directory* This);
+void File_SetDirFlags(Directory* This, DirFlags Flags);
+void File_SetDirFilter(Directory* This, String* Wildcard);
+int File_ReadDir(Directory* This, String* Dest);
 
 //Template Reads & Writes
 #if 0

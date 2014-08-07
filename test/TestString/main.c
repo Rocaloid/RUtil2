@@ -1,4 +1,4 @@
-#define WITH_ASSERT_ABORT
+﻿#define WITH_ASSERT_ABORT
 
 #include "Structure/String.h"
 #include "Structure/UtfString.h"
@@ -293,6 +293,28 @@ void TestCase()
     String_Dtor(& a);
 }
 
+void TestWCMatch()
+{
+    String_FromChars(Str1, "WildCard!..loop");
+    String_FromChars(Pat1, "*.loop");
+    RAssert(Wildcard_Match(& Str1, & Pat1) == 1);
+    
+    String_FromChars(Str2, "通配符测试.txt");
+    String_FromChars(Pat2_0, "*.bin");
+    String_FromChars(Pat2_1, "*.txt");
+    String_FromChars(Pat2_2, "通??测?.t*");
+    RAssert(Wildcard_Match(& Str2, & Pat2_0) == 0);
+    RAssert(Wildcard_Match(& Str2, & Pat2_1) == 1);
+    RAssert(Wildcard_Match(& Str2, & Pat2_2) == 1);
+    
+    String_Dtor(& Str1);
+    String_Dtor(& Str2);
+    String_Dtor(& Pat1);
+    String_Dtor(& Pat2_0);
+    String_Dtor(& Pat2_1);
+    String_Dtor(& Pat2_2);
+}
+
 int main()
 {
     TestTor(); // Will great water wall block it? LOL
@@ -315,6 +337,7 @@ int main()
     TestLR();
     TestTrim();
     TestCase();
+    TestWCMatch();
     
     return 0;
 }

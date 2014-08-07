@@ -1,4 +1,4 @@
-#include <string.h>
+﻿#include <string.h>
 #include "String.h"
 #include "UtfString.h"
 #include "Array.h"
@@ -138,9 +138,10 @@ void String_SetWord(String* This, int Index, String* Data)
 void String_Join(String* This, String* Sorc)
 {
     Array_Resize(char, This -> Data, 
-        This -> Data_Index + Sorc -> Data_Index + 2 + This -> Data_Index / 10);
+                 This -> Data_Index + Sorc -> Data_Index + 2 + 
+                 This -> Data_Index / 10);
     memcpy(This -> Data + This -> Data_Index + 1, Sorc -> Data,
-        Sorc -> Data_Index + 1);
+           Sorc -> Data_Index + 1);
     This -> Data_Index += Sorc -> Data_Index + 1;
     This -> WordNum += Sorc -> WordNum;
 }
@@ -149,7 +150,7 @@ void String_JoinChars(String* This, char* Sorc)
 {
     int Len = strlen(Sorc);
     Array_Resize(char, This -> Data,
-        This -> Data_Index + Len + 1 + This -> Data_Index / 10);
+                 This -> Data_Index + Len + 1 + This -> Data_Index / 10);
     memcpy(This -> Data + This -> Data_Index + 1, Sorc, Len);
     This -> Data_Index += Len;
     This -> WordNum += strnum_utf8(Sorc);
@@ -164,7 +165,7 @@ int String_Equal(String* This, String* Sorc)
 int String_EqualN(String* This, String* Sorc, int w)
 {
     return (w == Sorc -> WordNum) && 
-           (! strwcmp_utf8(This -> Data, Sorc -> Data, w));
+    (! strwcmp_utf8(This -> Data, Sorc -> Data, w));
 }
 
 int String_EqualChars(String* This, const char* Sorc)
@@ -261,16 +262,14 @@ void Mid(String* Dest, String* Sorc, int From, int Count)
     
     for(int i = 0; i < From && Begin; ++ i)
         Begin = next_char_safe_utf8(Begin, 
-                                    Sorc -> Data + 
-                                    Sorc -> Data_Index + 1);
-    RAssert(Begin);
+                                    Sorc -> Data + Sorc -> Data_Index + 1);
+        RAssert(Begin);
     End = Begin;
     
     for(int i = 0; i < Count && End; ++ i)
         End = next_char_safe_utf8(End, 
-                                  Sorc -> Data + 
-                                  Sorc -> Data_Index + 1);
-    RAssert(End);
+                                  Sorc -> Data + Sorc -> Data_Index + 1);
+        RAssert(End);
     
     int MidLen = End - Begin;
     String_AllocLength(Dest, MidLen);
@@ -287,9 +286,8 @@ void MidFrom(String* Dest, String* Sorc, int From)
     char* End = Sorc -> Data + Sorc -> Data_Index + 1;
     
     for(int i = 0; i < From; ++ i)
-        Begin = next_char_safe_utf8(Begin, 
-                                    End);
-    RAssert(Begin);
+        Begin = next_char_safe_utf8(Begin, End);
+        RAssert(Begin);
     
     int MidLen = End - Begin;
     String_AllocLength(Dest, MidLen);
@@ -304,9 +302,8 @@ void Right(String* Dest, String* Sorc, int Count)
     char* End = Sorc -> Data + Sorc -> Data_Index + 1;
     char* Begin = End;
     for(int i = 0; i < Count; ++ i)
-        Begin = prev_char_safe_utf8(Begin, 
-                                    Sorc -> Data);
-    RAssert(Begin);
+        Begin = prev_char_safe_utf8(Begin, Sorc -> Data);
+        RAssert(Begin);
     
     int Len = End - Begin;
     String_AllocLength(Dest, Len);
@@ -322,9 +319,8 @@ void Left(String* Dest, String* Sorc, int Count)
     char* End = Begin;
     for(int i = 0; i < Count; ++ i)
         End = next_char_safe_utf8(End, 
-                                  Sorc -> Data + 
-                                  Sorc -> Data_Index + 1);
-    RAssert(End);
+                                  Sorc -> Data + Sorc -> Data_Index + 1);
+        RAssert(End);
     
     int Len = End - Begin;
     String_AllocLength(Dest, Len);
@@ -342,7 +338,7 @@ void UpperCase(String* Dest, String* Sorc)
     while(Curr && *Curr)
     {
         if(GetWordLength_Utf8(Curr[0]) == 1 && 
-           (Curr[0] >= 'a' && Curr[0] <= 'z'))
+            (Curr[0] >= 'a' && Curr[0] <= 'z'))
             Curr[0] += ('A' - 'a');
         Curr = next_char_safe_utf8(Curr, 
                                    Dest -> Data + Dest -> Data_Index + 1);
@@ -357,7 +353,7 @@ void LowerCase(String* Dest, String* Sorc)
     while(Curr && *Curr)
     {
         if(GetWordLength_Utf8(Curr[0]) == 1 && 
-           (Curr[0] >= 'A' && Curr[0] <= 'Z'))
+            (Curr[0] >= 'A' && Curr[0] <= 'Z'))
             Curr[0] -= ('A' - 'a');
         Curr = next_char_safe_utf8(Curr, 
                                    Dest -> Data + Dest -> Data_Index + 1);
@@ -430,4 +426,31 @@ void RTrim(String* Dest, String* Sorc)
     Dest -> Data_Index = End - Begin - 1;
     
     memcpy(Dest -> Data, Begin, End - Begin);
+}
+
+int _Wildcard_Match_Core(const char *WC, const char *Str)
+{  
+    if (*WC == '\0')  
+        return *Str == '\0';  
+    if (*WC == '?')  
+        return _Wildcard_Match_Core(WC = next_char_utf8(WC), 
+                                    Str = next_char_utf8(Str));  
+    else if (*WC == '*')
+    {  
+        for (WC = next_char_utf8(WC); *Str; Str = next_char_utf8(Str)) 
+            if (_Wildcard_Match_Core(WC, Str)) return 1;  
+        return *WC == '\0';  
+    }
+    else  
+        return *WC == *Str && _Wildcard_Match_Core(WC = next_char_utf8(WC),
+                                                   Str = next_char_utf8(Str));
+    
+    return -1;
+}  
+
+int Wildcard_Match(String* Sorc, String* Wildcard)
+{
+    const char* Str = String_GetChars(Sorc);
+    const char* WC = String_GetChars(Wildcard);
+    return _Wildcard_Match_Core(WC, Str);
 }
