@@ -1,4 +1,4 @@
-#ifndef RUTIL2_RALLOC_H
+﻿#ifndef RUTIL2_RALLOC_H
 #define RUTIL2_RALLOC_H
 
 #include <memory.h>
