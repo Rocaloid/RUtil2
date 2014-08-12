@@ -12,10 +12,11 @@ void* RAlign(int Align, int Size);
 #define _aligned_malloc __mingw_aligned_malloc
 #define _aligned_free  __mingw_aligned_free
 #define memalign(align, size) _aligned_malloc(size, align)
-#endif //For MinGW
-
-#if defined(__APPLE__)
+ //For MinGW
+#elif defined(__APPLE__)
     #define memalign(align, size) aligned_malloc(size, align)
+#else
+    #include <malloc.h>
 #endif
 
 

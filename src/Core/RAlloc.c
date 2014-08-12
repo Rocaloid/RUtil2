@@ -6,6 +6,7 @@
 #include "RAlloc.h"
 #include "OO.h"
 
+#if defined(__APPLE__)
 void *aligned_malloc( size_t size, int align )
 {
     void *mem = malloc( size + (align-1) + sizeof(void*) );
@@ -21,6 +22,7 @@ void aligned_free( void *mem )
 {
     free( ((void**)mem)[-1] );
 }
+#endif
 
 void* RAlloc(int Size)
 {
@@ -38,7 +40,7 @@ void __RFree(void* a, ...)
     void* Ptr;
     va_list Args;
     va_start(Args, a);
-    
+
     //First
     free(a);
     while(1)
@@ -49,7 +51,7 @@ void __RFree(void* a, ...)
             break;
         free(Ptr);
     }
-    
+
     va_end(Args);
 }
 
