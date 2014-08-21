@@ -1,4 +1,4 @@
-#ifndef RUTIL2_RALLOC_H
+﻿#ifndef RUTIL2_RALLOC_H
 #define RUTIL2_RALLOC_H
 
 #include <memory.h>
@@ -12,7 +12,14 @@ void* RAlign(int Align, int Size);
 #define _aligned_malloc __mingw_aligned_malloc
 #define _aligned_free  __mingw_aligned_free
 #define memalign(align, size) _aligned_malloc(size, align)
-#endif //For MinGW
+ //For MinGW
+#elif defined(__APPLE__)
+    #define memalign(align, size) aligned_malloc(size, align)
+#else
+    #include <malloc.h>
+#endif
+
+
 
 #define RFree(...) __RFree(__VA_ARGS__, (void*)(- 1))
 void __RFree(void* a, ...);

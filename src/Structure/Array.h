@@ -1,7 +1,7 @@
 #ifndef RUTIL2_ARRAY_H
 #define RUTIL2_ARRAY_H
 
-#include <malloc.h>
+#include <stdlib.h>
 #define Array_Addition 96
 
 // RoundUpToMultipleOf8

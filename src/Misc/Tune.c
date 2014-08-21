@@ -1,6 +1,5 @@
-#include <malloc.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <math.h>
 #include "Tune.h"
 #include "../Core/OO.h"
