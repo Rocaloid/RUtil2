@@ -14,11 +14,6 @@ void* RAlign(int Align, int Size);
 #define memalign(align, size) _aligned_malloc(size, align)
 #endif //For MinGW
 
-#if defined(__APPLE__)
-    #define memalign(align, size) aligned_malloc(size, align)
-#endif
-
-
 
 #define RFree(...) __RFree(__VA_ARGS__, (void*)(- 1))
 void __RFree(void* a, ...);
