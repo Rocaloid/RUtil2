@@ -207,7 +207,7 @@ void File_ReadLine(File* This, String* Dest)
     }
     while(tmpchar != '\n' && tmpchar != 0 && This -> FilePtr < This -> Length);
     
-    tmp[tmp_Index] = 0;
+    tmp[tmp_Index + 1] = 0;
     String_SetChars(Dest, tmp);
     Array_Dtor(char, tmp);
 }

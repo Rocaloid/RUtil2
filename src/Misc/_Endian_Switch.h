@@ -16,13 +16,13 @@ RTFunc(RInline void, Endian_Switch, _T1* val)
                (tval << 8);
     #elif _T1_DataLen == 4
         UInt32 tval = (*(UInt32 *)val);
-        (*(UInt32 *)val) =  ((tval >> 24))            |
-               ((tval << 8) & 0x00ff0000) |
-               ((tval >> 8) & 0x0000ff00) |
+        (*(UInt32 *)val) =  ((tval >> 24)) |
+               ((tval << 8) & 0x00ff0000)  |
+               ((tval >> 8) & 0x0000ff00)  |
                ((tval << 24));
     #elif _T1_DataLen == 8
         UInt64 tval = (*(UInt64 *)val);
-        (*(UInt64 *)val) = ((tval >> 56))                        |
+        (*(UInt64 *)val) = ((tval >> 56))            |
                ((tval << 40) & 0x00ff000000000000ll) |
                ((tval << 24) & 0x0000ff0000000000ll) |
                ((tval <<  8) & 0x000000ff00000000ll) |

@@ -12,8 +12,7 @@ void* RAlign(int Align, int Size);
 #define _aligned_malloc __mingw_aligned_malloc
 #define _aligned_free  __mingw_aligned_free
 #define memalign(align, size) _aligned_malloc(size, align)
-#endif //For MinGW
-
+#endif
 
 #define RFree(...) __RFree(__VA_ARGS__, (void*)(- 1))
 void __RFree(void* a, ...);

@@ -46,7 +46,7 @@ void __RFree(void* a, ...)
             break;
         free(Ptr);
     }
-    
+
     va_end(Args);
 
 }

@@ -186,14 +186,16 @@ void __RFree(void* a, ...);
         Index, Data)
 
 #define Array_InsertNull(Type, Array, Index) \
-    _ProtoArray_InsertNull(Type, Array, _C1(Array, _Index), _C1(Array, _Size), Index)
+    _ProtoArray_InsertNull(Type, Array, _C1(Array, _Index), _C1(Array, _Size), \
+        Index)
 
 #define Array_Remove(Type, Array, Index) \
-    _ProtoArray_Remove(Type, Array, _C1(Array, _Index), _C1(Array, _Size), Index)
+    _ProtoArray_Remove(Type, Array, _C1(Array, _Index), _C1(Array, _Size), \
+        Index)
 
 #define Array_RemoveRange(Type, Array, LIndex, HIndex) \
-    _ProtoArray_RemoveRange(Type, Array, _C1(Array, _Index), _C1(Array, _Size), \
-        LIndex, HIndex)
+    _ProtoArray_RemoveRange(Type, Array, _C1(Array, _Index), \
+    _C1(Array, _Size), LIndex, HIndex)
 
 //---------------------Advanced Macros--------------------
 #define Array_IncFind(Dest, Type, Array, Data) \
