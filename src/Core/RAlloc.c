@@ -7,20 +7,20 @@
 #include "OO.h"
 
 #if defined(__APPLE__)
-void *aligned_malloc( size_t size, int align )
+void* aligned_malloc(size_t size, int align)
 {
-    void *mem = malloc( size + (align-1) + sizeof(void*) );
-
+    void *mem = malloc(size + (align-1) + sizeof(void*));
+    
     char *amem = ((char*)mem) + sizeof(void*);
     amem += align - ((uintptr_t)amem & (align - 1));
-
+    
     ((void**)amem)[-1] = mem;
     return amem;
 }
 
-void aligned_free( void *mem )
+void aligned_free(void *mem)
 {
-    free( ((void**)mem)[-1] );
+    free(((void**)mem)[-1]);
 }
 #endif
 
