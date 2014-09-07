@@ -1,6 +1,7 @@
-#include <stdlib.h>
 #if defined(__APPLE__)
 #include <malloc/malloc.h>
+#else
+#include <malloc.h>
 #endif
 #include <stdarg.h>
 #include "RAlloc.h"
@@ -15,7 +16,6 @@ void* RAlloc(int Size)
 void* RAlign(int Align, int Size)
 {
 #if defined(__APPLE__)
-
     if(Size % Align)
     {
         return malloc(Size);
