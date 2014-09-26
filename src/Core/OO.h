@@ -197,7 +197,7 @@ void __RDelete(void* a, ...);
             _DUMMY_ABORT(), \
             NULL)) : NULL)
 #else
-    #define RAssert(a, ...) (void)0
+    #define RAssert(a, ...)
 #endif
 
 #define Likely(x)        __builtin_expect(!!(x), 1)
