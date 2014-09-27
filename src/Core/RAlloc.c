@@ -15,7 +15,7 @@ void* RAlloc(int Size)
 
 void* RAlign(int Align, int Size)
 {
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__MINGW32__) || defined(_WIN64)
     if(Size % Align)
     {
         return malloc(Size);
