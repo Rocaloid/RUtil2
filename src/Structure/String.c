@@ -170,8 +170,9 @@ int String_EqualN(String* This, String* Sorc, int w)
 
 int String_EqualChars(String* This, const char* Sorc)
 {
+    if(strlen(Sorc) != This -> Data_Index + 1)
+        return 0;
     return (! strncmp(This -> Data, Sorc, This -> Data_Index + 1));
-    return 0;
 }
 
 int String_EqualNChars(String* This, const char* Sorc, int w)
