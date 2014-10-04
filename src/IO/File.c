@@ -101,7 +101,7 @@ int64_t File_GetLength(File* This)
 }
 
 #define File_Read_Array_Core \
-    Trash = fread(&tmpchar, 1, 1, This -> BaseStream); \
+    Trash = fread(& tmpchar, 1, 1, This -> BaseStream); \
     Array_Push(char, tmp, tmpchar); \
     This -> FilePtr ++; \
     fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
@@ -130,7 +130,7 @@ int File_Read_Chars(File* This, char* Dest)
     
     do
     {
-        Trash = fread(&tmpchar, 1, 1, This -> BaseStream);
+        Trash = fread(& tmpchar, 1, 1, This -> BaseStream);
         Dest[count ++] = tmpchar;
         This -> FilePtr ++;
         fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
@@ -173,13 +173,14 @@ void File_ReadWord(File* This, String* Dest)
     Array_Gtor(char, tmp);
     char tmpchar;
     
-    Trash = fread(&tmpchar, 1, 1, This -> BaseStream);
+    Trash = fread(& tmpchar, 1, 1, This -> BaseStream);
     while(tmpchar == ' ' || tmpchar == '\t' ||
         tmpchar == '\n' || tmpchar == '\r')
     {
         This -> FilePtr ++;
         fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
-        Trash = fread(&tmpchar, 1, 1, This -> BaseStream);
+        Trash = fread(& tmpchar, 1, 1, This -> BaseStream);
+        if(This -> FilePtr + 1 >= This -> Length) break;
     }
     
     fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
