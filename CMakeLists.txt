@@ -1,3 +1,20 @@
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+    if(NOT DEFINED WITH_IN_SOURCE_BUILD)
+        message(FATAL_ERROR
+            "CMake generation for this project is not allowed within the source directory!"
+            "\n Remove the CMakeCache.txt file and try again from another folder, e.g.:"
+            "\n "
+            "\n rm -r CMakeFiles CMakeCache.txt"
+            "\n cd .."
+            "\n mkdir RUtil2-make"
+            "\n cd RUtil2-make"
+            "\n cmake ../RUtil2"
+            "\n "
+            "\n Alternately define WITH_IN_SOURCE_BUILD to force this option (not recommended!)"
+        )
+    endif()
+endif()
+
 cmake_minimum_required(VERSION 2.8.4)
 project(RUtil2)
 
