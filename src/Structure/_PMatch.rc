@@ -35,6 +35,19 @@ RTMethod(int , PMatch, AddPair, _T1 XVar, _T2 YVar)
     return Index;
 }
 
+RTMethod(void, PMatch, InvertTo, _RTClassName* Dest)
+{
+    Array_Resize(_T1, Dest -> X, This -> X_Index + 1);
+    Array_Resize(_T2, Dest -> Y, This -> Y_Index + 1);
+    Dest -> X_Index = This -> X_Index;
+    Dest -> Y_Index = This -> Y_Index;
+    int i;
+    for(i = 0; i <= This -> X_Index; i ++)
+        Dest -> X[i] = This -> Y[i];
+    for(i = 0; i <= This -> Y_Index; i ++)
+        Dest -> Y[i] = This -> X[i];
+}
+
 RTMethod(void, PMatch, Clear)
 {
     This -> X_Index = - 1;

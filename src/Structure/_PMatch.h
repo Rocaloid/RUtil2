@@ -10,6 +10,7 @@ RClass(_RTClassName)
 
 RTMethod(void, PMatch, From, _RTClassName* Sorc);
 RTMethod(int , PMatch, AddPair, _T1 XVar, _T2 YVar);
+RTMethod(void, PMatch, InvertTo, _RTClassName* Dest);
 RTMethod(void, PMatch, Clear);
 RTMethod(void, PMatch, Print);
 RTMethod(_C(Transition, RTAttr_2), PMatch, Query, _T1 XVar);

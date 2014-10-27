@@ -204,11 +204,24 @@ void File_ReadLine(File* This, String* Dest)
     do
     {
         File_Read_Array_Core
-        if(tmpchar == 10) tmp_Index --;
     }
-    while(tmpchar != '\n' && tmpchar != 0 && This -> FilePtr < This -> Length);
+    while(tmpchar != 13 && tmpchar != 10 && tmpchar != 0 && This -> FilePtr
+        < This -> Length);
     
-    tmp[tmp_Index + 1] = 0;
+    do
+    {
+        This -> FilePtr ++;
+        fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
+        tmpchar = fread(& tmpchar, 1, 1, This -> BaseStream);
+    }
+    while(tmpchar == 13 || tmpchar == 10);
+    fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
+    
+    Array_Push(char, tmp, '\0');
+    tmp_Index --;
+    while(tmp_Index > -1 && (tmp[tmp_Index] == 13 || tmp[tmp_Index] == 10))
+        tmp[tmp_Index --] = 0;
+     
     String_SetChars(Dest, tmp);
     Array_Dtor(char, tmp);
 }
