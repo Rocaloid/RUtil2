@@ -207,21 +207,22 @@ void File_ReadLine(File* This, String* Dest)
     }
     while(tmpchar != 13 && tmpchar != 10 && tmpchar != 0 && This -> FilePtr
         < This -> Length);
+    Trash = fread(& tmpchar, 1, 1, This -> BaseStream);
     
-    do
+    while((tmpchar == 13 || tmpchar == 10) && This -> FilePtr < This -> Length)
     {
         This -> FilePtr ++;
         fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
-        tmpchar = fread(& tmpchar, 1, 1, This -> BaseStream);
+        Trash = fread(& tmpchar, 1, 1, This -> BaseStream);
     }
-    while(tmpchar == 13 || tmpchar == 10);
+    
     fseek(This -> BaseStream, This -> FilePtr, SEEK_SET);
     
     Array_Push(char, tmp, '\0');
     tmp_Index --;
     while(tmp_Index > -1 && (tmp[tmp_Index] == 13 || tmp[tmp_Index] == 10))
         tmp[tmp_Index --] = 0;
-     
+    
     String_SetChars(Dest, tmp);
     Array_Dtor(char, tmp);
 }
