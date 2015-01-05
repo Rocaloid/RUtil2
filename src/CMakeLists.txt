@@ -15,7 +15,7 @@ install(FILES Core/OO.h
               Core/RTemplate.h
               Core/Include_T1AllTypes.h
               Core/MacroUtil.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Core)
+              DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/RUtil2/Core)
 install(FILES Structure/Array.h
               Structure/PMatch.h
               Structure/_PMatch.h
@@ -23,7 +23,7 @@ install(FILES Structure/Array.h
               Structure/Transition.h
               Structure/_Transition.h
               Structure/UtfString.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Structure)
+              DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/RUtil2/Structure)
 install(FILES Misc/Convert.h
               Misc/Sort.h
               Misc/_Sort.h
@@ -33,14 +33,14 @@ install(FILES Misc/Convert.h
               Misc/CRC32.h
               Misc/Endian_Switch.h
               Misc/_Endian_Switch.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/Misc)
+              DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/RUtil2/Misc)
 install(FILES IO/File.h
               IO/_File.h
               IO/WaveFile.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2/IO)
+              DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/RUtil2/IO)
 install(FILES Include/RUtil2.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/)
+              DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(FILES Include/RUtil2.h
-              DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RUtil2)
+              DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/RUtil2)
 
-install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+install(TARGETS RUtil2 ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
