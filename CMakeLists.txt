@@ -1,61 +1,16 @@
-if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
-    if(NOT DEFINED WITH_IN_SOURCE_BUILD)
-        message(FATAL_ERROR
-            "CMake generation for this project is not allowed within the source directory!"
-            "\n Remove the CMakeCache.txt file and try again from another folder, e.g.:"
-            "\n "
-            "\n rm -r CMakeFiles CMakeCache.txt"
-            "\n cd .."
-            "\n mkdir RUtil2-make"
-            "\n cd RUtil2-make"
-            "\n cmake ../RUtil2"
-            "\n "
-            "\n Alternately define WITH_IN_SOURCE_BUILD to force this option (not recommended!)"
-        )
-    endif()
-endif()
+cmake_minimum_required(VERSION 2.8)
 
-cmake_minimum_required(VERSION 2.8.4)
 project(RUtil2)
 
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Debug")
+if(TARGET RUtil2)
+    return()
 endif()
 
-add_definitions(-std=gnu99 -Wall)
-
-# RUtil2 should work on any platform.
-if    (${CMAKE_SYSTEM_PROCESSOR} MATCHES armv7l)
-    add_definitions(-march=armv7 -mfloat-abi=hard -mfpu=neon)
-elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES x86_64*
-    OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES amd64*
-    OR ${CMAKE_SYSTEM_NAME}      MATCHES Darwin*)
-    add_definitions(-march=x86-64 -mtune=generic -mtune=core2 -mtune=core-avx-i)
-elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES i686*
-    OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES i386*
-    OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES x86*)
-    add_definitions(-march=i686 -mtune=generic -mtune=core2 -mtune=core-avx-i)
+if(NOT MSVC)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+else()
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W3")
 endif()
-message("-- Detected Supported Platform: " ${CMAKE_SYSTEM_PROCESSOR})
-
-set(CMAKE_C_FLAGS_DEBUG "-O0 -g")
-set(CMAKE_C_FLAGS_RELEASE "-Ofast -DNDEBUG")
-
-set(CMAKE_LD_FLAGS_DEBUG "-Wl,-O0")
-set(CMAKE_LD_FLAGS_RELEASE "-Wl,-O1,--as-needed,--sort-common")
-
-enable_testing()
-
-include(GNUInstallDirs)
-
-# uninstall target
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-    IMMEDIATE @ONLY)
-
-add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
 include(TestBigEndian)
 test_big_endian(IS_BIG_ENDIAN)
@@ -63,6 +18,30 @@ if(IS_BIG_ENDIAN)
     add_definitions(-D__BIG_ENDIAN__)
 endif()
 
-add_subdirectory(src)
-add_subdirectory(doc)
-add_subdirectory(test)
+file(GLOB_RECURSE SRC_SOURCES "src/*.c")
+add_library(RUtil2 STATIC ${SRC_SOURCES})
+set_target_properties(RUtil2 PROPERTIES
+    C_STANDARD 99
+    POSITION_INDEPENDENT_CODE ON
+)
+target_include_directories(RUtil2 PRIVATE "src")
+target_link_libraries(RUtil2 m)
+
+# Arrange header files for external use
+add_custom_command(TARGET RUtil2 POST_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory "include/RUtil2")
+add_custom_command(TARGET RUtil2 POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/src/Include/RUtil2.h" "include/RUtil2.h")
+file(GLOB_RECURSE SRC_HEADERS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/src" "src/*.h")
+foreach(SRC_HEADER ${SRC_HEADERS})
+    add_custom_command(TARGET RUtil2 POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/src/${SRC_HEADER}" "include/RUtil2/${SRC_HEADER}")
+endforeach()
+target_include_directories(RUtil2 INTERFACE "${CMAKE_CURRENT_BINARY_DIR}/include")
+
+if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")  # Test subproject
+    include(CTest)
+    #add_subdirectory(test)
+endif()
+
+# Workaround for CMake version older than 3.1
+# Remove this and set the minimum required version to 3.1
+# when we make sure everyone is having CMake 3.1
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
