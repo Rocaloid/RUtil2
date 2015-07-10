@@ -8,6 +8,8 @@
     #define RVal (* ((UInt64 *)(Val)))
 #endif
 
+/* 端序转换（大小互转） */
+
 RTFunc(RInline void, Endian_Switch, _T1* val)
 {
     #if _T1_DataLen == 2
@@ -32,6 +34,8 @@ RTFunc(RInline void, Endian_Switch, _T1* val)
                ((tval << 56));
     #endif
 }
+
+/* 数组的端序转换 */
 
 RTFunc(RInline void, Endian_Switch_Array, _T1* val, int Size)
 {
